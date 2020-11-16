@@ -4,10 +4,11 @@ import classes from './RadioButton.module.css';
 
 const radiobutton = (props) => {
   return (
-      <form>
-      <input  className={classes.RadioButton} type="radio" id="test" name="Testradio" vale="Testradio1"/>
-    </form> 
+      <label className={classes.RadioButton}>
+      <input type="radio" name="Testradio" id="RadioBtn" vale="Testradio1"> 
+      </input>
+      <span className={classes.checkmark} ></span>
+      </label>
   );
 }
-
 export default radiobutton;

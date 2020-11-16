@@ -1,0 +1,9 @@
+.Heading2 {
+    color: #3cB650 ;
+	font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    font-size:  35px;
+	overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+    padding: 20px;	
+}

@@ -4,7 +4,7 @@ import classes from './TextBox.module.css';
 
 const textbox = (props) => {
   return (
-    <input className={classes.TextBox} type="text" id="test"></input>
+    <input className={classes.TextBox} type="text" id={this.props.id}></input>
   );
 }
 

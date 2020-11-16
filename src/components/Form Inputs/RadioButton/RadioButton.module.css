@@ -1,8 +1,28 @@
+
 .RadioButton {
-	position: absolute;
-	visibility: hidden;
-	width: 30px; height: 30px;
-	position: absolute;
+	width: 25px;
+	height: 25px;
+	border: 2px solid #3cB650;
 	border-radius: 50%;
-    transition: transform .6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+	margin-left: 20px;
+	display: flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.RadioButton .checkmark {
+	width: calc(100% - 6px);
+	height: calc(100% - 6px);
+	border-radius: 50%;
+	background-color: #3cB650;
+	display: inline-block;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}
+.RadioButton input{
+	display: none;
+}
+
+.RadioButton input:checked + .checkmark {
+	opacity: 1;
 }

@@ -4,7 +4,7 @@ import classes from './FormLabel.module.css';
 
 const formlabel = (props) => {
   return (
-    <label className={classes.FormLabel} for="test">Test Label:</label>
+    <label className={classes.FormLabel} for="test">{props.children}</label>
   );
 }
 
