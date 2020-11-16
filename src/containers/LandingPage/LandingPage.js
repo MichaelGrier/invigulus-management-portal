@@ -13,10 +13,6 @@ import Heading1 from '../../components/Heading1/Heading1';
 import FormContainer from '../../containers/FormContainer/FormContainer';
 
 class LandingPage extends Component {
-  buttonClickedHandler = () => {
-    alert('You clicked a button');
-  }
-
   render () {
     return (
       <div>
