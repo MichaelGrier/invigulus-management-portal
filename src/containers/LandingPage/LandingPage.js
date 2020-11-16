@@ -6,10 +6,6 @@ import Footer from '../../components/Footer/Footer';
 import LandingPageCards from '../../components/UI/Cards/LandingPageCards/LandingPageCards';
 
 class LandingPage extends Component {
-  buttonClickedHandler = () => {
-    alert('You clicked a button');
-  }
-
   render () {
     return (
       <div>
