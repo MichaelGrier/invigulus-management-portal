@@ -21,9 +21,7 @@ class LoginPage extends Component {
         <NavBar />
         <main className={classes.main}>
           <FormContainer> 
-              <Heading2>Log In</Heading2>
               <FormLabel>Email:</FormLabel>
-              <TextBox/><br/>
               <FormLabel>Password:</FormLabel>
               <TextBox/><br/>
               <Button>Submit</Button>
