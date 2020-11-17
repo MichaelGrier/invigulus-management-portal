@@ -1,9 +1,26 @@
-.FormContainer {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;    
+.wrapper {
+    padding: 5px 20px; 
 }
 
-.form {
+.wrapper fieldset {
+    margin: 20px 0;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    padding: 20px;
     text-align: center;
+	clear: left;
+    width: 50%;
+    margin: 2rem auto;
+    border: 3;
+    border-style: solid;
+    border-width: thin;
+    border-color: rgb(221, 218, 218);
+
 }
+
+/*.FormContainer {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;  
+}*/
+

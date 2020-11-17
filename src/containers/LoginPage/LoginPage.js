@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 
-import classes from './LoingPage.module.css';
+import classes from './LoginPage.module.css';
 import NavBar from '../../components/NavBar/NavBar';
 import Footer from '../../components/Footer/Footer';
 import TextBox from '../../components/Form Inputs/TextBox/TextBox';
 import FormLabel from '../../components/Form Inputs/FormLabel/FormLabel';
 import DropDown from '../../components/Form Inputs/DropDown/DropDown';
 import RadioButton from '../../components/Form Inputs/RadioButton/RadioButton';
-import Button from '../../components/UI/Button/Button';
+import Button from '../../components/UI/Button/Button'; 
+import FormContainer from '../../containers/FormContainer/FormContainer';
 
 class LoginPage extends Component {
   buttonClickedHandler = () => {
@@ -19,7 +20,14 @@ class LoginPage extends Component {
       <div>
         <NavBar />
         <main className={classes.main}>
-          <h1 className={classes.header}>Invigulus Management Portal</h1>
+          <FormContainer> 
+              <Heading2>Log In</Heading2>
+              <FormLabel>Email:</FormLabel>
+              <TextBox/><br/>
+              <FormLabel>Password:</FormLabel>
+              <TextBox/><br/>
+              <Button>Submit</Button>
+          </FormContainer>
         </main>
         <Footer />
       </div>
