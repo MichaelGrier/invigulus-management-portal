@@ -6,7 +6,7 @@ import classes from './Logo.module.css';
 const logo = (props) => {
   return(
     <div className={classes.logo}>
-      <img src={invigulusLogo} alt="Invigulus Logo" />
+      <a href={'/'}><img src={invigulusLogo} alt="Invigulus Logo" /></a>
     </div>
   );
 };

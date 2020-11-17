@@ -5,3 +5,15 @@
   justify-content: center;
   margin-top: 6rem;
 }
+
+a {
+  color: #191919;
+  text-decoration: none;
+}
+
+a:hover 
+{
+   color:#191919;
+   text-decoration:none; 
+   cursor:pointer;  
+}
