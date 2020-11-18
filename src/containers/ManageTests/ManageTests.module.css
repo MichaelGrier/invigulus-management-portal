@@ -1,0 +1,17 @@
+.main {
+  background-color: #e5e5e5;
+  padding-bottom: 4rem;
+}
+
+.header {
+  padding-top: 3rem;
+  color: #191919;
+}
+
+.tableWrap {
+  width: 80%;
+  margin: 4rem auto 0 auto;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+}

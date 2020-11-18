@@ -23,9 +23,9 @@ class ViewSessions extends Component {
           <h1 className={classes.header}>View Sessions</h1>
           <div className={classes.wrap}>
             <div className={classes.searchBar}>
-              <h5>**Search by Session ID**</h5>
+              <h5>Enter Session ID</h5>
               <TextBox id='search'/>
-              <SmallButton clicked={this.searchHandler}>Search</SmallButton>
+              <SmallButton clicked={this.searchHandler}>Find</SmallButton>
             </div>
             <div className={classes.tabWrap}>
               <Tabs defaultActiveKey="main" id="sessionTabs">
@@ -346,9 +346,9 @@ class ViewSessions extends Component {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>#</td>
-                        <td>#</td>
-                        <td>#</td>
+                        <td><a href='https://www.youtube.com/watch?v=HYUiahljMMc' target='_blank' rel='noreferrer'>https://www.youtube.com/watch?v=HYUiahljMMc</a></td>
+                        <td><a href='https://www.youtube.com/watch?v=HYUiahljMMc' target='_blank' rel='noreferrer'>https://www.youtube.com/watch?v=HYUiahljMMc</a></td>
+                        <td><a href='https://www.youtube.com/watch?v=HYUiahljMMc' target='_blank' rel='noreferrer'>https://www.youtube.com/watch?v=HYUiahljMMc</a></td>
                       </tr>
                     </tbody>
                   </Table>

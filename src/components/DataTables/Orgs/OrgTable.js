@@ -18,6 +18,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
+import SmallButton from '../../UI/SmallButton/SmallButton';
 
 const OrgTable = () => {
   // memoize data to ensure it is not duplicated on each render
@@ -73,7 +74,11 @@ const OrgTable = () => {
   return (
     <>
       {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
-      <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
+      <div className={classes.toolBarWrap}>
+        {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
+        <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        <SmallButton>Add New</SmallButton>
+      </div>
 
       {/* render table */}
       <Table {...getTableProps()} striped bordered hover>
@@ -125,6 +130,9 @@ const OrgTable = () => {
           disabled={!canNextPage}
         >Next</button>
       </div>
+      <br/>
+      <SmallButton>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
+      <SmallButton>Delete</SmallButton>
     </>
   );
 }

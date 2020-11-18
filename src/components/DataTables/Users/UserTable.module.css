@@ -1,3 +1,8 @@
+.toolBarWrap {
+  display: flex;
+  justify-content: space-between;
+}
+
 .pageButton {
   -webkit-text-decoration: none;
           text-decoration: none;

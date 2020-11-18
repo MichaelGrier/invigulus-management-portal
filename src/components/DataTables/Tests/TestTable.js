@@ -13,14 +13,15 @@ import {COLUMNS} from './columns';
 
 import TableFilter from '../../UI/TableFilter/TableFilter';
 
-import classes from './UserTable.module.css';
+import classes from './TestTable.module.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
-import SmallButton from '../../UI/SmallButton/SmallButton';
+import Button from '../../UI/Button/Button';
+import SmallButton from '../../UI/SmallButton/SmallButton'
 
-const UserTable = () => {
+const TestTable = () => {
   // memoize data to ensure it is not duplicated on each render
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
@@ -73,7 +74,6 @@ const UserTable = () => {
 
   return (
     <>
-      {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
       <div className={classes.toolBarWrap}>
         {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
         <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
@@ -136,4 +136,4 @@ const UserTable = () => {
     </>
   );
 }
-export default UserTable
+export default TestTable

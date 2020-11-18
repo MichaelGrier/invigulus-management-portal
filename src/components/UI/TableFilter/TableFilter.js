@@ -5,7 +5,7 @@ import classes from './TableFilter.module.css';
 const TableFilter = ({filter, setFilter}) => {
   return (
     <span>
-      Search: {' '}
+      <strong className={classes.searchLabel}>Search:</strong> {' '}
       <input
         className={classes.TableFilter}
         value={filter || ''}

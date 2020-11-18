@@ -6,7 +6,7 @@ import Card from '../Card';
 const landingPageCards = (props) => {
   return (
     <div className={classes.landingPageCards}>
-      <a href='/'><Card>Manage Organizations</Card></a>
+      <a href='/'><Card>Manage Organizations and Tests</Card></a>
       <a href='/'><Card>Manage Users</Card></a>
       <a href='/'><Card>View Sessions</Card></a>
     </div>
