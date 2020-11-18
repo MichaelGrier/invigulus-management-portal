@@ -18,7 +18,6 @@ class ViewSessions extends Component {
   render() {
     return(
       <>
-        <NavBar />
         <main className={classes.main}>
           <h1 className={classes.header}>View Sessions</h1>
           <div className={classes.wrap}>
@@ -373,7 +372,6 @@ class ViewSessions extends Component {
             </div>
           </div>
         </main>
-        <Footer /> 
       </>
     );
   }

@@ -1,11 +1,11 @@
 import React from 'react';
-
+import {Link} from 'react-router-dom';
 
 import classes from './LoginLink.module.css';
 
 const loginLink = (props) => {
   return (
-    <a className={classes.loginLink} href="/">{props.children}</a>
+    <Link to={{pathname:'/login'}} className={classes.loginLink}>{props.children}</Link>
   );
 }
 

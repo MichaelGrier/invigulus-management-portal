@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import classes from './LandingPageCards.module.css';
 import Card from '../Card';
@@ -6,9 +7,9 @@ import Card from '../Card';
 const landingPageCards = (props) => {
   return (
     <div className={classes.landingPageCards}>
-      <a href='/'><Card>Manage Organizations and Tests</Card></a>
-      <a href='/'><Card>Manage Users</Card></a>
-      <a href='/'><Card>View Sessions</Card></a>
+      <Link to={{pathname:'/manage-orgs-and-tests'}}><Card>Manage Organizations and Tests</Card></Link>
+      <Link to={{pathname:'/manage-users'}}><Card>Manage Users</Card></Link>
+      <Link to={{pathname:'/view-sessions'}}><Card>View Sessions</Card></Link>
     </div>
   );
 }
