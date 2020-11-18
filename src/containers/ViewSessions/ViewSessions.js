@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 
 import classes from './ViewSessions.module.css';
-import NavBar from '../../components/NavBar/NavBar';
-import Footer from '../../components/Footer/Footer';
 import SmallButton from '../../components/UI/SmallButton/SmallButton';
 import TextBox from '../../components/Form Inputs/TextBox/TextBox';
 import {Tabs, Tab, Table} from 'react-bootstrap';

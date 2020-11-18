@@ -18,8 +18,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
-import Button from '../../UI/Button/Button';
-import SmallButton from '../../UI/SmallButton/SmallButton'
+import SmallButton from '../../UI/SmallButton/SmallButton';
 
 const TestTable = () => {
   // memoize data to ensure it is not duplicated on each render
