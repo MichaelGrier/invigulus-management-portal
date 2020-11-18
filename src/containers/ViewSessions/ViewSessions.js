@@ -30,7 +30,7 @@ class ViewSessions extends Component {
             <div className={classes.tabWrap}>
               <Tabs defaultActiveKey="main" id="sessionTabs">
                 <Tab eventKey="main" title="Main">
-                  <Table className={classes.mainTable} striped bordered hover>
+                  <Table id='mainTable' striped bordered hover>
                     <thead>
                       <tr>
                         <th>Session ID</th>
@@ -46,20 +46,20 @@ class ViewSessions extends Component {
                     <tbody>
                       <tr>
                         <td>#</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
                       </tr>
                     </tbody>
                   </Table>
                 </Tab>
 
                 <Tab eventKey="location" title="Location">
-                  <Table className={classes.locationTable} striped bordered hover>
+                  <Table id='locationTable' striped bordered hover>
                     <thead>
                       <tr>
                         <th>Latitude</th>
@@ -76,7 +76,7 @@ class ViewSessions extends Component {
                 </Tab>
 
                 <Tab eventKey="userAgent" title="User Agent">
-                  <Table className={classes.userAgentTable} striped bordered hover>
+                  <Table id='userAgentTable' striped bordered hover>
                     <thead>
                       <tr>
                         <th>User Agent</th>
@@ -91,7 +91,7 @@ class ViewSessions extends Component {
                 </Tab>
 
                 <Tab eventKey="analytics" title="Analytics">
-                  <Table className={classes.analyticsTable} striped bordered hover>
+                  <Table id='analyticsTable' striped bordered hover>
                     <thead>
                       <tr>
                         <th colSpan="8">PARAMETERS</th>
@@ -202,7 +202,7 @@ class ViewSessions extends Component {
                 </Tab>
 
                 <Tab eventKey="openTok" title="OpenTok Archive">
-                  <Table className={classes.openTokTable} striped bordered hover>
+                  <Table id='openTokTable' striped bordered hover>
                     <thead>
                       <tr>
                         <th>Created At</th>
@@ -280,7 +280,7 @@ class ViewSessions extends Component {
                 </Tab>
 
                 <Tab eventKey="examinee" title="Examinee">
-                  <Table className={classes.examineeTable} striped bordered hover>
+                  <Table id='examineeTable' striped bordered hover>
                     <thead>
                       <tr>
                         <th>ID</th>
@@ -304,7 +304,7 @@ class ViewSessions extends Component {
                   </Table>
                 </Tab>
                 <Tab eventKey="images" title="Images">
-                  <Table className={classes.imageTable} striped bordered hover>
+                  <Table id='imageTable' striped bordered hover>
                     <thead>
                       <tr>
                         <th>Face</th>
@@ -320,7 +320,7 @@ class ViewSessions extends Component {
                   </Table>
                 </Tab>
                 <Tab eventKey="test" title="Test">
-                  <Table className={classes.testTable} striped bordered hover>
+                  <Table id='testTable' striped bordered hover>
                     <thead>
                       <tr>
                         <th>Test ID</th>
