@@ -1,10 +1,15 @@
 .TextBox {
         width: 25%;
         padding: 12px 20px;
-        margin: 8px 0;
         display: inline-block;
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
+<<<<<<< HEAD
         height: 2rem;
+=======
+        position: relative;
+        display: inline-block;
+        margin: auto;
+>>>>>>> AndriesBranch
     }

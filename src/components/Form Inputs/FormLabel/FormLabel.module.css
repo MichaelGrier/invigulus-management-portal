@@ -5,5 +5,8 @@
 	overflow-x: hidden;
     text-rendering: optimizeLegibility;
     padding: 20px;
+    position: relative;
+    display: inline-block;
+    margin: auto;
 	
 }

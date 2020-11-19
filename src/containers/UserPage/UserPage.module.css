@@ -1,0 +1,82 @@
+.UserPage {
+    height: 100vh;
+    background-color: #e5e5e5;
+    width: 100%;
+    color: #3cB650 ;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+    background-color: #3cB650;
+}
+
+.wrapper {
+    padding: 5px 20px;
+    display: flex;
+    
+}
+
+.wrapper fieldset {
+    margin: 20px 0;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    list-style-type: none;
+    clear: left;
+    display: flex;
+    width: 60%;
+    margin: 0px auto;
+    border: 3;
+    border-style: solid;
+    border-width: thin;
+    border-color: rgb(221, 218, 218);
+    
+}
+
+.flexChild1 {
+    flex: 0.9;
+    /* border: 2px solid yellow; */
+    padding-top: 30px;
+
+}
+
+.flexChild2 {
+    flex: 1.1;
+    /* border: 2px solid yellow;  */
+    padding-top: 30px;
+
+}
+
+/* .flexChild:first-child {
+    margin-right: 5px;
+} */
+
+table {
+  width: 100%;
+  /* border: 1px solid black; */
+}
+
+.cell1 {
+  width:60%;
+}
+
+.cell2 {
+    width:40%;
+}
+
+.cell3 {
+    width: 35%;
+}
+
+.cell4 {
+    width:65%;
+}
+
+.cell5 {
+    width:15%;
+  }
+  
+.cell6 {
+    width:85%;
+}
+

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-
 import classes from './LandingPage.module.css';
 import LandingPageCards from '../../components/UI/Cards/LandingPageCards/LandingPageCards';
 

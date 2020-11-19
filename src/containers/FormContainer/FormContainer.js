@@ -10,9 +10,9 @@ const formcontainer = (props) => {
 
   return(
     <div className={classes.wrapper}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={classes.form}>
         <fieldset>
-          {props.children}
+            {props.children}
         </fieldset>
       </form>
     </div>
