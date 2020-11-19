@@ -5,11 +5,5 @@
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
-<<<<<<< HEAD
         height: 2rem;
-=======
-        position: relative;
-        display: inline-block;
-        margin: auto;
->>>>>>> AndriesBranch
-    }
+}
