@@ -167,9 +167,9 @@ class UserPage extends Component {
                 <div className={classes.flexChild}>
                   <table>
                   <tr>
-                  <td className={classes.cell7} style={{textAlign:"right"}}><button style={buttonstyle}>Edit User</button></td>
-                  <td className={classes.cell8} style={{textAlign:"center"}}><button style={buttonstyle}>Add User</button></td>
-                  <td className={classes.cell9} style={{textAlign:"left"}}><button style={buttonstyle}>Submit</button></td>
+                  <td className={classes.cell7} style={{textAlign:"right", paddingRight: "2%"}}><button style={buttonstyle}>Edit</button></td>
+                  <td className={classes.cell8} style={{textAlign:"left", paddingLeft: "2%"}}><button style={buttonstyle}>Add</button></td>
+                  {/* <td className={classes.cell9} style={{textAlign:"left"}}><button style={buttonstyle}>Submit</button></td> */}
                   </tr>
                   </table>
                 </div>

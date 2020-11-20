@@ -8,12 +8,12 @@ const Accordion = ({ children, onChange, isOpen, label }) => {
     onChange && onChange(!isOpen);
   };
 
+
   return (
     <div className={styles.wrapper}>
       <span
         className={cx(styles.toggler, { [styles.active]: isOpen })}
-        onClick={onChangeHandler}
-      >
+        onClick={onChangeHandler}>
         {label}
       </span>
       <div
@@ -28,7 +28,7 @@ const Accordion = ({ children, onChange, isOpen, label }) => {
 };
 
 Accordion.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool,
   onChange: PropTypes.func,
   children: PropTypes.node,
   label: PropTypes.string.isRequired
