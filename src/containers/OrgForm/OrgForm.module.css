@@ -1,4 +1,4 @@
-.UserPage {
+.OrgForm {
     height: 100vh;
     background-color: #e5e5e5;
     width: 100%;
@@ -16,23 +16,6 @@
     
 }
 
-/* .wrapper fieldset {
-    margin: 20px 0;
-    border-radius: 10px;
-    background-color: #f2f2f2;
-    padding: 20px;
-    list-style-type: none;
-    clear: left;
-    display: flex;
-    width: 70%;
-    margin: 0px auto;
-    border: 3;
-    border-style: solid;
-    border-width: thin;
-    border-color: rgb(221, 218, 218);
-    flex-wrap: wrap;
-    justify-content: space-between;
-} */
 
 .wrapper fieldset {
     margin: 20px 0;
@@ -41,39 +24,44 @@
     padding: 20px;
     list-style-type: none;
     clear: left;
-    display: flex;
-    width:60%;
+    /* display: flex; */
+    width: 60%;
     margin: 0px auto;
     border: 3;
     border-style: solid;
     border-width: thin;
     border-color: rgb(221, 218, 218);
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: space-between;
 } 
 
-.flexChild {
+/* .flexChild {
 width: 100%;
 height: 15%;
 /* border: 2px solid yellow; */
 
-}
+/* }
 
 .flexChild:nth-child(2n) {
-    width: 45%;
+    width: 100%;
     height:75%;
 }
 
 .flexChild:nth-child(3n) {
-    width: 55%;
+    width: 100%;
     height:75%;
 }
 
+.flexChild:nth-child(3n) {
+    width: 100%;
+    height:75%;
+}
 
-.flexChild:nth-child(4n) {
+.flexChild:nth-child(5n) {
     width: 100%;
     height: 15%;
-  }
+  } */ 
+
 
 
 
@@ -94,11 +82,11 @@ table {
 }
 
 .cell1 {
-  width:60%;
+  width:40%;
 }
 
 .cell2 {
-    width:40%;
+    width:60%;
 }
 
 .cell3 {
@@ -126,7 +114,7 @@ table {
 }
 
 .cell9 {
-    width:50%;
+    width:30%;
 }
 
 .cell10 {
@@ -143,4 +131,16 @@ table {
 
 .cell13 {
     width: 40%;
+}
+
+.cell14 {
+    width:27%;
+}
+
+.cell15 {
+    width:10%;
+}
+
+.cell16 {
+    width:30%;
 }

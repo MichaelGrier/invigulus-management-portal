@@ -10,6 +10,8 @@ import ManageOrgs from './ManageOrgs/ManageOrgs';
 import ManageTests from './ManageTests/ManageTests';
 import ManageUsers from './ManageUsers/ManageUsers';
 import ViewSessions from './ViewSessions/ViewSessions';
+import UserPage from './UserPage/UserPage';
+import OrgForm from './OrgForm/OrgForm';
 
 class ManagementPortal extends Component {
   render() {
@@ -24,6 +26,8 @@ class ManagementPortal extends Component {
         <Route path='/manage-tests' exact component={ManageTests} />
         <Route path='/manage-users' exact component={ManageUsers} />
         <Route path='/view-sessions' exact component={ViewSessions} />
+        <Route path= '/add-users' exact component={UserPage} />
+        <Route path= '/add-orgs' exact component={OrgForm} />
 
         <Footer />
       </>

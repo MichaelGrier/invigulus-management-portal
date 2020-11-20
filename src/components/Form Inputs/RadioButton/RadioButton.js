@@ -8,7 +8,7 @@ const radiobutton = () => {
       <label id="labelr" className={classes.RadioButton}>
       <input type="radio" name="Testradio" id="RadioBtn" vale="Testradio1"> 
       </input>
-      <span className={classes.checkmark} ></span>
+      <span className={classes.checkmark}></span>
       </label>
       <label id="labelr" className={classes.RadioButton}>
       <input type="radio" name="Testradio" id="RadioBtn2" vale="Testradio1"> 

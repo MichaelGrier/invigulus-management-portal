@@ -28,7 +28,6 @@ class UserPage extends Component {
       position: "relative",
       textRendering: "optimizeLegibility",
       display: "inline-block",
-      textAlign: "right",
       width: "70%"
       };
     
@@ -43,7 +42,41 @@ class UserPage extends Component {
       }; 
 
       const textbxstyle2 = {
-        width: "45%",
+        width: "70%",
+        padding: "12px 20px",
+        margin: "8px 0",
+        border: "1px solid #ccc",
+        borderRadius: "4px",
+        boxSizing: "border-box",
+        display: "inline-block"
+      }; 
+
+      const buttonstyle = {
+        backgroundColor: "#4CAF50",
+        border: "none",
+        color: "white",
+        padding: "10px 22px",
+        textAlign: "center",
+        textDecoration: "none",
+        display: "inline-block",
+        fontSize: "16px",
+        margin: "4px 2px",
+        cursor: "pointer",
+        borderRadius:"30px",
+      };
+
+      const textbxstyle3 = {
+        width: "90%",
+        padding: "12px 20px",
+        margin: "8px 0",
+        border: "1px solid #ccc",
+        borderRadius: "4px",
+        boxSizing: "border-box",
+        display: "inline-block"
+      }; 
+
+      const textbxstyle4 = {
+        width: "40%",
         padding: "12px 20px",
         margin: "8px 0",
         border: "1px solid #ccc",
@@ -55,13 +88,24 @@ class UserPage extends Component {
 
     return (
       <div>
-        <NavBar />
         <main className={classes.main}>
-            <Heading2>Add or Edit Users</Heading2>
+            <Heading2> Manage Users</Heading2>
           <form className={classes.wrapper}>
               <fieldset>
+                <div className={classes.flexChild}>
+                <table>
+                  <tr ><td className={classes.cell10} style={{textAlign:"right"}}><label for="lname" style={labelstyle}>Last Name:</label></td>
+                  <td className={classes.cell11} style={{textAlign:"left"}}><input style={textbxstyle3} type="text" id="lnames" name="lnames"/></td>
+                  <td className={classes.cell12} style={{textAlign:"left"}}><label for="lname" style={labelstyle}> ID:</label></td>
+                  <td className={classes.cell13} style={{textAlign:"left"}}><input style={textbxstyle4} type="text" id="userid" name="userid"/></td>
+                  </tr>
+
+                  </table>
+                  <hr></hr>
+                </div>
               
-              <div className={classes.flexChild1}>
+              <div className={classes.flexChild}>
+                <br/>
               <table>
             
                 <tr ><td id={classes.cell1}  style={{textAlign:"right"}} ><label for="fname" style={labelstyle}>First Name:</label></td>
@@ -81,21 +125,17 @@ class UserPage extends Component {
                 </tr>
 
                 <tr><td className={classes.cell1} style={{textAlign:"right"}}><label for="picture" style={labelstyle}>Profile Picture:</label></td>
-                <td className={classes.cell2} style={{textAlign:"left"}}><input style={textbxstyle} type="text" id="picture" name="picture"/></td>
+                <td className={classes.cell2} style={{textAlign:"left"}}><input type="file" id="picture" name="picture" accept="image/*"></input></td>
                 </tr>
 
-                <tr><td className={classes.cell1} style={{textAlign:"right"}}>         </td>
-                <td className={classes.cell2} style={{textAlign:"left"}}></td>
-                </tr>
-
-                <br/>
-                <tr><td className={classes.cell1}></td>
-                <td className={classes.cell2} style={{rowspan: "2", textAlign:"right"}}><Button>Add User</Button></td></tr>
+                {/* <tr><td className={classes.cell1}></td>
+                <td className={classes.cell2} style={{rowspan: "2", textAlign:"right"}}><Button>Add User</Button></td></tr> */}
 
                 </table> 
                 
                 </div>
-                <div className={classes.flexChild2}>
+                <div className={classes.flexChild}>
+                  <br/>
                 <table>
 
             
@@ -119,20 +159,23 @@ class UserPage extends Component {
                 <td className={classes.cell4} style={{textAlign:"left"}}><input style={textbxstyle2} type="text" id="country" name="country"/></td>
                 </tr>
 
-                <tr><td className={classes.cell3} style={{textAlign:"right"}}>    </td>
-                <td className={classes.cell4} style={{textAlign:"left"}}></td>
-                </tr>
-                <br/>
-                <tr><td className={classes.cell5} style={{textAlign:"center", paddingLeft: "0px" }}><Button>Edit User</Button></td>
+                {/* <tr><td className={classes.cell5} style={{textAlign:"center", paddingLeft: "0px", rowspan: "2" }}><Button>Edit User</Button></td>
                 <td className={classes.cell6} style={{textAlign:"left", paddingLeft: "0px"}}><Button>Submit</Button></td>
-                </tr>
-                
+                </tr> */}
                 </table>
+                </div>
+                <div className={classes.flexChild}>
+                  <table>
+                  <tr>
+                  <td className={classes.cell7} style={{textAlign:"right", paddingRight: "2%"}}><button style={buttonstyle}>Edit</button></td>
+                  <td className={classes.cell8} style={{textAlign:"left", paddingLeft: "2%"}}><button style={buttonstyle}>Add</button></td>
+                  {/* <td className={classes.cell9} style={{textAlign:"left"}}><button style={buttonstyle}>Submit</button></td> */}
+                  </tr>
+                  </table>
                 </div>
           </fieldset>
           </form>
         </main>
-        <Footer />
       </div>
     );
   }
