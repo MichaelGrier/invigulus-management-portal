@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import classes from './UserPage.module.css';
+import classes from './OrgForm.module.css';
 import NavBar from '../../components/NavBar/NavBar';
 import Footer from '../../components/Footer/Footer';
 import TextBox from '../../components/Form Inputs/TextBox/TextBox';
@@ -13,11 +13,24 @@ import Heading1 from '../../components/Heading1/Heading1';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
 import LoginLink from '../../components/NavBar/LoginLink/LoginLink'
 import { alignPropType } from 'react-bootstrap/esm/DropdownMenu';
+import Accordion from '../../components/Accordion/Accordion';
 
-class UserPage extends Component {
+class OrgForm extends Component {
   buttonClickedHandler = () => {
     alert('You clicked a button');
+
   }
+  state = {
+    isOpen: true
+  };
+    
+      onChange = isOpen => {
+        this.setState({
+          isOpen
+        });
+      };
+  
+
 
   render () {
     const labelstyle = {
@@ -85,11 +98,13 @@ class UserPage extends Component {
         display: "inline-block"
       }; 
 
+      const { isOpen } = this.state;
+    
 
     return (
       <div>
         <main className={classes.main}>
-            <Heading2> Manage Users</Heading2>
+            <Heading2>   Manage Organizations</Heading2>
           <form className={classes.wrapper}>
               <fieldset>
                 <div className={classes.flexChild}>
@@ -103,9 +118,9 @@ class UserPage extends Component {
                   </table>
                   <hr></hr>
                 </div>
-              
-              <div className={classes.flexChild}>
-                <br/>
+              <div >
+              <Accordion isOpen={isOpen} onChange={this.onChange}>
+                
               <table>
             
                 <tr ><td id={classes.cell1}  style={{textAlign:"right"}} ><label for="fname" style={labelstyle}>First Name:</label></td>
@@ -132,9 +147,12 @@ class UserPage extends Component {
                 <td className={classes.cell2} style={{rowspan: "2", textAlign:"right"}}><Button>Add User</Button></td></tr> */}
 
                 </table> 
-                
+                </Accordion>
                 </div>
-                <div className={classes.flexChild}>
+
+                
+                <div>
+                <Accordion isOpen={isOpen} onChange={this.onChange}>
                   <br/>
                 <table>
 
@@ -163,6 +181,15 @@ class UserPage extends Component {
                 <td className={classes.cell6} style={{textAlign:"left", paddingLeft: "0px"}}><Button>Submit</Button></td>
                 </tr> */}
                 </table>
+                </Accordion>
+                </div>
+                
+                <div>
+                    <Accordion isOpen={isOpen} onChange={this.onChange}>    
+
+
+
+                    </Accordion>
                 </div>
                 <div className={classes.flexChild}>
                   <table>
@@ -181,4 +208,4 @@ class UserPage extends Component {
   }
 }
 
-export default UserPage;
+export default OrgForm;
