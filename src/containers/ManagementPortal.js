@@ -3,6 +3,7 @@ import {Route} from 'react-router-dom';
 
 import NavBar from '../components/NavBar/NavBar';
 import Footer from '../components/Footer/Footer';
+import LoginPage from '../containers/LoginPage/LoginPage';
 import LandingPage from './LandingPage/LandingPage';
 import OrgsAndTests from './OrgsAndTests/OrgsAndTests';
 import ManageOrgs from './ManageOrgs/ManageOrgs';
@@ -17,6 +18,7 @@ class ManagementPortal extends Component {
         <NavBar />
 
         <Route path='/' exact component={LandingPage} />
+        <Route path='/login' exact component={LoginPage} />
         <Route path='/manage-orgs-and-tests' exact component={OrgsAndTests} />
         <Route path='/manage-orgs' exact component={ManageOrgs} />
         <Route path='/manage-tests' exact component={ManageTests} />

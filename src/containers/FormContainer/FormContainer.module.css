@@ -1,6 +1,6 @@
 .wrapper {
     padding: 5px 20px;
-    
+    margin: 5rem 0;
 }
 
 .wrapper fieldset {
@@ -18,12 +18,4 @@
     border-color: rgb(221, 218, 218);
     
 }
-
-
-
-/*.FormContainer {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;  
-}*/
 

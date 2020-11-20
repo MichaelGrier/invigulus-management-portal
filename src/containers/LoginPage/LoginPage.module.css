@@ -1,14 +1,19 @@
-.LoginPage {
-    height: 100vh;
-    background-color: #e5e5e5;
-    width: 100%;
-    color: #3cB650 ;
-    font-family: 'Lato', sans-serif;
-    font-weight: 400;
-    overflow-x: hidden;
-    text-rendering: optimizeLegibility;
-    background-color: #3cB650;
+.main {
+  height: 85vh;
+  background-color: #fff;
+  overflow: auto;
 }
+
+/* .LoginPage {
+  height: 100vh;
+  background-color: #ffffff;
+  width: 100%;
+  color: #3cB650 ;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+} */
 
 table {
   width: 100%;
@@ -16,35 +21,8 @@ table {
 
 .cell {
   width:5%;
-
 }
 
 .cell2 {
-width:10%;
-
+  width:10%;
 }
-
-
-
-/*.form-row {
-    display: flex;
-    justify-content: flex-end;
-    padding: .5em;
-    text-align: center;
-}
-
-.form-row > input {
-    flex: 2;
-    text-align: center;
-  }
-
-.form-row > label {
-    padding: .5em 1em .5em 0;
-    flex: 1;
-    text-align: center;
-  }
-
-.form-row > input,
-.form-row > button {
-    padding: .5em;
-  } */

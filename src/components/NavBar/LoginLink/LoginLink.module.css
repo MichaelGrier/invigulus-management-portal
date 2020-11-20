@@ -1,6 +1,6 @@
 .loginLink {
   -webkit-text-decoration: none;
-          text-decoration: none;
+    text-decoration: none;
   font-size: 120%;
   font-weight: bold ;
   color: #3cb650;
@@ -13,4 +13,6 @@
 .loginLink:active {
   color: #3cb650;
   border-bottom: 2px solid #3cb650;
+  -webkit-text-decoration: none;
+    text-decoration: none;
 }

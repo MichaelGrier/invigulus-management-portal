@@ -1,5 +1,9 @@
 export const COLUMNS = [
   {
+    Header: 'User Type',
+    accessor: 'itemType'
+  },
+  {
     Header: 'First Name',
     accessor: 'firstName'
   },
