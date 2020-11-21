@@ -14,18 +14,35 @@ import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
 import LoginLink from '../../components/NavBar/LoginLink/LoginLink'
 import { alignPropType } from 'react-bootstrap/esm/DropdownMenu';
 import Accordion from '../../components/Accordion/Accordion';
+import Accordion2 from '../../components/Accordion/Accordion2';
+import Accordion3 from '../../components/Accordion/Accordion3';
 
 class OrgForm extends Component {
   buttonClickedHandler = () => {
     alert('You clicked a button');
-  }
+      }
       state = {
-      isOpen: true
+      isOpen: true,
+      isOpen2: true,
+      isOpen3: true
       };
-    
+  
+
       onChange = isOpen => {
         this.setState({
           isOpen
+        });
+      };
+
+      onChange2 = isOpen2 => {
+        this.setState({
+          isOpen2
+        });
+      };
+
+      onChange3 = isOpen3 => {
+        this.setState({
+          isOpen3
         });
       };
 
@@ -97,15 +114,16 @@ class OrgForm extends Component {
       }; 
 
       const { isOpen } = this.state;
-    
-
+      const { isOpen2 } = this.state;
+      const { isOpen3 } = this.state;
+      
     return (
       <div>
         <main className={classes.main}>
             <Heading2>   Manage Organizations</Heading2>
           <form className={classes.wrapper}>
               <fieldset>
-                <div className={classes.flexChild}>
+                {/* <div className={classes.flexChild}>
                 <table>
                   <tr ><td className={classes.cell10} style={{textAlign:"right"}}><label for="lname" style={labelstyle}>Name:</label></td>
                   <td className={classes.cell11} style={{textAlign:"left"}}><input style={textbxstyle3} type="text" id="lnames" name="lnames"/></td>
@@ -115,7 +133,7 @@ class OrgForm extends Component {
 
                   </table>
                   <hr></hr>
-                </div>
+                </div> */}
                 <Accordion isOpen={isOpen} onChange={this.onChange} label={"Description"}>
               <div>
               
@@ -161,7 +179,7 @@ class OrgForm extends Component {
                 </table> 
                 </div>
                 </Accordion>
-                <Accordion isOpen={!isOpen} onChange={this.onChange} label={"Contact"}>
+                <Accordion2 isOpen2={isOpen2} onChange={this.onChange2} label={"Contact"}>
                 <div>
                   <br/>
                 <table>
@@ -192,10 +210,10 @@ class OrgForm extends Component {
                 </tr> */}
                 </table>
                 </div>
-                </Accordion>
-                <Accordion isOpen={!isOpen} onChange={this.onChange} label={"Exams"}>
+                </Accordion2>
+                <Accordion3 isOpen3={isOpen3} onChange={this.onChange3} label={"Configuration Settings"}>
                 <div>   
-                  <table>
+                  {/* <table>
                     <tr ><td id={classes.cell1}  style={{textAlign:"right"}} ><label for="description" style={labelstyle}>Exam Description:</label></td>
                     <td className={classes.cell2} style={{textAlign:"left", width:"30%"}}><input style={textbxstyle} type="text" id="description" name="description"/></td>
                     </tr>
@@ -203,7 +221,7 @@ class OrgForm extends Component {
                     <tr><td className={classes.cell1} style={{textAlign:"right"}}><label for="tds" style={labelstyle}>Test Delivery System (URL):</label></td>
                     <td className={classes.cell2} style={{textAlign:"left"}}><input style={textbxstyle} type="text" id="tds" name="tds"/></td>
                     </tr>
-                  </table>
+                  </table> */}
                   <table>
                     <tr><td className={classes.cell14} style={{textAlign:"right"}}><label for="Img Capture" style={labelstyle}>Image Capture Setting:</label></td>
                     <td className={classes.cell15} style={{textAlign: "right"}}><label style={labelstyle} style={{paddingBottom: "0", color: "#3cB650"}}>No</label><br/><label style={labelstyle} style={{paddingBottom:"0", color: "#3cB650"}}>Yes</label></td>
@@ -225,7 +243,7 @@ class OrgForm extends Component {
 
                  </table>
                 </div>
-                </Accordion>
+                </Accordion3>
                 <div className={classes.flexChild}>
                   <table>
                   <tr>
