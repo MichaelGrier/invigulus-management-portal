@@ -1,6 +1,8 @@
 .main {
   background-color: #e5e5e5;
   padding-bottom: 4rem;
+  height: 85vh;
+  overflow: auto;
 }
 
 .header {

@@ -29,7 +29,7 @@ const UserTable = () => {
       const pathToData = res.data.result.Items
       const loadedData = [];
       
-      // push data object into an array of kvps
+      // push data objects into an array
       for (const Item in pathToData) {
         loadedData.push({
           id: Item,

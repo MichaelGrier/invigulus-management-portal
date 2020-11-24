@@ -1,15 +1,11 @@
 export const COLUMNS = [
   {
-    Header: 'Item ID',
-    accessor: 'itemId'
+    Header: 'Test ID',
+    accessor: 'id'
   },
   {
     Header: 'Org ID',
-    accessor: 'orgID'
-  },
-  {
-    Header: 'Test ID',
-    accessor: 'testID'
+    accessor: 'testOrgId'
   },
   {
     Header: 'Description',

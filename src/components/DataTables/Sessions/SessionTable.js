@@ -8,24 +8,24 @@ import {
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
 import axios from '../../../axios';
-import {Link} from 'react-router-dom';
 
 import {COLUMNS} from './columns';
+
 import TableFilter from '../../UI/TableFilter/TableFilter';
 
-import classes from './TestTable.module.css';
+import classes from './SessionTable.module.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import SmallButton from '../../UI/SmallButton/SmallButton';
 
-const TestTable = () => {
-  const [tests, setTests] = useState([])
+const SessionTable = () => {
+  const [sessions, setSessions] = useState([])
 
   // get data from api
   useEffect(() => {
-    axios.get('/tests').then(res => {
+    axios.get('/sessions').then(res => {
       //console.log(res.data.result.Items);
       const pathToData = res.data.result.Items
       const loadedData = [];
@@ -33,24 +33,48 @@ const TestTable = () => {
       // push data objects into an array
       for (const Item in pathToData) {
         loadedData.push({
-          id: pathToData[Item].id,
           itemId: pathToData[Item].itemId,
           itemType: pathToData[Item].itemType,
-          testOrgId: pathToData[Item].testOrgId,
-          description: pathToData[Item].description,
-          tds: pathToData[Item].tds,
+          // time data
           created: pathToData[Item].created,
-          updated: pathToData[Item].updated
+          updated: pathToData[Item].updated,
+          startTime: pathToData[Item].startTime,
+          endTime: pathToData[Item].endTime,
+          // session ids and process state
+          sessionOrgId: pathToData[Item].sessionOrgId,
+          sessionTestId: pathToData[Item].sessionTestId,
+          sessionUserId: pathToData[Item].sessionUserId,
+          processState: pathToData[Item].processState,
+          // examinee data
+          id: pathToData[Item].examinee.id,
+          email: pathToData[Item].examinee.email,
+          firstName: pathToData[Item].examinee.firstName,
+          lastName: pathToData[Item].examinee.lastName,
+          // test data
+          description: pathToData[Item].test.description,
+          testId: pathToData[Item].test.id,
+          // analytics
+          analytics: pathToData[Item].analytics,
+          // geolocation
+          geoLocation: pathToData[Item].geoLocation,
+          // openTok
+          openTok: pathToData[Item].openTok,
+          // userAgent
+          userAgent: pathToData[Item].userAgent,
+          // images
+          images: pathToData[Item].images,
+          // videos
+          videos: pathToData[Item].videos
         });
       }
-      //console.log(loadedData);
-      setTests(loadedData);
+      console.log(loadedData);
+      setSessions(loadedData);
     });
   }, []);
 
   // memoize data to ensure it is not duplicated on each render
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => tests, [tests]);
+  const data = useMemo(() => sessions, [sessions]);
 
   // create table instance
   const {
@@ -103,7 +127,6 @@ const TestTable = () => {
       <div className={classes.toolBarWrap}>
         {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
         <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
-        <Link ><SmallButton>Add New</SmallButton></Link>
       </div>
 
       {/* render table */}
@@ -157,9 +180,8 @@ const TestTable = () => {
         >Next</button>
       </div>
       <br/>
-      <SmallButton>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
-      <SmallButton>Delete</SmallButton>
+      <SmallButton>View Details</SmallButton>
     </>
   );
 }
-export default TestTable
+export default SessionTable

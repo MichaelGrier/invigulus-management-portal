@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
 
 import classes from './LoginPage.module.css';
-import NavBar from '../../components/NavBar/NavBar';
-import Footer from '../../components/Footer/Footer';
 import Button from '../../components/UI/Button/Button'; 
 import FormContainer from '../../containers/FormContainer/FormContainer';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
 import LoginLink from '../../components/NavBar/LoginLink/LoginLink'
-import { alignPropType } from 'react-bootstrap/esm/DropdownMenu';
 
 class LoginPage extends Component {
   buttonClickedHandler = () => {

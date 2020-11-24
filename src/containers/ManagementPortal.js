@@ -9,6 +9,7 @@ import OrgsAndTests from './OrgsAndTests/OrgsAndTests';
 import ManageOrgs from './ManageOrgs/ManageOrgs';
 import ManageTests from './ManageTests/ManageTests';
 import ViewUsers from './ViewUsers/ViewUsers';
+//import ViewSession from './ViewSessions/ViewSession/ViewSession';
 import ViewSessions from './ViewSessions/ViewSessions';
 import UserPage from './UserPage/UserPage';
 import OrgForm from './OrgForm/OrgForm';

@@ -1,18 +1,8 @@
 import React, {Component} from 'react';
 
 import classes from './OrgForm.module.css';
-import NavBar from '../../components/NavBar/NavBar';
-import Footer from '../../components/Footer/Footer';
-import TextBox from '../../components/Form Inputs/TextBox/TextBox';
-import FormLabel from '../../components/Form Inputs/FormLabel/FormLabel';
-import DropDown from '../../components/Form Inputs/DropDown/DropDown';
 import RadioButton from '../../components/Form Inputs/RadioButton/RadioButton';
-import Button from '../../components/UI/Button/Button'; 
-import FormContainer from '../../containers/FormContainer/FormContainer';
-import Heading1 from '../../components/Heading1/Heading1';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
-import LoginLink from '../../components/NavBar/LoginLink/LoginLink'
-import { alignPropType } from 'react-bootstrap/esm/DropdownMenu';
 import Accordion from '../../components/Accordion/Accordion';
 import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
@@ -219,7 +209,7 @@ class OrgForm extends Component {
       }
     }
     Validatoremailrg() {
-    let rg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let isValid= rg.test(this.state.email)
     if (isValid)
     {
@@ -279,25 +269,25 @@ class OrgForm extends Component {
         borderRadius:"30px",
       };
 
-      const textbxstyle3 = {
-        width: "90%",
-        padding: "12px 20px",
-        margin: "8px 0",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        boxSizing: "border-box",
-        display: "inline-block"
-      }; 
+      // const textbxstyle3 = {
+      //   width: "90%",
+      //   padding: "12px 20px",
+      //   margin: "8px 0",
+      //   border: "1px solid #ccc",
+      //   borderRadius: "4px",
+      //   boxSizing: "border-box",
+      //   display: "inline-block"
+      // }; 
 
-      const textbxstyle4 = {
-        width: "40%",
-        padding: "12px 20px",
-        margin: "8px 0",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        boxSizing: "border-box",
-        display: "inline-block"
-      }; 
+      // const textbxstyle4 = {
+      //   width: "40%",
+      //   padding: "12px 20px",
+      //   margin: "8px 0",
+      //   border: "1px solid #ccc",
+      //   borderRadius: "4px",
+      //   boxSizing: "border-box",
+      //   display: "inline-block"
+      // }; 
 
       const { isOpen } = this.state;
       const { isOpen2 } = this.state;
