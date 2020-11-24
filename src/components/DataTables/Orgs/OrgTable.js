@@ -7,6 +7,7 @@ import {
   useRowSelect
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
+import {Link} from 'react-router-dom';
 
 import MOCK_DATA from './MOCK_DATA.json';
 import {COLUMNS} from './columns';
@@ -19,6 +20,7 @@ import {faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import SmallButton from '../../UI/SmallButton/SmallButton';
+//import {Link} from 'react-router-dom';
 
 const OrgTable = () => {
   // memoize data to ensure it is not duplicated on each render
@@ -77,7 +79,7 @@ const OrgTable = () => {
       <div className={classes.toolBarWrap}>
         {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
         <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
-        <SmallButton>Add New</SmallButton>
+        <Link to={{pathname: '/add-orgs'}}><SmallButton>Add New</SmallButton></Link>
       </div>
 
       {/* render table */}
@@ -131,7 +133,7 @@ const OrgTable = () => {
         >Next</button>
       </div>
       <br/>
-      <SmallButton>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
+      <Link to={{pathname: 'add-edit-orgs'}}><SmallButton>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton></Link> 
       <SmallButton>Delete</SmallButton>
     </>
   );

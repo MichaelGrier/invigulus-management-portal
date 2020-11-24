@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState, useEffect} from 'react';
 import {
   useTable, 
   useSortBy, 
@@ -7,8 +7,8 @@ import {
   useRowSelect
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
+import axios from '../../../axios';
 
-import MOCK_DATA from './MOCK_DATA.json';
 import {COLUMNS} from './columns';
 
 import TableFilter from '../../UI/TableFilter/TableFilter';
@@ -18,12 +18,42 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
-import SmallButton from '../../UI/SmallButton/SmallButton';
 
 const UserTable = () => {
+  const [users, setUsers] = useState([])
+
+  // get data from api
+  useEffect(() => {
+    axios.get('/users').then(res => {
+      //console.log(res.data.result.Items);
+      const pathToData = res.data.result.Items
+      const loadedData = [];
+      
+      // push data object into an array of kvps
+      for (const Item in pathToData) {
+        loadedData.push({
+          id: Item,
+          itemType: pathToData[Item].itemType,
+          firstName: pathToData[Item].firstName,
+          lastName: pathToData[Item].lastName,
+          userId: pathToData[Item].userId,
+          email: pathToData[Item].email,
+          phone: pathToData[Item].phone,
+          street: pathToData[Item].address.street1,
+          city: pathToData[Item].address.city,
+          state: pathToData[Item].address.state,
+          zip: pathToData[Item].address.zip,
+          country: pathToData[Item].address.country, 
+        });
+      }
+      //console.log(loadedData);
+      setUsers(loadedData);
+    });
+  }, []);
+
   // memoize data to ensure it is not duplicated on each render
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => MOCK_DATA, []);
+  const data = useMemo(() => users, [users]);
 
   // create table instance
   const {
@@ -77,7 +107,6 @@ const UserTable = () => {
       <div className={classes.toolBarWrap}>
         {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
         <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
-        <SmallButton>Add New</SmallButton>
       </div>
 
       {/* render table */}
@@ -131,8 +160,6 @@ const UserTable = () => {
         >Next</button>
       </div>
       <br/>
-      <SmallButton>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
-      <SmallButton>Delete</SmallButton>
     </>
   );
 }

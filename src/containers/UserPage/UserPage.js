@@ -1,18 +1,7 @@
 import React, {Component} from 'react';
 
 import classes from './UserPage.module.css';
-import NavBar from '../../components/NavBar/NavBar';
-import Footer from '../../components/Footer/Footer';
-import TextBox from '../../components/Form Inputs/TextBox/TextBox';
-import FormLabel from '../../components/Form Inputs/FormLabel/FormLabel';
-import DropDown from '../../components/Form Inputs/DropDown/DropDown';
-import RadioButton from '../../components/Form Inputs/RadioButton/RadioButton';
-import Button from '../../components/UI/Button/Button'; 
-import FormContainer from '../../containers/FormContainer/FormContainer';
-import Heading1 from '../../components/Heading1/Heading1';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
-import LoginLink from '../../components/NavBar/LoginLink/LoginLink'
-import { alignPropType } from 'react-bootstrap/esm/DropdownMenu';
 
 class UserPage extends Component {
   buttonClickedHandler = () => {

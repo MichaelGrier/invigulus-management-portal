@@ -8,7 +8,7 @@ import LandingPage from './LandingPage/LandingPage';
 import OrgsAndTests from './OrgsAndTests/OrgsAndTests';
 import ManageOrgs from './ManageOrgs/ManageOrgs';
 import ManageTests from './ManageTests/ManageTests';
-import ManageUsers from './ManageUsers/ManageUsers';
+import ViewUsers from './ViewUsers/ViewUsers';
 import ViewSessions from './ViewSessions/ViewSessions';
 import UserPage from './UserPage/UserPage';
 import OrgForm from './OrgForm/OrgForm';
@@ -24,10 +24,10 @@ class ManagementPortal extends Component {
         <Route path='/manage-orgs-and-tests' exact component={OrgsAndTests} />
         <Route path='/manage-orgs' exact component={ManageOrgs} />
         <Route path='/manage-tests' exact component={ManageTests} />
-        <Route path='/manage-users' exact component={ManageUsers} />
+        <Route path='/manage-users' exact component={ViewUsers} />
         <Route path='/view-sessions' exact component={ViewSessions} />
         <Route path= '/add-users' exact component={UserPage} />
-        <Route path= '/add-orgs' exact component={OrgForm} />
+        <Route path= '/add-edit-orgs' exact component={OrgForm} />
 
         <Footer />
       </>
