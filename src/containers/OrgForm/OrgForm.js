@@ -221,8 +221,6 @@ class OrgForm extends Component {
       this.setState ({emailError: ""})
     }
   }
-
-
   render () {
     const labelstyle = {
       color: "#3cB650",

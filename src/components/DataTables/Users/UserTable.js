@@ -25,7 +25,7 @@ const UserTable = () => {
   // get data from api
   useEffect(() => {
     axios.get('/users').then(res => {
-      //console.log(res.data.result.Items);
+      console.log(res);
       const pathToData = res.data.result.Items
       const loadedData = [];
       
