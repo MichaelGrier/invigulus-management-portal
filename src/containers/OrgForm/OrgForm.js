@@ -219,18 +219,18 @@ class OrgForm extends Component {
       }
     }
     Validatoremailrg() {
-    let rg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    let isValid= rg.test(this.state.email)
-    if (isValid)
-    {
-      this.setState ({emailError: "The email address entered has an incorrect format"})
-      alert("The email address entered has an incorrect format")
+      let rg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      let isValid= rg.test(this.state.email)
+      if (isValid)
+      {
+        this.setState ({emailError: "The email address entered has an incorrect format"})
+        alert("The email address entered has an incorrect format")
+      }
+      else 
+      {
+        this.setState ({emailError: ""})
+      }
     }
-    else 
-    {
-      this.setState ({emailError: ""})
-    }
-  }
 
 
   render () {

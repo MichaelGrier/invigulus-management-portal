@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState, useEffect} from 'react';
 import {
   useTable, 
   useSortBy, 
@@ -8,6 +8,7 @@ import {
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
 import {Link} from 'react-router-dom';
+import axios from '../../../axios';
 
 import MOCK_DATA from './MOCK_DATA.json';
 import {COLUMNS} from './columns';
@@ -23,9 +24,36 @@ import SmallButton from '../../UI/SmallButton/SmallButton';
 //import {Link} from 'react-router-dom';
 
 const OrgTable = () => {
+  const [orgs, setOrgs] = useState([])
+
+  // get data from api
+  useEffect(() => {
+    axios.get('/orgs').then(res => {
+      console.log(res.data.result.Items);
+      const pathToData = res.data.result.Items
+      const loadedData = [];
+      
+      //push data object into an array of kvps
+      for (const Item in pathToData) {
+        loadedData.push({
+          description: pathToData[Item].description,
+          id: pathToData[Item].id,
+          city: pathToData[Item].address.city,
+          firstName: pathToData[Item].contact.firstName,
+          lastName: pathToData[Item].contact.lastName,
+          email: pathToData[Item].contact.email,
+          phone: pathToData[Item].contact.phone
+        });
+      }
+      console.log(loadedData);
+      setOrgs(loadedData);
+    });
+  
+  }, []);
+
   // memoize data to ensure it is not duplicated on each render
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => MOCK_DATA, []);
+  const data = useMemo(() => orgs, [orgs]);
 
   // create table instance
   const {
