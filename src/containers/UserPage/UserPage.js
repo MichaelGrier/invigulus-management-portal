@@ -65,7 +65,7 @@ class UserPage extends Component {
       }; 
 
       const textbxstyle4 = {
-        width: "40%",
+        width: "93%",
         padding: "12px 20px",
         margin: "8px 0",
         border: "1px solid #ccc",
@@ -83,12 +83,12 @@ class UserPage extends Component {
               <fieldset>
                 <div className={classes.flexChild}>
                 <table>
-                  <tr ><td className={classes.cell10} style={{textAlign:"right"}}><label for="lname" style={labelstyle}>Last Name:</label></td>
-                  <td className={classes.cell11} style={{textAlign:"left"}}><input style={textbxstyle3} type="text" id="lnames" name="lnames"/></td>
-                  <td className={classes.cell12} style={{textAlign:"left"}}><label for="lname" style={labelstyle}> ID:</label></td>
-                  <td className={classes.cell13} style={{textAlign:"left"}}><input style={textbxstyle4} type="text" id="userid" name="userid"/></td>
+                  <tr >
+                  <td className={classes.cell10} style={{textAlign:"right"}}><label for="userid" style={labelstyle}> User ID:</label></td>
+                  <td className={classes.cell11} style={{textAlign:"left"}}><input style={textbxstyle4} type="text" id="userid" name="userid"/></td>
+                  <td className={classes.cell12} style={{textAlign:"right"}}><label for="userid" style={labelstyle}></label></td>
+                  <td className={classes.cell13} style={{textAlign:"left"}}></td>
                   </tr>
-
                   </table>
                   <hr></hr>
                 </div>
