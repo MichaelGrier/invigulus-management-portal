@@ -29,7 +29,7 @@ class ManagementPortal extends Component {
         <Route path='/view-sessions' exact component={ViewSessions} />
         <Route path= '/add-users' exact component={UserPage} />
         <Route path= '/add-edit-orgs' exact component={OrgForm} />
-        <Route path= '/add-edit-tests' exact ccmponent={TestForm}/>
+        <Route path= '/add-edit-tests' exact component={TestForm}/>
 
         <Footer />
       </>
