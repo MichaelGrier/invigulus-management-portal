@@ -103,7 +103,7 @@ const TestTable = () => {
       <div className={classes.toolBarWrap}>
         {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
         <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
-        <Link ><SmallButton>Add New</SmallButton></Link>
+        <Link to={{pathname: '/add-test'}}><SmallButton>Add New</SmallButton></Link>
       </div>
 
       {/* render table */}

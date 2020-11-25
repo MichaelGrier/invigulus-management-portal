@@ -10,7 +10,6 @@ import Table from 'react-bootstrap/Table';
 import {Link} from 'react-router-dom';
 import axios from '../../../axios';
 
-import MOCK_DATA from './MOCK_DATA.json';
 import {COLUMNS} from './columns';
 
 import TableFilter from '../../UI/TableFilter/TableFilter';
@@ -29,23 +28,36 @@ const OrgTable = () => {
   // get data from api
   useEffect(() => {
     axios.get('/orgs').then(res => {
-      console.log(res.data.result.Items);
+      //console.log(res.data.result.Items);
       const pathToData = res.data.result.Items
       const loadedData = [];
       
       //push data object into an array of kvps
       for (const Item in pathToData) {
         loadedData.push({
+          // org info
           description: pathToData[Item].description,
           id: pathToData[Item].id,
-          city: pathToData[Item].address.city,
-          firstName: pathToData[Item].contact.firstName,
-          lastName: pathToData[Item].contact.lastName,
-          email: pathToData[Item].contact.email,
-          phone: pathToData[Item].contact.phone
+          itemId: pathToData[Item].itemId,
+          itemType: pathToData[Item].itemType,
+          city: pathToData[Item].address[0].city,
+          // primary contact data
+          firstName: pathToData[Item].contact[0].firstName,
+          lastName: pathToData[Item].contact[0].lastName,
+          email: pathToData[Item].contact[0].email,
+          phone: pathToData[Item].contact[0].phone,
+          // full contact data
+          contact: pathToData[Item].contact,
+          // address
+          address: pathToData[Item].address,
+          // configuration params
+          configuration: pathToData[Item].configuration,
+          // timestamps
+          created: pathToData[Item].created,
+          updated: pathToData[Item].updated
         });
       }
-      console.log(loadedData);
+      //console.log(loadedData);
       setOrgs(loadedData);
     });
   

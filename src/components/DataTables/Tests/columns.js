@@ -14,13 +14,5 @@ export const COLUMNS = [
   {
     Header: 'Test Delivery System',
     accessor: 'tds'
-  },
-  {
-    Header: 'Date Created',
-    accessor: 'created'
-  },
-  {
-    Header: 'Date Updated',
-    accessor: 'updated'
   }
 ]
