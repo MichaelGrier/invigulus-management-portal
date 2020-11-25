@@ -11,7 +11,6 @@ import ManageTests from './ManageTests/ManageTests';
 import ViewUsers from './ViewUsers/ViewUsers';
 //import ViewSession from './ViewSessions/ViewSession/ViewSession';
 import ViewSessions from './ViewSessions/ViewSessions';
-import UserPage from './UserPage/UserPage';
 import OrgForm from './OrgForm/OrgForm';
 
 class ManagementPortal extends Component {
@@ -27,7 +26,6 @@ class ManagementPortal extends Component {
         <Route path='/manage-tests' exact component={ManageTests} />
         <Route path='/manage-users' exact component={ViewUsers} />
         <Route path='/view-sessions' exact component={ViewSessions} />
-        <Route path= '/add-users' exact component={UserPage} />
         <Route path= '/add-edit-orgs' exact component={OrgForm} />
 
         <Footer />
