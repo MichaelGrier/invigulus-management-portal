@@ -12,6 +12,7 @@ import ViewUsers from './ViewUsers/ViewUsers';
 import ViewSessions from './ViewSessions/ViewSessions';
 import UserPage from './UserPage/UserPage';
 import OrgForm from './OrgForm/OrgForm';
+import TestForm from './TestForm/TestForm';
 
 class ManagementPortal extends Component {
   render() {
@@ -28,6 +29,7 @@ class ManagementPortal extends Component {
         <Route path='/view-sessions' exact component={ViewSessions} />
         <Route path= '/add-users' exact component={UserPage} />
         <Route path= '/add-edit-orgs' exact component={OrgForm} />
+        <Route path= '/add-edit-tests' exact ccmponent={TestForm}/>
 
         <Footer />
       </>
