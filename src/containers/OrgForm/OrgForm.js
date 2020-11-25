@@ -10,9 +10,7 @@ import Accordion4 from '../../components/Accordion/Accordion4';
 import Accordion5 from '../../components/Accordion/Accodion5';
 
 class OrgForm extends Component {
-  buttonClickedHandler = () => {
-    alert('You clicked a button');
-      }
+  
       state = {
       isOpen: true,
       isOpen2: false,
