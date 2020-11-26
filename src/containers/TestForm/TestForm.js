@@ -53,11 +53,15 @@ class TestForm extends Component {
 
     // make api call to post data
     axios.post('/tests', formData)
-         .then(response => console.log(response))
-         .catch(error => console.log(error));
-
-    //redirect to confirmation page
-    this.props.history.push('/add-test-confirmation')
+         // if request is successful, redirect to confirmation page
+         .then(res => {
+           if (res.status === 200) {
+            this.props.history.push('/add-test-confirmation')
+           } 
+         })
+         // else, display error
+         .catch(error => alert(error))
+         
   }
 
   render () {
@@ -273,51 +277,5 @@ class TestForm extends Component {
     );
   }
 }
+
 export default withRouter(TestForm);
-
-// ValidatorItemType() {
-//   if (this.state.itemtype === "")
-//     {
-//       this.setState ({emptyErroritype: "This field cannot be empty"})
-//     }
-//     else 
-//     {
-//       this.setState ({emptyErroritype: ""})
-//     }
-//   }
-//   ValidatorToI() {
-//     if (this.state.testorgid === "" )
-//     {
-//       this.setState ({emptyErrortestOid: "This field cannot be empty"})
-//     }
-//     else 
-//     {
-//       this.setState ({emptyErrortestOid: ""})
-//     }
-//   }
-//   ValidatorTid() {
-//     if (this.state.testid === "")
-//     {
-//       this.setState ({emptyErrortestid: "This field cannot be empty"})
-//     }
-//     else 
-//     {
-//       this.setState ({emptyErrortestid: ""})
-//     }
-//   }
-//   Validatortds() {
-//     if (this.state.tds === "" )
-//     {
-//       this.setState ({emptyErrortds: "This field cannot be empty"})
-//     }
-//     else 
-//     {
-//       this.setState ({emptyErrortds: ""})
-//     }
-//   }
-
-//   SubmitValidator() {
-//       if (this.state.itemtype === "" || this.state.testorgid === "" || this.state.testid === "" || this.state.tds === "" ) {
-//         alert("A required field is missing")
-//       }
-//   }

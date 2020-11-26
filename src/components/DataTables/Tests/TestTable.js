@@ -98,6 +98,20 @@ const TestTable = () => {
   let selectedRow = selectedFlatRows
   console.log(selectedRow);
 
+  // handle delete button click
+  const handleDeleteRequest = () => {
+    // get id of test to be deleted from selectedRow object
+    let itemToDelete = selectedRow[0].original.id
+    
+    // make axios call, then reload page
+    axios.delete(`/tests/${itemToDelete}`)
+         .then(response => {
+          console.log(response);
+          window.location.reload();
+         })
+         .catch(error => alert(error));
+  }
+
   return (
     <>
       <div className={classes.toolBarWrap}>
@@ -158,7 +172,7 @@ const TestTable = () => {
       </div>
       <br/>
       <SmallButton>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
-      <SmallButton>Delete</SmallButton>
+      <SmallButton clicked={handleDeleteRequest}>Delete</SmallButton>
     </>
   );
 }

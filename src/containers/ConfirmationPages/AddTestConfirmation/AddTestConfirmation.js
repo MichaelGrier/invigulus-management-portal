@@ -7,7 +7,7 @@ import SmallButton from '../../../components/UI/SmallButton/SmallButton';
 const addTestConfirmation = () => {
   return(
     <main className={classes.main}>
-      <h3>You successfully added a test.</h3>
+      <h3 className={classes.header}>You successfully added a test.</h3>
       <Link to={{pathname:'/manage-tests'}}><SmallButton>Back to Tests</SmallButton></Link>
     </main>
   );
