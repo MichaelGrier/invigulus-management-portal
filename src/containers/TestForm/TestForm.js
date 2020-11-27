@@ -14,7 +14,15 @@ class TestForm extends Component {
       id: "",
       description: "",
       tds: "",
+      isError: {
+        itemType: "",
+        testOrgId: "",
+        id: "",
+        description: "",
+        tds: "",
+      }
     }
+   
 
     this.handleItemTypeChange = this.handleItemTypeChange.bind(this);
     this.handleTestOrgIdChange = this.handleTestOrgIdChange.bind(this);
@@ -60,11 +68,48 @@ class TestForm extends Component {
            } 
          })
          // else, display error
-         .catch(error => alert(error))
-         
+         .catch(error => alert(error))    
   }
 
+  formValChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let isError = { ...this.state.isError };
+
+    switch (name) {
+        case "itemType":
+            isError.itemType =
+                value === ""? "This field is required" : "";
+            break;
+        case "testOrgId":
+            isError.testOrgId = value === ""? "This field is required": "";
+            break;
+        case "id":
+            isError.id =
+                value === ""? "This field is required": "";
+            break;
+        case "description":
+            isError.description =
+                value === ""? "This field is required": "";
+            break;
+        case "tds":
+            isError.tds =
+                value === ""? "This field is required": "";
+            break;
+        default:
+            break;
+    }
+
+    this.setState({
+        isError,
+        [name]: value
+    })
+};
+
   render () {
+    
+    const { isError } = this.state
+
     const labelstyle = {
       color: "#3cB650",
       fontFamily: "sans-serif",
@@ -99,6 +144,7 @@ class TestForm extends Component {
       cursor: "pointer",
       borderRadius:"30px",
     };
+  
 
     return (
       <div>
@@ -126,18 +172,22 @@ class TestForm extends Component {
                         style={{textAlign:"left", width:"30%"}}
                       >
                         <input
-                          style={textbxstyle} 
-                          //onBlur = {()=> this.ValidatorItemType()}
+                          style={textbxstyle}                        
                           type="text" 
                           id="itemType" 
                           name="itemType"
                           value={this.state.itemType} 
-                          onChange={this.handleItemTypeChange} 
+                          onChange={this.handleItemTypeChange}
+                          onChange={this.formValChange}
+                          onBlur={this.formValChange} 
                         />
-                        {/* <p style={{color:"red"}}>{this.state.emptyErroritype}</p> */}
+                        <br/>
+                        <span 
+                          style={{color:"red"}}>
+                          {isError.itemType}
+                        </span>
                       </td>
-                    </tr>
-                
+                    </tr>               
                     <tr>
                       <td 
                         className={classes.cell1} 
@@ -160,17 +210,22 @@ class TestForm extends Component {
                           id="testOrgId" 
                           name="testOrgId"
                           value={this.state.testOrgId}
-                          onChange={this.handleTestOrgIdChange} 
+                          onChange={this.handleTestOrgIdChange}
+                          onChange={this.formValChange}
+                          onBlur={this.formValChange} 
                         />
-                        {/* <p style={{color:"red"}}>{this.state.emptyErrortestOid}</p> */}
+                        <br/>
+                        <span 
+                          style={{color:"red"}}>
+                          {isError.testOrgId}
+                        </span>
                       </td>
                     </tr>
-
                     <tr>
                       <td 
                         className={classes.cell1} 
                         style={{textAlign:"right"}}
-                      >
+                        >
                         <label 
                           htmlFor="id" 
                           style={labelstyle}
@@ -188,9 +243,15 @@ class TestForm extends Component {
                           id="id" 
                           name="id"
                           value={this.state.id} 
-                          onChange={this.handleIdChange} 
+                          onChange={this.handleIdChange}
+                          onChange={this.formValChange}
+                          onBlur={this.formValChange} 
                         />
-                        {/* <p style={{color:"red"}}>{this.state.emptyErrortestid}</p> */}
+                        <br/>
+                        <span 
+                          style={{color:"red"}}>
+                          {isError.id}
+                        </span>
                       </td>
                     </tr>
 
@@ -211,17 +272,21 @@ class TestForm extends Component {
                       >
                         <input
                           style={textbxstyle} 
-                          //onBlur = {()=> this.ValidatorItemType()}
                           type="text" 
                           id="description" 
                           name="description"
                           value={this.state.description} 
-                          onChange={this.handleDescriptionChange} 
+                          onChange={this.handleDescriptionChange}
+                          onChange={this.formValChange}
+                          onBlur={this.formValChange} 
                         />
-                        {/* <p style={{color:"red"}}>{this.state.emptyErroritype}</p> */}
+                        <br/>
+                        <span 
+                          style={{color:"red"}}>
+                          {isError.description}
+                        </span>
                       </td>
                     </tr>
-
                     <tr>
                       <td 
                         className={classes.cell1} 
@@ -244,9 +309,15 @@ class TestForm extends Component {
                           id="tds" 
                           name="tds"
                           value={this.state.tds}
-                          onChange={this.handleTdsChange} 
+                          onChange={this.handleTdsChange}
+                          onChange={this.formValChange}
+                          onBlur={this.formValChange}
                         />
-                        {/* <p style={{color:"red"}}>{this.state.emptyErrortds}</p> */}
+                        <br/>
+                        <span 
+                          style={{color:"red"}}>
+                          {isError.tds}
+                        </span>
                       </td>
                     </tr>
                   </tbody>
