@@ -119,7 +119,7 @@ const OrgTable = () => {
       <div className={classes.toolBarWrap}>
         {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
         <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
-        <Link to={{pathname: '/add-edit-orgs'}}><SmallButton>Add New</SmallButton></Link>
+        <Link to={{pathname: '/add-org'}}><SmallButton>Add New</SmallButton></Link>
       </div>
 
       {/* render table */}

@@ -11,9 +11,10 @@ import ManageTests from './ManageTests/ManageTests';
 import ViewUsers from './ViewUsers/ViewUsers';
 //import ViewSession from './ViewSessions/ViewSession/ViewSession';
 import ViewSessions from './ViewSessions/ViewSessions';
-import OrgForm from './OrgForm/OrgForm';
-import TestForm from './TestForm/TestForm';
+import OrgForm from './OrgForms/OrgForm';
+import TestForm from './TestForms/TestForm/TestForm';
 import AddTestConfirmation from './ConfirmationPages/AddTestConfirmation/AddTestConfirmation';
+import EditTestForm from './TestForms/EditTestForm/EditTestForm';
 
 class ManagementPortal extends Component {
   render() {
@@ -28,9 +29,10 @@ class ManagementPortal extends Component {
         <Route path='/manage-tests' exact component={ManageTests} />
         <Route path='/manage-users' exact component={ViewUsers} />
         <Route path='/view-sessions' exact component={ViewSessions} />
-        <Route path= '/add-edit-orgs' exact component={OrgForm} />
-        <Route path= '/add-test' exact component={TestForm}/>
-        <Route path= '/add-test-confirmation' exact component={AddTestConfirmation}/>
+        <Route path= '/add-org' exact component={OrgForm} />
+        <Route path= '/add-test' exact component={TestForm} />
+        <Route path= '/add-test-confirmation' exact component={AddTestConfirmation} />
+        <Route path= '/edit-test' component={EditTestForm} />
 
         <Footer />
       </>

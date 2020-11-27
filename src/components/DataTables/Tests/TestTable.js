@@ -8,7 +8,7 @@ import {
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
 import axios from '../../../axios';
-import {Link} from 'react-router-dom';
+import {Link, withRouter, useHistory} from 'react-router-dom';
 
 import {COLUMNS} from './columns';
 import TableFilter from '../../UI/TableFilter/TableFilter';
@@ -21,7 +21,8 @@ import Checkbox from '../../UI/Checkbox/Checkbox';
 import SmallButton from '../../UI/SmallButton/SmallButton';
 
 const TestTable = () => {
-  const [tests, setTests] = useState([])
+  const [tests, setTests] = useState([]);
+  const history = useHistory();
 
   // get data from api
   useEffect(() => {
@@ -98,6 +99,27 @@ const TestTable = () => {
   let selectedRow = selectedFlatRows
   console.log(selectedRow);
 
+  // handle edit button click
+  const HandleEditRequest = () => {
+    // get properties to be passed to form and store in variable
+    const itemToEdit = selectedRow[0].original;
+    // initialize query parameters array
+    const queryParams = [];
+
+    // loop through itemToEdit, encode data, and push into queryParams as strings
+    for (let i in itemToEdit) {
+      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(itemToEdit[i]));
+    }
+    // join queryParams strings and store in variable
+    const queryString = queryParams.join('&');
+
+    // pass queryString data to EditTestForm via router
+    history.push({
+      pathname: '/edit-test',
+      search: '?' + queryString
+    });
+  }
+
   // handle delete button click
   const handleDeleteRequest = () => {
     // get id of test to be deleted from selectedRow object
@@ -171,9 +193,9 @@ const TestTable = () => {
         >Next</button>
       </div>
       <br/>
-      <SmallButton>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
+      <SmallButton clicked={HandleEditRequest}>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
       <SmallButton clicked={handleDeleteRequest}>Delete</SmallButton>
     </>
   );
 }
-export default TestTable
+export default withRouter(TestTable);

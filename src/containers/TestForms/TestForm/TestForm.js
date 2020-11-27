@@ -1,19 +1,21 @@
 import React, {Component} from 'react';
-import axios from '../../axios';
+import axios from '../../../axios';
 import {withRouter} from 'react-router-dom';
 
 import classes from './TestForm.module.css';
-import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
+import Heading2 from '../../../components/Form Inputs/Heading2/Heading2';
 
 class TestForm extends Component {
   constructor() {
     super();
     this.state = {
-      itemType: "",
-      testOrgId: "",
-      id: "",
-      description: "",
-      tds: "",
+      data: {
+        itemType: "",
+        testOrgId: "",
+        id: "",
+        description: "",
+        tds: "",
+      },
       isError: {
         itemType: "",
         testOrgId: "",
@@ -23,7 +25,6 @@ class TestForm extends Component {
       }
     }
    
-
     this.handleItemTypeChange = this.handleItemTypeChange.bind(this);
     this.handleTestOrgIdChange = this.handleTestOrgIdChange.bind(this);
     this.handleIdChange = this.handleIdChange.bind(this);
@@ -34,30 +35,40 @@ class TestForm extends Component {
 
   // whenever a change is made to an input field, update the corresponding state property
   handleItemTypeChange(event) {
-    this.setState({itemType: event.target.value});
+    let data = {...this.state.data};
+    data.itemType = event.target.value;
+    this.setState({data});
   }
 
   handleTestOrgIdChange(event) {
-    this.setState({testOrgId: event.target.value});
+    let data = {...this.state.data};
+    data.testOrgId = event.target.value
+    this.setState({data});
   }
 
   handleIdChange(event) {
-    this.setState({id: event.target.value});
+    let data = {...this.state.data};
+    data.id = event.target.value
+    this.setState({data});
   }
 
   handleDescriptionChange(event) {
-    this.setState({description: event.target.value});
+    let data = {...this.state.data};
+    data.description = event.target.value
+    this.setState({data});
   }
 
   handleTdsChange(event) {
-    this.setState({tds: event.target.value});
+    let data = {...this.state.data};
+    data.tds = event.target.value
+    this.setState({data});
   }
 
   handleSubmit(event) {
     // prevent default submit action
     event.preventDefault();
     // distribute data stored in state into new object
-    const formData = {...this.state}
+    const formData = {...this.state.data}
 
     // make api call to post data
     axios.post('/tests', formData)
@@ -178,7 +189,6 @@ class TestForm extends Component {
                           name="itemType"
                           value={this.state.itemType} 
                           onChange={this.handleItemTypeChange}
-                          onChange={this.formValChange}
                           onBlur={this.formValChange} 
                         />
                         <br/>
@@ -205,13 +215,11 @@ class TestForm extends Component {
                       >
                         <input 
                           style={textbxstyle} 
-                          // onBlur = {()=> this.ValidatorToI()} 
                           type="text" 
                           id="testOrgId" 
                           name="testOrgId"
                           value={this.state.testOrgId}
                           onChange={this.handleTestOrgIdChange}
-                          onChange={this.formValChange}
                           onBlur={this.formValChange} 
                         />
                         <br/>
@@ -238,13 +246,11 @@ class TestForm extends Component {
                       >
                         <input
                           style={textbxstyle}  
-                          // onBlur = {()=> this.ValidatorTid()}
                           type="text" 
                           id="id" 
                           name="id"
                           value={this.state.id} 
                           onChange={this.handleIdChange}
-                          onChange={this.formValChange}
                           onBlur={this.formValChange} 
                         />
                         <br/>
@@ -277,7 +283,6 @@ class TestForm extends Component {
                           name="description"
                           value={this.state.description} 
                           onChange={this.handleDescriptionChange}
-                          onChange={this.formValChange}
                           onBlur={this.formValChange} 
                         />
                         <br/>
@@ -304,13 +309,11 @@ class TestForm extends Component {
                       >
                         <input
                           style={textbxstyle} 
-                          // onBlur = {()=> this.Validatortds()} 
                           type="text" 
                           id="tds" 
                           name="tds"
                           value={this.state.tds}
                           onChange={this.handleTdsChange}
-                          onChange={this.formValChange}
                           onBlur={this.formValChange}
                         />
                         <br/>
