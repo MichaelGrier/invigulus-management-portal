@@ -82,7 +82,7 @@ class TestForm extends Component {
     }
     else {
       // prevent default submit action
-      //event.preventDefault();
+      event.preventDefault();
        // distribute data stored in state into new object
        const formData = {...this.state}
 
