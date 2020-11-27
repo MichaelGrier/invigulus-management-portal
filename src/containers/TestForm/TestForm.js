@@ -14,7 +14,15 @@ class TestForm extends Component {
       id: "",
       description: "",
       tds: "",
+      isError: {
+        itemType: "",
+        testOrgId: "",
+        id: "",
+        description: "",
+        tds: "",
+      }
     }
+   
 
     this.handleItemTypeChange = this.handleItemTypeChange.bind(this);
     this.handleTestOrgIdChange = this.handleTestOrgIdChange.bind(this);
@@ -46,21 +54,87 @@ class TestForm extends Component {
   }
 
   handleSubmit(event) {
-    // prevent default submit action
-    event.preventDefault();
-    // distribute data stored in state into new object
-    const formData = {...this.state}
+  
+  //   const formValid = ({ isError, ...rest }) => {
+  //     let isValid = false;
+  
+  //     Object.values(isError).forEach(val => {
+  //         if (val.length > 0) {
+  //             isValid = false
+  //         } else {
+  //             isValid = true
+  //         }
+  //     });
+  
+  //     Object.values(rest).forEach(val => {
+  //         if (val === null) {
+  //             isValid = false
+  //         } else {
+  //             isValid = true
+  //         }
+  //     });
+  
+  //     return isValid;
+  // };
+    if (this.state.itemType === "" || this.state.testOrgId === "" || this.state.id === "" || this.state.description === "" || this.state.tds === "") {
+      console.log(this.state)
+      alert("One or more required fields are missing")
+    }
+    else {
+      // prevent default submit action
+      //event.preventDefault();
+       // distribute data stored in state into new object
+       const formData = {...this.state}
 
-    // make api call to post data
-    axios.post('/tests', formData)
-         .then(response => console.log(response))
-         .catch(error => console.log(error));
-
-    //redirect to confirmation page
-    this.props.history.push('/add-test-confirmation')
+       // make api call to post data
+       axios.post('/tests', formData)
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
+   
+       //redirect to confirmation page
+       this.props.history.push('/add-test-confirmation')
+    }
   }
 
+  formValChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let isError = { ...this.state.isError };
+
+    switch (name) {
+        case "itemType":
+            isError.itemType =
+                value === ""? "This field is required" : "";
+            break;
+        case "testOrgId":
+            isError.testOrgId = value === ""? "This field is required": "";
+            break;
+        case "id":
+            isError.id =
+                value === ""? "This field is required": "";
+            break;
+        case "description":
+            isError.description =
+                value === ""? "This field is required": "";
+            break;
+        case "tds":
+            isError.tds =
+                value === ""? "This field is required": "";
+            break;
+        default:
+            break;
+    }
+
+    this.setState({
+        isError,
+        [name]: value
+    })
+};
+
   render () {
+    
+    const { isError } = this.state
+
     const labelstyle = {
       color: "#3cB650",
       fontFamily: "sans-serif",
@@ -95,6 +169,7 @@ class TestForm extends Component {
       cursor: "pointer",
       borderRadius:"30px",
     };
+  
 
     return (
       <div>
@@ -122,18 +197,22 @@ class TestForm extends Component {
                         style={{textAlign:"left", width:"30%"}}
                       >
                         <input
-                          style={textbxstyle} 
-                          //onBlur = {()=> this.ValidatorItemType()}
+                          style={textbxstyle}                        
                           type="text" 
                           id="itemType" 
                           name="itemType"
                           value={this.state.itemType} 
-                          onChange={this.handleItemTypeChange} 
+                          onChange={this.handleItemTypeChange}
+                          onChange={this.formValChange}
+                          onBlur={this.formValChange} 
                         />
-                        {/* <p style={{color:"red"}}>{this.state.emptyErroritype}</p> */}
+                        <br/>
+                        <span 
+                          style={{color:"red"}}>
+                          {isError.itemType}
+                        </span>
                       </td>
-                    </tr>
-                
+                    </tr>               
                     <tr>
                       <td 
                         className={classes.cell1} 
@@ -156,17 +235,22 @@ class TestForm extends Component {
                           id="testOrgId" 
                           name="testOrgId"
                           value={this.state.testOrgId}
-                          onChange={this.handleTestOrgIdChange} 
+                          onChange={this.handleTestOrgIdChange}
+                          onChange={this.formValChange}
+                          onBlur={this.formValChange} 
                         />
-                        {/* <p style={{color:"red"}}>{this.state.emptyErrortestOid}</p> */}
+                        <br/>
+                        <span 
+                          style={{color:"red"}}>
+                          {isError.testOrgId}
+                        </span>
                       </td>
                     </tr>
-
                     <tr>
                       <td 
                         className={classes.cell1} 
                         style={{textAlign:"right"}}
-                      >
+                        >
                         <label 
                           htmlFor="id" 
                           style={labelstyle}
@@ -184,9 +268,15 @@ class TestForm extends Component {
                           id="id" 
                           name="id"
                           value={this.state.id} 
-                          onChange={this.handleIdChange} 
+                          onChange={this.handleIdChange}
+                          onChange={this.formValChange}
+                          onBlur={this.formValChange} 
                         />
-                        {/* <p style={{color:"red"}}>{this.state.emptyErrortestid}</p> */}
+                        <br/>
+                        <span 
+                          style={{color:"red"}}>
+                          {isError.id}
+                        </span>
                       </td>
                     </tr>
 
@@ -207,17 +297,21 @@ class TestForm extends Component {
                       >
                         <input
                           style={textbxstyle} 
-                          //onBlur = {()=> this.ValidatorItemType()}
                           type="text" 
                           id="description" 
                           name="description"
                           value={this.state.description} 
-                          onChange={this.handleDescriptionChange} 
+                          onChange={this.handleDescriptionChange}
+                          onChange={this.formValChange}
+                          onBlur={this.formValChange} 
                         />
-                        {/* <p style={{color:"red"}}>{this.state.emptyErroritype}</p> */}
+                        <br/>
+                        <span 
+                          style={{color:"red"}}>
+                          {isError.description}
+                        </span>
                       </td>
                     </tr>
-
                     <tr>
                       <td 
                         className={classes.cell1} 
@@ -240,9 +334,15 @@ class TestForm extends Component {
                           id="tds" 
                           name="tds"
                           value={this.state.tds}
-                          onChange={this.handleTdsChange} 
+                          onChange={this.handleTdsChange}
+                          onChange={this.formValChange}
+                          onBlur={this.formValChange}
                         />
-                        {/* <p style={{color:"red"}}>{this.state.emptyErrortds}</p> */}
+                        <br/>
+                        <span 
+                          style={{color:"red"}}>
+                          {isError.tds}
+                        </span>
                       </td>
                     </tr>
                   </tbody>

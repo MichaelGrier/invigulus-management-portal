@@ -39,7 +39,8 @@ class OrgForm extends Component {
           lname2:'',
           phone2:'',
           email2:'',
-          imagecapture:'',
+          imagecaptureyes:'',
+          imagecaptureno:'',
           frameinterval:'',
           anomalyduration:'',
           smoothingframe:'',
@@ -69,11 +70,13 @@ class OrgForm extends Component {
     this.handleLname2Change = this.handleLname2Change.bind(this);
     this.handlePhone2Change = this.handlePhone2Change.bind(this);
     this.handleEmail2Change = this.handleEmail2Change.bind(this);
-    this.handleImageCChange = this.handleImageCChange.bind(this);
+    this.handleImageCYChange = this.handleImageCYChange.bind(this);
+    this.handleImageCNChange = this.handleImageCNChange.bind(this);
     this.handleAnomDChange = this.handleAnomDChange.bind(this);
     this.handleSmoothChange = this.handleSmoothChange.bind(this);
-    this.handleFramIChange = this.handleFrameIChange.bind(this);
+    this.handleFrameIChange = this.handleFrameIChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   // whenever a change is made to an input field, update the corresponding state property
@@ -173,8 +176,12 @@ class OrgForm extends Component {
     this.setState({email2: event.target.value});
   }
 
-  handleImageCChange(event) {
-    this.setState({imagecapture: event.target.value});
+  handleImageCYChange(event) {
+    this.setState({imagecaptureyes: "true"});
+  }
+
+  handleImageCNChange(event) {
+    this.setState({imagecaptureno: "false"});
   }
 
   handleAnomDChange(event) {
@@ -186,7 +193,7 @@ class OrgForm extends Component {
   }
 
   handleSmoothChange(event) {
-    this.setState({smoothingFrame: event.target.value});
+    this.setState({smoothingframe: event.target.value});
   }
 
 
@@ -241,7 +248,6 @@ class OrgForm extends Component {
           isOpen5
         });
       };
-
 
   render () {
     const labelstyle = {
@@ -350,7 +356,7 @@ class OrgForm extends Component {
                       </p> */}
                     </td>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <td 
                       className={classes.cell3} 
                       style={{textAlign:"right"}}>
@@ -372,7 +378,7 @@ class OrgForm extends Component {
                           value={this.state.ID}
                           onChange={this.handleOrgIDChange}/>
                     </td>
-                  </tr>
+                  </tr> */}
                 </table>
                   <hr></hr>
                     </div> 
@@ -392,9 +398,9 @@ class OrgForm extends Component {
                                 className={classes.cell4}
                                 style={{textAlign:"left"}}>
                                 <input 
-                                onBlur = {()=> this.ValidatorTofA()} 
+                                // onBlur = {()=> this.ValidatorTofA()} 
                                 style={textbxstyle2} 
-                                onChangeText={(text) => {this.setState({ typeofaddress: text })}} 
+                                // onChangeText={(text) => {this.setState({ typeofaddress: text })}} 
                                 type="text" 
                                 id="addresstype" 
                                 name="addresstype"
@@ -428,10 +434,10 @@ class OrgForm extends Component {
                                   value={this.state.street}
                                   onChange={this.handleStrChange}
                                   />
-                                <p 
+                                {/* <p 
                                   style={{color:"red"}}>
                                   {this.state.emptyErrorStreet}
-                                </p>
+                                </p> */}
                               </td>
                             </tr>
                             <tr>
@@ -756,7 +762,7 @@ class OrgForm extends Component {
                                   <label 
                                     for="lname" 
                                     style={labelstyle}>
-                                    Name:
+                                    Last Name:
                                   </label>
                                 </td>
                                 <td 
@@ -875,10 +881,12 @@ class OrgForm extends Component {
                                 style={{textAlign:"left", width:"30%"}}>
                                 <input 
                                   style={textbxstyle} 
-                                  onChangeText={(text) => {this.setState({ fname2: text })}} 
+                                  // onChangeText={(text) => {this.setState({ fname2: text })}} 
                                   type="text" 
                                   id="fname2" 
-                                  name="fname2"/>
+                                  name="fname2"
+                                  value={this.state.fname2}
+                                  onChange={this.handleFname2Change}/>
                               </td>
                             </tr>            
                             <tr>
@@ -896,10 +904,12 @@ class OrgForm extends Component {
                                 style={{textAlign:"left"}}>
                                 <input 
                                   style={textbxstyle} 
-                                  onChangeText={(text) => {this.setState({ lname2: text })}} 
+                                  // onChangeText={(text) => {this.setState({ lname2: text })}} 
                                   type="text" 
                                   id="lname2" 
-                                  name="lname2"/>
+                                  name="lname2"
+                                  value={this.state.lname2}
+                                  onChange={this.handleLname2Change}/>
                               </td>
                             </tr>
                             <tr>
@@ -915,11 +925,13 @@ class OrgForm extends Component {
                                 className={classes.cell2} 
                                 style={{textAlign:"left"}}>
                                 <input 
-                                  onChangeText={(text) => {this.setState({ email2: text })}} 
+                                  // onChangeText={(text) => {this.setState({ email2: text })}} 
                                   style={textbxstyle} 
                                   type="text" 
                                   id="email2" 
-                                  name="email2"/>
+                                  name="email2"
+                                  value={this.state.email2}
+                                  onChange={this.handleEmail2Change}/>
                               </td>
                             </tr>
                             <tr>
@@ -940,7 +952,9 @@ class OrgForm extends Component {
                                   style={textbxstyle} 
                                   type="text" 
                                   id="phone2" 
-                                  name="phone2"/>
+                                  name="phone2"
+                                  value={this.state.phone2}
+                                  onChange={this.handlePhone2Change}/>
                               </td>
                             </tr>
                           </table>
@@ -955,7 +969,7 @@ class OrgForm extends Component {
                                 className={classes.cell14} 
                                 style={{textAlign:"right"}}>
                                 <label 
-                                  htmlFor="Img Capture" 
+                                  htmlFor="ImgCapture" 
                                   style={labelstyle}>
                                   Image Capture Setting:
                                 </label>
@@ -978,7 +992,34 @@ class OrgForm extends Component {
                               <td 
                                 className={classes.cell16} 
                                 style={{textAlign:"center"}}>
-                                <RadioButton/>
+                                <div>
+                                  <label 
+                                    id="labelr" 
+                                    className={classes.RadioButton}>
+                                    <input type="radio" 
+                                      name="Testradio" 
+                                      id="RadioBtn" 
+                                      value={this.state.imagecaptureno}
+                                      onChange={this.handleImageCNChange} />
+                                    <span 
+                                      className={classes.checkmark}>
+                                    </span>
+                                  </label>
+                                    <label 
+                                      id="labelr" 
+                                      className={classes.RadioButton}>
+                                    <input 
+                                      type="radio" 
+                                      name="Testradio" 
+                                      id="RadioBtn2" 
+                                      value={this.state.imagecaptureyes}
+                                      onChange={this.handleImageCYChange}
+                                      />                                  
+                                    <span 
+                                      className={classes.checkmark}>  
+                                    </span>
+                                  </label>
+                                </div>
                               </td>
                             </tr>
                           </table>
@@ -997,11 +1038,13 @@ class OrgForm extends Component {
                               className={classes.cell2} 
                               style={{textAlign:"left", width:"30%"}}>
                               <input 
-                                onChangeText={(text) => {this.setState({ frameinterval: text })}} 
+                                // onChangeText={(text) => {this.setState({ frameinterval: text })}} 
                                 style={textbxstyle} 
                                 type="text" 
                                 id="frameInterval" 
-                                name="frameInterval"/>
+                                name="frameInterval"
+                                value={this.state.frameinterval}
+                                onChange={this.handleFrameIChange}/>
                             </td>
                           </tr>
                           <tr>
@@ -1018,11 +1061,13 @@ class OrgForm extends Component {
                               className={classes.cell2} 
                               style={{textAlign:"left"}}>
                               <input 
-                                onChangeText={(text) => {this.setState({ anomalyduration: text })}} 
+                                // onChangeText={(text) => {this.setState({ anomalyduration: text })}} 
                                 style={textbxstyle} 
                                 type="text" 
                                 id="anomalyDuration" 
-                                name="anomalyDuration"/>
+                                name="anomalyDuration"
+                                value={this.state.anomalyduration}
+                                onChange={this.handleAnomDChange}/>
                             </td>
                           </tr>
                           <tr>
@@ -1039,11 +1084,13 @@ class OrgForm extends Component {
                               className={classes.cell2} 
                               style={{textAlign:"left"}}>
                               <input 
-                                onChangeText={(text) => {this.setState({ smoothingFrame: text })}} 
+                                // onChangeText={(text) => {this.setState({ smoothingFrame: text })}} 
                                 style={textbxstyle} 
                                 type="text" 
                                 id="smoothingFrame" 
-                                name="smoothingFrame"/>
+                                name="smoothingFrame"
+                                value={this.state.smoothingframe}
+                                onChange={this.handleSmoothChange}/>
                             </td>
                           </tr>
                           </table>
@@ -1057,9 +1104,7 @@ class OrgForm extends Component {
                                 style={{textAlign:"right", paddingRight: "2%", paddingTop:"2%"}}>
                                 <input 
                                   type="submit" value="Submit" 
-                                  style={buttonstyle}>
-                                  Submit
-                                </input>
+                                  style={buttonstyle}/>
                               </td>
                             </tr>
                           </table>
