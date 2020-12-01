@@ -8,6 +8,7 @@ import {
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
 import axios from '../../../axios';
+import {withRouter, useHistory} from 'react-router-dom';
 
 import {COLUMNS} from './columns';
 
@@ -22,6 +23,7 @@ import SmallButton from '../../UI/SmallButton/SmallButton';
 
 const SessionTable = () => {
   const [sessions, setSessions] = useState([])
+  const history = useHistory();
 
   // get data from api
   useEffect(() => {
@@ -67,7 +69,7 @@ const SessionTable = () => {
           videos: pathToData[Item].videos
         });
       }
-      console.log(loadedData);
+      //console.log(loadedData);
       setSessions(loadedData);
     });
   }, []);
@@ -121,6 +123,26 @@ const SessionTable = () => {
   // data from selected row is stored here
   let selectedRow = selectedFlatRows
   console.log(selectedRow);
+
+  const handleViewDetailsRequest = () => {
+    // get sessionId of selected row and store in variable
+    const sessionToDisplay = selectedRow[0].original.itemId;
+
+    // initialize query parameters array
+    const queryParams = [];
+
+    // encode sessionId and push into queryParams as strings
+    queryParams.push(encodeURIComponent('itemId') + '=' + encodeURIComponent(sessionToDisplay));
+
+    // join queryParams strings and store in variable
+    const queryString = queryParams.join('&');
+    
+    // pass queryString data to ViewSession container via router
+    history.push({
+      pathname: '/view-selected-session',
+      search: '?' + queryString
+    });
+  }
 
   return (
     <>
@@ -180,8 +202,8 @@ const SessionTable = () => {
         >Next</button>
       </div>
       <br/>
-      <SmallButton>View Details</SmallButton>
+      <SmallButton clicked={handleViewDetailsRequest}>View Details</SmallButton>
     </>
   );
 }
-export default SessionTable
+export default withRouter(SessionTable);

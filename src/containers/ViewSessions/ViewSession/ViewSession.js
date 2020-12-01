@@ -1,16 +1,28 @@
 import React, {Component} from 'react';
+import axios from '../../../axios';
 
 import classes from './ViewSession.module.css';
-import SmallButton from '../../../components/UI/SmallButton/SmallButton';
-import TextBox from '../../../components/Form Inputs/TextBox/TextBox';
 import {Tabs, Tab, Table} from 'react-bootstrap';
 
-import Face from '../../assets/images/face.jpg';
-import ID from '../../assets/images/id.jpg';
-
 class ViewSession extends Component {
-  searchHandler = () => {
-    alert("You searched");
+  // constructor() {
+  //   super();
+  //   this.state = {}
+  // }
+
+  componentDidMount() {
+    // parse query from URL string to retrieve sessionId
+    const query = new URLSearchParams(this.props.location.search);
+    const sessionId = {};
+    for (let param of query.entries()) {
+      sessionId[param[0]] = param[1];
+    }
+    console.log(sessionId.itemId)
+    
+    // get session by sessionId
+    axios.get(`/sessions/${sessionId.itemId}`).then(res => {
+      console.log(res);
+    })
   }
 
   render() {
@@ -19,11 +31,6 @@ class ViewSession extends Component {
         <main className={classes.main}>
           <h1 className={classes.header}>View Sessions</h1>
           <div className={classes.wrap}>
-            <div className={classes.searchBar}>
-              <h5>Enter Session ID</h5>
-              <TextBox id='search'/>
-              <SmallButton clicked={this.searchHandler}>Find</SmallButton>
-            </div>
             <div className={classes.tabWrap}>
               <Tabs defaultActiveKey="main" id="sessionTabs">
                 <Tab eventKey="main" title="Main">
@@ -108,7 +115,6 @@ class ViewSession extends Component {
                         <td colSpan="2">#</td>
                       </tr>
                     </tbody>
-                    <br/>
 
                     <thead>
                       <tr>
@@ -129,7 +135,6 @@ class ViewSession extends Component {
                         <td colSpan="2">#</td>
                       </tr>
                     </tbody>
-                    <br/>
 
                     <thead>
                       <tr>
@@ -148,7 +153,6 @@ class ViewSession extends Component {
                         <td colSpan="2">#</td>
                       </tr>
                     </tbody>
-                    <br/>
 
                     <thead>
                       <tr>
@@ -165,7 +169,6 @@ class ViewSession extends Component {
                         <td colSpan="4">#</td>
                       </tr>
                     </tbody>
-                    <br/>
 
                     <thead>
                       <tr>
@@ -194,7 +197,6 @@ class ViewSession extends Component {
                         <td>#</td>
                       </tr>
                     </tbody>
-                    <br/>
                   </Table>
                 </Tab>
 
@@ -310,8 +312,8 @@ class ViewSession extends Component {
                     </thead>
                     <tbody>
                       <tr>
-                        <td><img alt="Face" src={Face}></img></td>
-                        <td><img alt="Identification" src={ID}></img></td>
+                        <td>#</td>
+                        <td>#</td>
                       </tr>
                     </tbody>
                   </Table>

@@ -9,7 +9,7 @@ import OrgsAndTests from './OrgsAndTests/OrgsAndTests';
 import ManageOrgs from './ManageOrgs/ManageOrgs';
 import ManageTests from './ManageTests/ManageTests';
 import ViewUsers from './ViewUsers/ViewUsers';
-//import ViewSession from './ViewSessions/ViewSession/ViewSession';
+import ViewSession from './ViewSessions/ViewSession/ViewSession';
 import ViewSessions from './ViewSessions/ViewSessions';
 import OrgForm from './OrgForms/OrgForm';
 import TestForm from './TestForms/TestForm/TestForm';
@@ -29,6 +29,7 @@ class ManagementPortal extends Component {
         <Route path='/manage-tests' exact component={ManageTests} />
         <Route path='/manage-users' exact component={ViewUsers} />
         <Route path='/view-sessions' exact component={ViewSessions} />
+        <Route path='/view-selected-session' component={ViewSession} />
         <Route path= '/add-org' exact component={OrgForm} />
         <Route path= '/add-test' exact component={TestForm} />
         <Route path= '/add-test-confirmation' exact component={AddTestConfirmation} />

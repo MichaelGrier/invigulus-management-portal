@@ -25,9 +25,6 @@ class TestForm extends Component {
       }
     }
    
-    this.handleItemTypeChange = this.handleItemTypeChange.bind(this);
-    this.handleTestOrgIdChange = this.handleTestOrgIdChange.bind(this);
-    this.handleIdChange = this.handleIdChange.bind(this);
     this.handleTdsChange = this.handleTdsChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,25 +39,6 @@ class TestForm extends Component {
       data[param[0]] = param[1];
     }
     this.setState({data: data});
-  }
-
-  // whenever a change is made to an input field, update the corresponding state property
-  handleItemTypeChange(event) {
-    let data = {...this.state.data};
-    data.itemType = event.target.value;
-    this.setState({data});
-  }
-
-  handleTestOrgIdChange(event) {
-    let data = {...this.state.data};
-    data.testOrgId = event.target.value
-    this.setState({data});
-  }
-
-  handleIdChange(event) {
-    let data = {...this.state.data};
-    data.id = event.target.value
-    this.setState({data});
   }
 
   handleDescriptionChange(event) {
@@ -85,9 +63,6 @@ class TestForm extends Component {
     };
     // store value of id
     const itemToEdit = this.state.data.id;
-
-    console.log(newData);
-    console.log(itemToEdit);
 
     // make api call to update data
     axios.patch(`/tests/${itemToEdit}`, newData)
@@ -205,8 +180,9 @@ class TestForm extends Component {
                           type="text" 
                           id="itemType" 
                           name="itemType"
+                          readOnly
                           value={this.state.data.itemType} 
-                          onChange={this.handleItemTypeChange}
+                          // onChange={this.handleItemTypeChange}
                           onBlur={this.formValChange} 
                         />
                         <br/>
@@ -236,8 +212,9 @@ class TestForm extends Component {
                           type="text" 
                           id="testOrgId" 
                           name="testOrgId"
+                          readOnly
                           value={this.state.data.testOrgId}
-                          onChange={this.handleTestOrgIdChange}
+                          // onChange={this.handleTestOrgIdChange}
                           onBlur={this.formValChange} 
                         />
                         <br/>
@@ -267,6 +244,7 @@ class TestForm extends Component {
                           type="text" 
                           id="id" 
                           name="id"
+                          readOnly
                           value={this.state.data.id} 
                           onChange={this.handleIdChange}
                           onBlur={this.formValChange} 
