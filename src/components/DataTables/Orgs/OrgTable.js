@@ -40,16 +40,16 @@ const OrgTable = () => {
           id: pathToData[Item].id,
           itemId: pathToData[Item].itemId,
           itemType: pathToData[Item].itemType,
-          //city: pathToData[Item].address[0].city,
-          // primary contact data
-          //firstName: pathToData[Item].contact[0].firstName,
-          //lastName: pathToData[Item].contact[0].lastName,
-          //email: pathToData[Item].contact[0].email,
-          //phone: pathToData[Item].contact[0].phone,
-          // full contact data
+          // city: pathToData[Item].address[0].city,
+          // // // primary contact data
+          // firstName: pathToData[Item].contact[0].firstName,
+          // lastName: pathToData[Item].contact[0].lastName,
+          // email: pathToData[Item].contact[0].email,
+          // phone: pathToData[Item].contact[0].phone,
+          //full contact data
           contact: pathToData[Item].contact,
           // address
-          //address: pathToData[Item].address,
+          address: pathToData[Item].address,
           // configuration params
           configuration: pathToData[Item].configuration,
           // timestamps
@@ -113,6 +113,19 @@ const OrgTable = () => {
   let selectedRow = selectedFlatRows
   console.log(selectedRow);
 
+  const handleDeleteRequest = () => {
+    // get id of test to be deleted from selectedRow object
+    let itemToDelete = selectedRow[0].original.id
+    
+    // make axios call, then reload page
+    axios.delete(`/orgs/${itemToDelete}`)
+         .then(response => {
+          console.log(response);
+          window.location.reload();
+         })
+         .catch(error => alert(error));
+  }
+
   return (
     <>
       {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
@@ -174,8 +187,8 @@ const OrgTable = () => {
       </div>
       <br/>
       <Link to={{pathname: 'add-edit-orgs'}}><SmallButton>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton></Link> 
-      <SmallButton>Delete</SmallButton>
-    </>
+      <SmallButton clicked={handleDeleteRequest}>Delete</SmallButton>
+    </> 
   );
 }
 export default OrgTable
