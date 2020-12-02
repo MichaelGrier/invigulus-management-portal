@@ -67,6 +67,12 @@ class TestForm extends Component {
   handleSubmit(event) {
     // prevent default submit action
     event.preventDefault();
+
+    if (this.state.itemType === "" || this.state.testOrgId === "" || this.state.id == "" || this.state.description === "" || this.state.tds === "")
+    {
+      alert("One or more required fields are missing.")
+    }
+    else {
     // distribute data stored in state into new object
     const formData = {...this.state.data}
 
@@ -81,6 +87,7 @@ class TestForm extends Component {
          // else, display error
          .catch(error => alert(error))    
   }
+}
 
   formValChange = e => {
     e.preventDefault();
