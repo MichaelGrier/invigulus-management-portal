@@ -10,7 +10,6 @@ import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
 import Accordion4 from '../../components/Accordion/Accordion4';
 import Accordion5 from '../../components/Accordion/Accodion5';
-import { faVuejs } from '@fortawesome/free-brands-svg-icons';
 
 class OrgForm extends Component {
   constructor() {
@@ -25,59 +24,20 @@ class OrgForm extends Component {
 
           configuration: null,
 
-          typeofaddress2:'',
-          street2:'',
-          city2:'',
-          statea2:'',
-          zipcode2:'',
-          country2:'',
-          typeofcontact2:'',
-          fname2:'',
-          lname2:'',
-          phone2:'',
-          email2:'',
-
           }
     
-    let RadioVal = null
+    let RadioVal1 = null
+    let RadioVal2 = null
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleOrgIDChange = this.handleOrgIDChange.bind(this);
-    this.handleitemTypeChange = this.handleitemTypeChange.bind(this);
-    this.handleitemIDChange = this.handleitemIDChange.bind(this);
-    // this.handleTofAChange = this.handleTofAChange.bind(this);
-    // this.handleStrChange = this.handleStrChange.bind(this);
-    // this.handleCityChange = this.handleCityChange.bind(this);
-    // this.handleStateChange = this.handleStateChange.bind(this);
-    // this.handleZipChange = this.handleZipChange.bind(this);
-    // this.handleCountryChange = this.handleCountryChange.bind(this);
-    this.handleToA2Change = this.handleToA2Change.bind(this);
-    this.handleStr2Change = this.handleStr2Change.bind(this);
-    this.handleCity2Change = this.handleCity2Change.bind(this);
-    this.handleState2Change = this.handleState2Change.bind(this);
-    this.handleZip2Change = this.handleZip2Change.bind(this);
-    this.handleCountry2Change = this.handleCountry2Change.bind(this);
-    // this.handleTofCChange = this.handleTofCChange.bind(this);
-    // this.handleFnameChange = this.handleFnameChange.bind(this);
-    // this.handleLnameChange = this.handleLnameChange.bind(this);
-    // this.handlePhoneChange = this.handlePhoneChange.bind(this);
-    // this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleTofC2Change = this.handleTofC2Change.bind(this);
-    this.handleFname2Change = this.handleFname2Change.bind(this);
-    this.handleLname2Change = this.handleLname2Change.bind(this);
-    this.handlePhone2Change = this.handlePhone2Change.bind(this);
-    this.handleEmail2Change = this.handleEmail2Change.bind(this);
-    // this.handleImageCYChange = this.handleImageCYChange.bind(this);
-    // this.handleImageCNChange = this.handleImageCNChange.bind(this);
-    // this.handleAnomDChange = this.handleAnomDChange.bind(this);
-    // this.handleSmoothChange = this.handleSmoothChange.bind(this);
-    // this.handleFrameIChange = this.handleFrameIChange.bind(this);
+    // this.handleitemTypeChange = this.handleitemTypeChange.bind(this);
+    // this.handleitemIDChange = this.handleitemIDChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCChange = this.handleCChange.bind(this);
     this.handleAChange = this.handleAChange.bind(this);
-    this.handleRadiobtn = this.handleRadiobtn.bind(this);
+    this.handleimgCapture = this.handleimgCapture.bind(this);
     this.handleConfigChange = this.handleConfigChange.bind(this);
-    this.handleC2Change = this.handleC2Change.bind(this);
-    this.handleA2Change = this.handleA2Change.bind(this);
+    this.handleidCapture = this.handleidCapture.bind(this);
   }
 
   // whenever a change is made to an input field, update the corresponding state property
@@ -89,61 +49,13 @@ class OrgForm extends Component {
     this.setState({id: event.target.value});
   }
 
-  handleitemTypeChange(event) {
-    this.setState({itemType: event.target.value});
-  }
-
-  handleitemIDChange(event) {
-    this.setState({itemId: event.target.value});
-  }
-
-  // handleTofAChange(event) {
-  //   this.setState({ address: {...this.state.address, type: event.target.value}});
+  // handleitemTypeChange(event) {
+  //   this.setState({itemType: event.target.value});
   // }
 
-  // handleStrChange(event) {
-  //   this.setState({ address: {...this.state.address, street: event.target.value}});
+  // handleitemIDChange(event) {
+  //   this.setState({itemId: event.target.value});
   // }
-
-  // handleCityChange(event) {
-  //   this.setState({ address: {...this.state.address, city: event.target.value}});
-  // }
-
-  // handleStateChange(event) {
-  //   this.setState({ address: {...this.state.address, state: event.target.value}});
-  // }
-
-  // handleZipChange(event) {
-  //   this.setState({ address: {...this.state.address, zip: event.target.value}});
-  // }
-
-  // handleCountryChange(event) {
-  //   this.setState({ address: {...this.state.address, country: event.target.value}});
-  // }
-
-  handleToA2Change(event) {
-    this.setState({typeofaddress2: event.target.value});
-  }
-
-  handleStr2Change(event) {
-    this.setState({street2: event.target.value});
-  }
-
-  handleCity2Change(event) {
-    this.setState({city2: event.target.value});
-  }
-
-  handleState2Change(event) {
-    this.setState({statea2: event.target.value});
-  }
-
-  handleZip2Change(event) {
-    this.setState({zipcode2: event.target.value});
-  }
-
-  handleCountry2Change(event) {
-    this.setState({country2: event.target.value});
-  }
 
   handleAChange() {
     let typea = document.getElementById("addresstype")
@@ -152,18 +64,6 @@ class OrgForm extends Component {
     let statea = document.getElementById("state")
     let zipa = document.getElementById("zip")
     let countrya = document.getElementById("country")
-    this.setState({
-      address: 
-      [{zip: zipa.value,
-        country: countrya.value,
-        state: statea.value,
-        type: typea.value,
-        city: citya.value,
-        street: streeta.value }]
-      })
-  }
-
-  handleA2Change() {
     let typea2 = document.getElementById("addresstype2")
     let streeta2 = document.getElementById("street2")
     let citya2 = document.getElementById("city2")
@@ -172,12 +72,20 @@ class OrgForm extends Component {
     let countrya2 = document.getElementById("country2")
     this.setState({
       address: 
-      [{zip: zipa2.value,
+      [{zip: zipa.value,
+        country: countrya.value,
+        state: statea.value,
+        type: typea.value,
+        city: citya.value,
+        street: streeta.value },
+      {
+        zip: zipa2.value,
         country: countrya2.value,
         state: statea2.value,
         type: typea2.value,
         city: citya2.value,
         street: streeta2.value }]
+
       })
   }
 
@@ -187,17 +95,6 @@ class OrgForm extends Component {
     let typec = document.getElementById("contacttype")
     let phonec = document.getElementById("phone")
     let emailc = document.getElementById("email")
-    this.setState({ 
-      contact: 
-      [{firstName: fnamec.value,
-        lastName: lnamec.value, 
-        type: typec.value, 
-        phone: phonec.value, 
-        email: emailc.value}]
-      })
-  }
-
-  handleC2Change() {
     let fnamec2 = document.getElementById("fname2")
     let lnamec2 = document.getElementById("lname2")
     let typec2 = document.getElementById("contacttype2")
@@ -205,7 +102,14 @@ class OrgForm extends Component {
     let emailc2 = document.getElementById("email2")
     this.setState({ 
       contact: 
-      [{firstName: fnamec2.value,
+      [{firstName: fnamec.value,
+        lastName: lnamec.value, 
+        type: typec.value, 
+        phone: phonec.value, 
+        email: emailc.value},
+
+        {
+        firstName: fnamec2.value,
         lastName: lnamec2.value, 
         type: typec2.value, 
         phone: phonec2.value, 
@@ -213,15 +117,27 @@ class OrgForm extends Component {
       })
   }
 
-  handleRadiobtn() {
-    let RadioNo = document.getElementById("RadioBtn")
-    let RadioYes = document.getElementById("RadioBtn2")
+  handleimgCapture() {
+    let RadioimgNo = document.getElementById("imgCaptureNo")
+    let RadioimgYes = document.getElementById("imgCaptureYes")
 
-    if (RadioNo.checked) {
-      this.RadioVal = "false"
+    if (RadioimgNo.checked) {
+      this.RadioVal1 = "false"
     }
-    if (RadioYes.checked) {
-      this.RadioVal = "true"
+    if (RadioimgYes.checked) {
+      this.RadioVal1 = "true"
+    }
+  }
+
+  handleidCapture() {
+    let RadioidNo = document.getElementById("idCaptureNo")
+    let RadioidYes = document.getElementById("idCaptureYes")
+
+    if (RadioidNo.checked) {
+      this.RadioVal2 = "false"
+    }
+    if (RadioidYes.checked) {
+      this.RadioVal2 = "true"
     }
   }
 
@@ -232,7 +148,9 @@ class OrgForm extends Component {
     this.setState({ 
       configuration: {
         Registration: {
-          imageCapture: this.RadioVal},
+          imageCapture: this.RadioVal1,
+          idCapture: this.RadioVal2
+        },
         postProcess: {
           anomalyDuration: anomalyd.value,
           smoothingFrame: smoothingf.value,
@@ -240,66 +158,6 @@ class OrgForm extends Component {
       }
     })
   }
-
-  // handleTofCChange(event) {
-  //   this.setState({ contact: {...this.state.contact, type: event.target.value}});
-  // }
-
-  // handleFnameChange(event) {
-  //   this.setState({ contact: {...this.state.contact, firstName: event.target.value}});
-  // }
-
-  // handleLnameChange(event) {
-  //   this.setState({ contact: {...this.state.contact, lastName: event.target.value}});
-  // }
-
-  // handlePhoneChange(event) {
-  //   this.setState({ contact: {...this.state.contact, phone: event.target.value}});
-  // }
-
-  // handleEmailChange(event) {
-  //   this.setState({ contact: {...this.state.contact, email: event.target.value}});
-  //}
-
-  handleTofC2Change(event) {
-    this.setState({typeofcontact2: event.target.value});
-  }
-
-  handleFname2Change(event) {
-    this.setState({fname2: event.target.value});
-  }
-
-  handleLname2Change(event) {
-    this.setState({lname2: event.target.value});
-  }
-
-  handlePhone2Change(event) {
-    this.setState({phone2: event.target.value});
-  }
-
-  handleEmail2Change(event) {
-    this.setState({email2: event.target.value});
-  }
-
-  // handleImageCYChange(event) {
-  //   this.setState({ configuration: {registration: {...this.state.configuration.registration, imageCapture: "true"}}});
-  // }
-
-  // handleImageCNChange(event) {
-  //   this.setState({ configuration: {registration: {...this.state.configuration.registration, imageCapture: "false"}}});
-  //}
-
-  // handleAnomDChange(event) {
-  //   this.setState({ configuration: {postProcess: {...this.state.configuration.postProcess, anomalyDuration: event.target.value}}});
-  // }
-
-  // handleFrameIChange(event) {
-  //   this.setState({ configuration: {postProcess: {...this.state.configuration.postProcess, frameInterval: event.target.value}}});
-  // }
-
-  // handleSmoothChange(event) {
-  //   this.setState({ configuration: {postProcess: {...this.state.configuration.postProcess, smoothingFrame: event.target.value}}});
-  // }
 
 
   handleSubmit(event) {
@@ -494,7 +352,7 @@ class OrgForm extends Component {
                           onChange={this.handleOrgIDChange}/>
                     </td>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <td 
                       className={classes.cell3} 
                       style={{textAlign:"right"}}>
@@ -516,12 +374,12 @@ class OrgForm extends Component {
                           value={this.state.itemType}
                           onChange={this.handleitemTypeChange}/>
                     </td>
-                  </tr>
+                  </tr> */}
                 </table>
                   <hr></hr>
                     </div> 
+                      <div> 
                       <Accordion isOpen={isOpen} onChange={this.onChange} label={"Address"}>
-                        <div>
                           <br/>
                           <table>
                             <tr>
@@ -676,17 +534,18 @@ class OrgForm extends Component {
                                 id="country" 
                                 name="country"
                                 // value={this.state.address.country}
-                                onChange={this.handleAChange}
+                                //onChange={this.handleAChange}
                                 />
                                 {/* <p style={{color:"red"}}>
                                   {this.state.emptyErrorCountry}
                                 </p> */}
                               </td>
                             </tr>
-                          </table> 
+                          </table>
+                          </Accordion>
                         </div>
+                        <div> 
                         <Accordion4 isOpen4={isOpen4} onChange={this.onChange4} label={"Add Additional Address"}>
-                        <div>
                           <table>
                             <tr>
                               <td 
@@ -707,8 +566,6 @@ class OrgForm extends Component {
                                   type="text" 
                                   id="addresstype2" 
                                   name="addresstype2"
-                                  value={this.state.typeofaddress2}
-                                  onChange={this.handleToA2Change}
                                   />
                               </td>
                             </tr>
@@ -770,7 +627,7 @@ class OrgForm extends Component {
                               style={{textAlign:"left"}}>
                               <input 
                                 style={textbxstyle2} 
-                                // onChangeText={(text) => {this.setState({ statea2: text })}} 
+                                //onChangeText={(text) => {this.setState({ statea2: text })}} 
                                 type="text" 
                                 id="state2" 
                                 name="state2"
@@ -818,15 +675,15 @@ class OrgForm extends Component {
                                   type="text" 
                                   id="country2" 
                                   name="country2"
-                                  onChange={this.handleC2Change}/>
+                                  //onChange={this.handleAChange}
+                                  />
                               </td>
                             </tr>
-                          </table> 
-                        </div>
-                        </Accordion4>
-                      </Accordion>
+                          </table>
+                      </Accordion4>
+                      </div>                     
+                      <div>
                       <Accordion2 isOpen2={isOpen2} onChange={this.onChange2} label={"Contact"}>
-                        <div>
                           <br/>
                             <table>
                               <tr>
@@ -957,7 +814,7 @@ class OrgForm extends Component {
                                     type="text" 
                                     id="phone" 
                                     name="phone"
-                                    onChange={this.handleCChange}
+                                    //onChange={this.handleCChange}
                                     />
                                   {/* <p style={{color:"red"}}>
                                     {this.state.emptyErrorphone}
@@ -965,9 +822,10 @@ class OrgForm extends Component {
                                 </td>
                               </tr>
                             </table>
-                        </div>
-                      <Accordion5 isOpen5={isOpen5} onChange={this.onChange5} label={"Add Additional Contact"}>
-                        <div>
+                            </Accordion2>
+                          </div>
+                          <div>
+                        <Accordion5 isOpen5={isOpen5} onChange={this.onChange5} label={"Add Additional Contact"}>
                           <table>
                             <tr>
                               <td 
@@ -1075,13 +933,13 @@ class OrgForm extends Component {
                                   type="text" 
                                   id="phone2" 
                                   name="phone2"
-                                  onChange={this.handleA2Change}/>
+                                  //onChange={this.handleCChange}
+                                  />
                               </td>
                             </tr>
                           </table>
-                        </div>
                       </Accordion5>
-                      </Accordion2>
+                      </div>
                       <Accordion3 isOpen3={isOpen3} onChange={this.onChange3} label={"Configuration Settings"}>
                         <div>  
                           <table>
@@ -1118,10 +976,10 @@ class OrgForm extends Component {
                                     id="labelr" 
                                     className={classes.RadioButton}>
                                     <input type="radio" 
-                                      name="Testradio" 
-                                      id="RadioBtn"
+                                      name="imgCaptureNo" 
+                                      id="imgCaptureNo"
                                       value="false"
-                                      onChange={this.handleRadiobtn}  
+                                      onChange={this.handleimgCapture}  
                                        />
                                     <span 
                                       className={classes.checkmark}>
@@ -1132,10 +990,71 @@ class OrgForm extends Component {
                                       className={classes.RadioButton}>
                                     <input 
                                       type="radio" 
-                                      name="Testradio" 
-                                      id="RadioBtn2" 
+                                      name="imgCaptureYes" 
+                                      id="imgCaptureYes" 
                                       value="true"
-                                      onChange={this.handleRadiobtn}
+                                      onChange={this.handleimgCapture}
+                                      />                                  
+                                    <span 
+                                      className={classes.checkmark}>  
+                                    </span>
+                                  </label>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                          <table>
+                            <tr>
+                              <td 
+                                className={classes.cell14} 
+                                style={{textAlign:"right"}}>
+                                <label 
+                                  htmlFor="idCapture" 
+                                  style={labelstyle}>
+                                  ID Capture Setting:
+                                </label>
+                              </td>
+                              <td 
+                                className={classes.cell15} 
+                                style={{textAlign: "right"}}>
+                                <label 
+                                  style={labelstyle} 
+                                  style={{paddingBottom: "0", color: "#3cB650"}}>
+                                  No
+                                </label>
+                                  <br/>
+                                <label 
+                                  style={labelstyle} 
+                                  style={{paddingBottom:"0", color: "#3cB650"}}>
+                                  Yes
+                                </label>
+                              </td>
+                              <td 
+                                className={classes.cell16} 
+                                style={{textAlign:"center"}}>
+                                <div>
+                                  <label 
+                                    id="labelr" 
+                                    className={classes.RadioButton}>
+                                    <input type="radio" 
+                                      name="idCaptureNo" 
+                                      id="idCaptureNo"
+                                      value="false"
+                                      onChange={this.handleidCapture}  
+                                       />
+                                    <span 
+                                      className={classes.checkmark}>
+                                    </span>
+                                  </label>
+                                    <label 
+                                      id="labelr" 
+                                      className={classes.RadioButton}>
+                                    <input 
+                                      type="radio" 
+                                      name="idCaptureYes" 
+                                      id="idCaptureYes" 
+                                      value="true"
+                                      onChange={this.handleidCapture}
                                       />                                  
                                     <span 
                                       className={classes.checkmark}>  
@@ -1214,7 +1133,7 @@ class OrgForm extends Component {
                                 id="smoothingframe" 
                                 name="smoothingframe"
                                 // value={this.state.smoothingFrame}
-                                onChange={this.handleConfigChange}
+                                //onChange={this.handleConfigChange}
                                 />
                             </td>
                           </tr>
@@ -1228,7 +1147,9 @@ class OrgForm extends Component {
                                 className={classes.cell7} 
                                 style={{textAlign:"right", paddingRight: "2%", paddingTop:"2%"}}>
                                 <input 
-                                  //onChange={this.handleAChange && this.handleCChange && this.handleConfigChange}
+                                  onClick={() => {this.handleAChange();
+                                  this.handleCChange();
+                                  this.handleConfigChange();}}
                                   type="submit" value="Submit" 
                                   style={buttonstyle}/>
                               </td>

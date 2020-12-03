@@ -76,40 +76,62 @@ class TestForm extends Component {
          .catch(error => alert(error))    
   }
 
-  // formValChange = e => {
-  //   e.preventDefault();
-  //   const { name, value } = e.target;
-  //   let isError = { ...this.state.isError };
+  formValChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let isError = { ...this.state.isError };
 
-  //   switch (name) {
-  //       case "itemType":
-  //           isError.itemType =
-  //               value === ""? "This field is required" : "";
-  //           break;
-  //       case "testOrgId":
-  //           isError.testOrgId = value === ""? "This field is required": "";
-  //           break;
-  //       case "id":
-  //           isError.id =
-  //               value === ""? "This field is required": "";
-  //           break;
-  //       case "description":
-  //           isError.description =
-  //               value === ""? "This field is required": "";
-  //           break;
-  //       case "tds":
-  //           isError.tds =
-  //               value === ""? "This field is required": "";
-  //           break;
-  //       default:
-  //           break;
-  //   }
+    const formValid = ({ isError, ...rest }) => {
+      let isValid = false;
+  
+      Object.values(isError).forEach(val => {
+          if (val.length > 0) {
+              isValid = false
+          } else {
+              isValid = true
+          }
+      });
+  
+      Object.values(rest).forEach(val => {
+          if (val === null) {
+              isValid = false
+          } else {
+              isValid = true
+          }
+      });
+  
+      return isValid;
+  };
 
-  //   this.setState({
-  //       isError,
-  //       [name]: value
-  //   })
-  // };
+    switch (name) {
+        case "itemType":
+            isError.itemType =
+                value === ""? "This field is required" : "" ;
+            break;
+        case "testOrgId":
+            isError.testOrgId = value === ""? "This field is required": "";
+            break;
+        case "id":
+            isError.id =
+                value === ""? "This field is required": "";
+            break;
+        case "description":
+            isError.description =
+                value === ""? "This field is required": "";
+            break;
+        case "tds":
+            isError.tds =
+                value === ""? "This field is required": "";
+            break;
+        default:
+            break;
+    }
+
+    this.setState({
+        isError,
+        [name]: value
+    })
+  };
 
   render () {
     const { isError } = this.state
@@ -182,7 +204,7 @@ class TestForm extends Component {
                           name="itemType"
                           readOnly
                           value={this.state.data.itemType} 
-                          // onChange={this.handleItemTypeChange}
+                          onChange={this.handleItemTypeChange}
                           onBlur={this.formValChange} 
                         />
                         <br/>
@@ -214,7 +236,7 @@ class TestForm extends Component {
                           name="testOrgId"
                           readOnly
                           value={this.state.data.testOrgId}
-                          // onChange={this.handleTestOrgIdChange}
+                          onChange={this.handleTestOrgIdChange}
                           onBlur={this.formValChange} 
                         />
                         <br/>
