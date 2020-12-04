@@ -133,7 +133,18 @@ class TestForm extends Component {
       borderRadius: "4px",
       boxSizing: "border-box",
       display: "inline-block"
-    }; 
+    };
+    
+    const uneditabletextbxstyle = {
+      width: "70%",
+      padding: "12px 20px",
+      margin: "8px 0",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      boxSizing: "border-box",
+      display: "inline-block",
+      backgroundColor: "#f2f2f2"
+    }
 
     const buttonstyle = {
       backgroundColor: "#4CAF50",
@@ -176,7 +187,7 @@ class TestForm extends Component {
                         style={{textAlign:"left", width:"30%"}}
                       >
                         <input
-                          style={textbxstyle}                        
+                          style={uneditabletextbxstyle}                        
                           type="text" 
                           id="itemType" 
                           name="itemType"
@@ -208,7 +219,7 @@ class TestForm extends Component {
                         style={{textAlign:"left"}}
                       >
                         <input 
-                          style={textbxstyle} 
+                          style={uneditabletextbxstyle} 
                           type="text" 
                           id="testOrgId" 
                           name="testOrgId"
@@ -240,7 +251,7 @@ class TestForm extends Component {
                         style={{textAlign:"left"}}
                       >
                         <input
-                          style={textbxstyle}  
+                          style={uneditabletextbxstyle}  
                           type="text" 
                           id="id" 
                           name="id"

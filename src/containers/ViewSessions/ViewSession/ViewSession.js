@@ -3,6 +3,7 @@ import axios from '../../../axios';
 
 import classes from './ViewSession.module.css';
 import {Tabs, Tab, Table} from 'react-bootstrap';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 class ViewSession extends Component {
   constructor() {
@@ -28,7 +29,8 @@ class ViewSession extends Component {
         userAgent: '',
         videos: {},
       },
-      dataLoaded: false
+      dataLoaded: false,
+      showSourceModal: false
     }
   }
 
@@ -77,23 +79,93 @@ class ViewSession extends Component {
       // update state
       this.setState({data: loadedData[0]});
       this.setState({dataLoaded: true});
+      //console.log(this.state);
+    });
+  }
 
-      
+  // render anomalies table rows dynamically based on number of objects in anomalies array
+  renderAnomalyTableRows(array) {
+    return array.map(item =>
+      <tr key={item}>
+        <td>{item.id}</td>
+        <td>{item.faces}</td>
+        <td>{item.relativePosition.start}</td>
+        <td>{item.relativePosition.end}</td>
+        <td>{item.absolutePosition.start}</td>
+        <td>{item.absolutePosition.end}</td>
+        <td>{item.time.start}</td>
+        <td>{item.time.end}</td>
+      </tr>
+    );
+  }
+
+  // render openTok archive table rows dynamically based on number of objects in archives array
+  renderOpenTokTableRows(array) {
+    return array.map(item =>
+      <tr>
+        <td>{item.sessionId}</td>
+        <td>{item.id}</td>
+        <td>{item.name}</td>
+        <td>{item.event}</td>
+        <td>{item.partnerId}</td>
+        <td>{item.projectId}</td>
+        <td>{item.password}</td>
+        <td>{item.outputMode}</td>
+        <td>{item.hasAudio.toString()}</td>
+        <td>{item.hasVideo.toString()}</td>
+        <td>{item.size}</td>
+        <td>{item.status}</td>
+      </tr>
+    );
+  }
+
+  handleSourceLinkClick() {
+    // store source url in a variable
+    const sessionId = this.state.data.itemId;
+
+    // initialize query parameters array
+    const queryParams = [];
+
+    // encode sessionId and push into queryParams as strings
+    queryParams.push(encodeURIComponent('sessionId') + '=' + encodeURIComponent(sessionId));
+
+    // join queryParams strings and store in variable
+    const queryString = queryParams.join('&');
+    
+    // pass queryString data to ViewSourceURL container via router
+    this.history.push({
+      pathname: '/view-sourceURL',
+      search: '?' + queryString
     });
   }
 
   render() {
+    // reformat dates received from database
+    const unformattedStartTime = new Date(this.state.data.startTime);
+    const startTime = unformattedStartTime.toISOString();
+
+    const unformattedEndTime = new Date(this.state.data.endTime);
+    const endTime = unformattedEndTime.toISOString();
+
+    const unformattedCreated = new Date(this.state.data.created);
+    const created = unformattedCreated.toISOString();
+
+    const unformattedUpdated = new Date(this.state.data.updated);
+    const updated = unformattedUpdated.toISOString();
+
     return(
       <>
+        {/* if data has been loaded from api, render tables, if not, display loading message */}
         {this.state.dataLoaded 
           ? 
           <main className={classes.main}>
             <h1 className={classes.header}>View Session</h1>
+
             <div className={classes.wrap}>
               <div className={classes.tabWrap}>
                 <Tabs defaultActiveKey="main" id="sessionTabs">
                   <Tab eventKey="main" title="Main">
-                    <Table id='mainTable' striped bordered hover>
+                    <Table id='mainTable' striped bordered hover style={{tableLayout: 'fixed'}}>
                       <thead>
                         <tr>
                           <th>Session ID</th>
@@ -112,15 +184,15 @@ class ViewSession extends Component {
                           <td>{this.state.data.sessionOrgId}</td>
                           <td>{this.state.data.sessionTestId}</td>
                           <td>{this.state.data.sessionUserId}</td>
-                          <td></td>
-                          <td></td>
+                          <td>{startTime}</td>
+                          <td>{endTime}</td>
                         </tr>
                       </tbody>
                     </Table>
                   </Tab>
       
                   <Tab eventKey="location" title="Location">
-                    <Table id='locationTable' striped bordered hover>
+                    <Table id='locationTable' striped bordered hover style={{tableLayout: 'fixed'}}>
                       <thead>
                         <tr>
                           <th>Latitude</th>
@@ -137,7 +209,7 @@ class ViewSession extends Component {
                   </Tab>
       
                   <Tab eventKey="userAgent" title="User Agent">
-                    <Table id='userAgentTable' striped bordered hover>
+                    <Table id='userAgentTable' striped bordered hover style={{tableLayout: 'fixed'}}>
                       <thead>
                         <tr>
                           <th>User Agent</th>
@@ -152,7 +224,7 @@ class ViewSession extends Component {
                   </Tab>
       
                   <Tab eventKey="analytics" title="Analytics">
-                    <Table id='analyticsTable' striped bordered hover>
+                    <Table id='analyticsTable' striped bordered hover style={{tableLayout: 'fixed'}}>
                       <thead>
                         <tr>
                           <th colSpan="8">PARAMETERS</th>
@@ -166,7 +238,7 @@ class ViewSession extends Component {
                       </thead>
                       <tbody>
                         <tr>
-                          <td colSpan="2">#</td>
+                          <td colSpan="2"><a href={this.state.data.analytics.postProcess.parameters.source} rel="noreferrer" target="_blank">Link to URL</a></td>
                           <td colSpan="2">{this.state.data.analytics.postProcess.parameters.interval}</td>
                           <td colSpan="2">{this.state.data.analytics.postProcess.parameters.duration}</td>
                           <td colSpan="2">{this.state.data.analytics.postProcess.parameters.frame}</td>
@@ -186,10 +258,10 @@ class ViewSession extends Component {
                       </thead>
                       <tbody>
                         <tr>
-                          <td colSpan="2"></td>
-                          <td colSpan="2"></td>
-                          <td colSpan="2"></td>
-                          <td colSpan="2"></td>
+                          <td colSpan="2">{this.state.data.analytics.postProcess.videoAttributes.duration}</td>
+                          <td colSpan="2">{this.state.data.analytics.postProcess.videoAttributes.frames}</td>
+                          <td colSpan="2">{this.state.data.analytics.postProcess.videoAttributes.processed}</td>
+                          <td colSpan="2">{this.state.data.analytics.postProcess.videoAttributes.fps}</td>
                         </tr>
                       </tbody>
       
@@ -205,9 +277,9 @@ class ViewSession extends Component {
                       </thead>
                       <tbody>
                         <tr>
-                          <td colSpan="3"></td>
-                          <td colSpan="3"></td>
-                          <td colSpan="2"></td>
+                          <td colSpan="3">{this.state.data.analytics.postProcess.statistics.video}</td>
+                          <td colSpan="3">{this.state.data.analytics.postProcess.statistics.anomalies}</td>
+                          <td colSpan="2">{this.state.data.analytics.postProcess.statistics.fps}</td>
                         </tr>
                       </tbody>
       
@@ -222,15 +294,15 @@ class ViewSession extends Component {
                       </thead>
                       <tbody>
                         <tr>
-                          <td colSpan="4">#</td>
-                          <td colSpan="4">#</td>
+                          <td colSpan="4">{this.state.data.analytics.postProcess.faces.singleFaceRatio}</td>
+                          <td colSpan="4">{this.state.data.analytics.postProcess.faces.averageFaceCount}</td>
                         </tr>
                       </tbody>
                     </Table>
                   </Tab>
       
                   <Tab eventKey="anomalies" title="Anomalies">
-                    <Table id='anomaliesTable' striped bordered hover>
+                    <Table id='anomaliesTable' striped bordered hover style={{tableLayout: 'fixed'}}>
                       <thead>
                         <tr>
                           <th colSpan="8">ANOMALIES</th>
@@ -247,16 +319,7 @@ class ViewSession extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                        </tr>
+                        {this.renderAnomalyTableRows(this.state.data.analytics.postProcess.anomalies)}
                       </tbody>
                     </Table>
                   </Tab>
@@ -265,82 +328,28 @@ class ViewSession extends Component {
                     <Table id='openTokTable' striped bordered hover>
                       <thead>
                         <tr>
-                          <th>Created At</th>
-                          <th>Duration</th>
-                          <th>Event</th>
-                          <th>Has Audio</th>
-                          <th>Has Video</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                        </tr>
-                      </tbody>
-      
-                      <thead>
-                        <tr>
+                          <th>Session ID</th>
                           <th>Archive ID</th>
                           <th>Archive Name</th>
-                          <th>Output Mode</th>
+                          <th>Event</th>
                           <th>Partner ID</th>
-                          <th>Password</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                        </tr>
-                      </tbody>
-                      
-                      <thead>
-                        <tr>
                           <th>Project ID</th>
-                          <th colSpan="2">Reason</th>
-                          <th>Resolution</th>
-                          <th>Session ID</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>#</td>
-                          <td colSpan="2">#</td>
-                          <td>#</td>
-                          <td>#</td>
-                        </tr>
-                      </tbody>
-      
-                      <thead>
-                        <tr>
-                          <th>sha256sum</th>
+                          <th>Password</th>
+                          <th>Output Mode</th>
+                          <th>Has Audio?</th>
+                          <th>Has Video?</th>
                           <th>Size</th>
                           <th>Status</th>
-                          <th>Updated At</th>
-                          <th>Process State</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>{this.state.data.processState}</td>
-                        </tr>
+                        {this.renderOpenTokTableRows(this.state.data.openTok.archives)}
                       </tbody>
                     </Table>
                   </Tab>
       
                   <Tab eventKey="examinee" title="Examinee">
-                    <Table id='examineeTable' striped bordered hover>
+                    <Table id='examineeTable' striped bordered hover style={{tableLayout: 'fixed'}}>
                       <thead>
                         <tr>
                           <th>ID</th>
@@ -360,7 +369,7 @@ class ViewSession extends Component {
                     </Table>
                   </Tab>
                   <Tab eventKey="images" title="Images">
-                    <Table id='imageTable' striped bordered hover>
+                    <Table id='imageTable' striped bordered hover style={{tableLayout: 'fixed'}}>
                       <thead>
                         <tr>
                           <th>Face</th>
@@ -369,14 +378,14 @@ class ViewSession extends Component {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{this.state.data.images.face}</td>
-                          <td>{this.state.data.images.identification}</td>
+                          <td>{this.state.data.images ? this.state.data.images.face : 'no image'}</td>
+                          <td>{this.state.data.images ? this.state.data.images.identification : 'no image'}</td>
                         </tr>
                       </tbody>
                     </Table>
                   </Tab>
                   <Tab eventKey="test" title="Test">
-                    <Table id='testTable' striped bordered hover>
+                    <Table id='testTable' striped bordered hover style={{tableLayout: 'fixed'}}>
                       <thead>
                         <tr>
                           <th>Test ID</th>
@@ -392,7 +401,7 @@ class ViewSession extends Component {
                     </Table>
                   </Tab>
                   <Tab eventKey="videos" title="Videos">
-                    <Table id='videosTable' striped bordered hover>
+                    <Table id='videosTable' striped bordered hover style={{tableLayout: 'fixed'}}>
                       <thead>
                         <tr>
                           <th>Environment</th>
@@ -410,7 +419,7 @@ class ViewSession extends Component {
                     </Table>
                   </Tab>
                   <Tab eventKey="dates" title="Dates">
-                    <Table id='datesTable' striped bordered hover>
+                    <Table id='datesTable' striped bordered hover style={{tableLayout: 'fixed'}}>
                       <thead>
                         <tr>
                           <th>Date Created</th>
@@ -419,8 +428,8 @@ class ViewSession extends Component {
                       </thead>
                       <tbody>
                         <tr>
-                          <td></td>
-                          <td></td>
+                          <td>{created}</td>
+                          <td>{updated}</td>
                         </tr>
                       </tbody>
                     </Table>
@@ -429,24 +438,14 @@ class ViewSession extends Component {
               </div>
             </div>
           </main> 
-          : <h1>loading...</h1>}
+          : <main className={classes.main}>
+              <div className={classes.spinnerWrap}>
+                <Spinner />
+              </div>
+            </main>}
       </>
     );
   }
 }
 
 export default ViewSession;
-
-// // reformat dates received from database
-// const unformattedStartTime = new Date(this.state.data.startTime);
-// const startTime = unformattedStartTime.toISOString();
-
-// const unformattedEndTime = new Date(this.state.data.endTime);
-// const endTime = unformattedEndTime.toISOString();
-
-// const unformattedCreated = new Date(this.state.data.created);
-// const created = unformattedCreated.toISOString();
-
-// const unformattedUpdated = new Date(this.state.data.updated);
-// const updated = unformattedUpdated.toISOString();
-

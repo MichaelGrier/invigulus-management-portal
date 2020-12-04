@@ -68,7 +68,7 @@ class TestForm extends Component {
     // prevent default submit action
     event.preventDefault();
 
-    if (this.state.itemType === "" || this.state.testOrgId === "" || this.state.id == "" || this.state.description === "" || this.state.tds === "")
+    if (this.state.itemType === "" || this.state.testOrgId === "" || this.state.id === "" || this.state.description === "" || this.state.tds === "")
     {
       alert("One or more required fields are missing.")
     }
@@ -78,51 +78,51 @@ class TestForm extends Component {
 
     // make api call to post data
     axios.post('/tests', formData)
-         // if request is successful, redirect to confirmation page
-         .then(res => {
-           if (res.status === 200) {
+        // if request is successful, redirect to confirmation page
+        .then(res => {
+          if (res.status === 200) {
             this.props.history.push('/add-test-confirmation')
-           } 
-         })
-         // else, display error
-         .catch(error => alert(error))    
-  }
-}
-
-  formValChange = e => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    let isError = { ...this.state.isError };
-
-    switch (name) {
-        case "itemType":
-            isError.itemType =
-                value === ""? "This field is required" : "";
-            break;
-        case "testOrgId":
-            isError.testOrgId = value === ""? "This field is required": "";
-            break;
-        case "id":
-            isError.id =
-                value === ""? "This field is required": "";
-            break;
-        case "description":
-            isError.description =
-                value === ""? "This field is required": "";
-            break;
-        case "tds":
-            isError.tds =
-                value === ""? "This field is required": "";
-            break;
-        default:
-            break;
+          } 
+        })
+        // else, display error
+        .catch(error => alert(error))    
     }
+  }
 
-    this.setState({
-        isError,
-        [name]: value
-    })
-};
+  // formValChange = e => {
+  //   e.preventDefault();
+  //   const { name, value } = e.target;
+  //   let isError = { ...this.state.isError };
+
+  //   switch (name) {
+  //       case "itemType":
+  //           isError.itemType =
+  //               value === ""? "This field is required" : "";
+  //           break;
+  //       case "testOrgId":
+  //           isError.testOrgId = value === ""? "This field is required": "";
+  //           break;
+  //       case "id":
+  //           isError.id =
+  //               value === ""? "This field is required": "";
+  //           break;
+  //       case "description":
+  //           isError.description =
+  //               value === ""? "This field is required": "";
+  //           break;
+  //       case "tds":
+  //           isError.tds =
+  //               value === ""? "This field is required": "";
+  //           break;
+  //       default:
+  //           break;
+  //   }
+
+  //   this.setState({
+  //       isError,
+  //       [name]: value
+  //   })
+  // };
 
   render () {
     
@@ -196,7 +196,7 @@ class TestForm extends Component {
                           name="itemType"
                           value={this.state.itemType} 
                           onChange={this.handleItemTypeChange}
-                          onBlur={this.formValChange} 
+                          //onBlur={this.formValChange} 
                         />
                         <br/>
                         <span 
@@ -227,7 +227,7 @@ class TestForm extends Component {
                           name="testOrgId"
                           value={this.state.testOrgId}
                           onChange={this.handleTestOrgIdChange}
-                          onBlur={this.formValChange} 
+                          //onBlur={this.formValChange} 
                         />
                         <br/>
                         <span 
@@ -258,7 +258,7 @@ class TestForm extends Component {
                           name="id"
                           value={this.state.id} 
                           onChange={this.handleIdChange}
-                          onBlur={this.formValChange} 
+                          //onBlur={this.formValChange} 
                         />
                         <br/>
                         <span 
@@ -290,7 +290,7 @@ class TestForm extends Component {
                           name="description"
                           value={this.state.description} 
                           onChange={this.handleDescriptionChange}
-                          onBlur={this.formValChange} 
+                          //onBlur={this.formValChange} 
                         />
                         <br/>
                         <span 
@@ -321,7 +321,7 @@ class TestForm extends Component {
                           name="tds"
                           value={this.state.tds}
                           onChange={this.handleTdsChange}
-                          onBlur={this.formValChange}
+                          //onBlur={this.formValChange}
                         />
                         <br/>
                         <span 

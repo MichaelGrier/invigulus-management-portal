@@ -19,9 +19,11 @@ import {faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import SmallButton from '../../UI/SmallButton/SmallButton';
+import Spinner from '../../UI/Spinner/Spinner';
 
 const TestTable = () => {
   const [tests, setTests] = useState([]);
+  const [loaded, setLoaded] = useState(false);
   const history = useHistory();
 
   // get data from api
@@ -44,8 +46,9 @@ const TestTable = () => {
           updated: pathToData[Item].updated
         });
       }
-      //console.log(loadedData);
+      // update state
       setTests(loadedData);
+      setLoaded(true);
     });
   }, []);
 
@@ -128,74 +131,83 @@ const TestTable = () => {
     // make axios call, then reload page
     axios.delete(`/tests/${itemToDelete}`)
          .then(response => {
-          console.log(response);
           window.location.reload();
          })
          .catch(error => alert(error));
   }
 
   return (
-    <>
-      <div className={classes.toolBarWrap}>
-        {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
-        <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
-        <Link to={{pathname: '/add-test'}}><SmallButton>Add New</SmallButton></Link>
-      </div>
+    <div className={classes.tableWrap}>
+      {/* if data is loaded, render table and associated components. if not, render loading spinner */}
+      {loaded ? 
+        <div>
+          <div className={classes.toolBarWrap}>
+            {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
+            <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
+            <Link to={{pathname: '/add-test'}}><SmallButton>Add New</SmallButton></Link>
+          </div>
 
-      {/* render table */}
-      <Table {...getTableProps()} striped bordered hover>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  // render headers w/ sort functionality
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>  
-                    {column.render('Header')}
-                    <span>
-                      {column.isSorted ? (column.isSortedDesc ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} />) : ''}
-                    </span>
-                  </th>
-                ))} 
-              </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map(row => {
-            prepareRow(row)
-            return (
-              // render table rows
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                })}
-              </tr>
-            )
-          })}
-        </tbody>
-      </Table>
-      <div>
-        {/* render pagination buttons */}
-        <button
-          className={classes.pageButton} 
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}
-        >Previous</button>
-        <span className={classes.pageNum}>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>
-        </span>
-        <button
-          className={classes.pageButton} 
-          onClick={() => nextPage()}
-          disabled={!canNextPage}
-        >Next</button>
-      </div>
-      <br/>
-      <SmallButton clicked={HandleEditRequest}>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
-      <SmallButton clicked={handleDeleteRequest}>Delete</SmallButton>
-    </>
+          {/* render table */}
+          <Table {...getTableProps()} striped bordered hover>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column) => (
+                      // render headers w/ sort functionality
+                      <th {...column.getHeaderProps(column.getSortByToggleProps())}>  
+                        {column.render('Header')}
+                        <span>
+                          {column.isSorted ? (column.isSortedDesc ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} />) : ''}
+                        </span>
+                      </th>
+                    ))} 
+                  </tr>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map(row => {
+                prepareRow(row)
+                return (
+                  // render table rows
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </Table>
+          <div>
+            {/* render pagination buttons */}
+            <button
+              className={classes.pageButton} 
+              onClick={() => previousPage()}
+              disabled={!canPreviousPage}
+            >Previous</button>
+            <span className={classes.pageNum}>
+              Page{' '}
+              <strong>
+                {pageIndex + 1} of {pageOptions.length}
+              </strong>
+            </span>
+            <button
+              className={classes.pageButton} 
+              onClick={() => nextPage()}
+              disabled={!canNextPage}
+            >Next</button>
+          </div>
+          <br/>
+          <SmallButton clicked={HandleEditRequest}>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
+          <SmallButton clicked={handleDeleteRequest}>Delete</SmallButton>
+        </div>
+      : 
+        <div className={classes.spinnerWrap}>
+          <Spinner />
+        </div>
+      }
+
+    </div>
   );
 }
 export default withRouter(TestTable);
