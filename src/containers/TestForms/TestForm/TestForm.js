@@ -113,7 +113,7 @@ class TestForm extends Component {
     // prevent default submit action
     event.preventDefault();
 
-    if (this.state.data.itemType === "" || this.state.data.testOrgId === "" || this.state.data.id === "" || this.state.description === "" || this.state.data.tds === "")
+    if (this.state.data.itemType === "" || this.state.data.testOrgId === "" || this.state.data.id === "" || this.state.data.description === "" || this.state.data.tds === "")
     {
       alert("One or more required fields are missing.")
     }
@@ -210,7 +210,6 @@ class TestForm extends Component {
                         <span 
                           id="itemTypeErrMsg"
                           style={{color:"red"}}>
-                            {this.ItemTypeErr}
                         </span>
                       </td>
                     </tr>               

@@ -10,6 +10,7 @@ import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
 import Accordion4 from '../../components/Accordion/Accordion4';
 import Accordion5 from '../../components/Accordion/Accodion5';
+import { faBoxTissue } from '@fortawesome/free-solid-svg-icons';
 
 class OrgForm extends Component {
   constructor() {
@@ -21,13 +22,15 @@ class OrgForm extends Component {
           itemType: '',
           contact: null,
           address: null,
-
           configuration: null,
 
           }
     
     let RadioVal1 = null
     let RadioVal2 = null
+    let imgCapVal = null
+    let idCapVal = null
+
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleOrgIDChange = this.handleOrgIDChange.bind(this);
     // this.handleitemTypeChange = this.handleitemTypeChange.bind(this);
@@ -38,6 +41,25 @@ class OrgForm extends Component {
     this.handleimgCapture = this.handleimgCapture.bind(this);
     this.handleConfigChange = this.handleConfigChange.bind(this);
     this.handleidCapture = this.handleidCapture.bind(this);
+    this.orgnameVal = this.orgnameVal.bind(this);
+    this.orgidVal = this.orgidVal.bind(this);
+    this.addresstypeVal = this.addresstypeVal.bind(this);
+    this.streetVal = this.streetVal.bind(this);
+    this.cityVal = this.cityVal.bind(this);
+    this.zipVal = this.zipVal.bind(this);
+    this.stateVal = this.stateVal.bind(this);
+    this.countryVal = this.countryVal.bind(this);
+    this.contacttypeVal = this.contacttypeVal.bind(this);
+    this.fnameVal = this.fnameVal.bind(this);
+    this.lnameVal = this.lnameVal.bind(this);
+    this.phoneVal = this.phoneVal.bind(this);
+    this.emailVal = this.emailVal.bind(this);
+    this.imgcaptureVal = this.imgcaptureVal.bind(this);
+    this.idcaptureVal = this.idcaptureVal.bind(this);
+    this.smoothingframeVal = this.smoothingframeVal.bind(this);
+    this.anomalydurationVal = this.anomalydurationVal.bind(this);
+    this.frameintervalVal = this.frameintervalVal.bind(this);
+    this.stateUpdate = this.stateUpdate.bind(this);
   }
 
   // whenever a change is made to an input field, update the corresponding state property
@@ -48,14 +70,6 @@ class OrgForm extends Component {
   handleOrgIDChange(event) {
     this.setState({id: event.target.value});
   }
-
-  // handleitemTypeChange(event) {
-  //   this.setState({itemType: event.target.value});
-  // }
-
-  // handleitemIDChange(event) {
-  //   this.setState({itemId: event.target.value});
-  // }
 
   handleAChange() {
     let typea = document.getElementById("addresstype")
@@ -85,7 +99,6 @@ class OrgForm extends Component {
         type: typea2.value,
         city: citya2.value,
         street: streeta2.value }]
-
       })
   }
 
@@ -159,11 +172,224 @@ class OrgForm extends Component {
     })
   }
 
+  stateUpdate() {
+    this.handleCChange();
+    this.handleAChange();
+    this.handleConfigChange();
+  }
+
+  orgnameVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("orgnameErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("orgnameErrMsg").innerHTML=""
+      }
+  }
+
+  orgidVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("orgidErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("orgidErrMsg").innerHTML=""
+      }
+  }
+
+  addresstypeVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("addresstypeErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("addresstypeErrMsg").innerHTML=""
+      }
+  }
+
+  streetVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("streetErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("streetErrMsg").innerHTML=""
+      }
+  }
+
+  zipVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("zipErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("zipErrMsg").innerHTML=""
+      }
+  }
+
+  cityVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("cityErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("cityErrMsg").innerHTML=""
+      }
+  }
+
+  stateVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("stateErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("stateErrMsg").innerHTML=""
+      }
+  }
+
+  countryVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("countryErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("countryErrMsg").innerHTML=""
+      }
+  }
+
+  contacttypeVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("contacttypeErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("contacttypeErrMsg").innerHTML=""
+      }
+  }
+
+  fnameVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("fnameErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("fnameErrMsg").innerHTML=""
+      }
+  }
+
+  lnameVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("lnameErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("lnameErrMsg").innerHTML=""
+      }
+  }
+
+  phoneVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("phoneErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("phoneErrMsg").innerHTML=""
+      }
+  }
+
+  emailVal(event) {
+    let emailv = document.getElementById("email")
+    let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let isValid= rg.test(emailv.value)
+    
+    if (event.target.value === ""){
+      document.getElementById("emailErrMsg").innerHTML="Required"
+      }
+    else if (!isValid) {
+        document.getElementById("emailErrMsg").innerHTML="The email has an incorrect format"
+      }
+    else {
+        document.getElementById("emailErrMsg").innerHTML=""
+      }
+  }
+
+  idcaptureVal() {
+    let RadioidNo = document.getElementById("idCaptureNo")
+    let RadioidYes = document.getElementById("idCaptureYes")
+    if (!RadioidNo.checked && !RadioidYes.checked){
+      //document.getElementById("imgcaptureErrMsg").innerHTML="Required"
+      this.idCapVal = false
+      }
+      else{
+      //document.getElementById("imgcaptureErrMsg").innerHTML=""
+      this.idCapVal = true
+      }
+  }
+
+  imgcaptureVal() {
+    let RadioimgNo = document.getElementById("imgCaptureNo")
+    let RadioimgYes = document.getElementById("imgCaptureYes")
+    if (!RadioimgNo.checked && !RadioimgYes.checked){
+      //document.getElementById("imgcaptureErrMsg").innerHTML="Required"
+      this.imgCapVal = false
+      }
+      else{
+      //document.getElementById("imgcaptureErrMsg").innerHTML=""
+      this.imgCapVal = true
+      }
+  }
+
+  frameintervalVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("frameintervalErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("frameintervalErrMsg").innerHTML=""
+      }
+  }
+
+  anomalydurationVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("anomalydurationErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("anomalydurationErrMsg").innerHTML=""
+      }
+  }
+
+  smoothingframeVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("smoothingframeErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("smoothingframeErrMsg").innerHTML=""
+      }
+  }
+
+
 
   handleSubmit(event) {
 
     event.preventDefault();
+    let orgNamev = document.getElementById("orgname")
+    let orgIdv = document.getElementById("orgID")
+    let typeav = document.getElementById("addresstype")
+    let streetav = document.getElementById("street")
+    let cityav = document.getElementById("city")
+    let stateav = document.getElementById("state")
+    let zipav = document.getElementById("zip")
+    let countryav = document.getElementById("country")
+    let fnamecv = document.getElementById("fname")
+    let lnamecv = document.getElementById("lname")
+    let typecv = document.getElementById("contacttype")
+    let phonecv = document.getElementById("phone")
+    let emailcv = document.getElementById("email")
+    let smoothingfv = document.getElementById("smoothingframe")
+    let anomalydv = document.getElementById("anomalyduration")
+    let frameiv = document.getElementById("frameinterval")
 
+    // if (this.state.description === "" || this.state.id === "" || this.state.type === "" || this.state.street === "" || this.state.city === ""
+    // || this.state.zip === "" || this.state.state === "" || this.state.country === "" || this.state.type === "" || this.state.fname === ""
+    // || this.state.lname === "" || this.state.phone === "" || this.state.email === "" || this.idCapVal === false || this.imgCapVal === false || 
+    // this.state.frameInterval === "" || this.state.smoothingFrame === "" || this.state.anomalyDuration === "")
+
+    if (orgNamev.value === "" || orgIdv.value === "" || typeav.value === "" || streetav.value === "" || cityav.value === "" || 
+    stateav.value === "" || zipav.value === "" || countryav.value === "" || fnamecv.value === "" || lnamecv.value === "" ||
+    typecv.value === "" || phonecv.value === "" || emailcv.value === "" || !this.idCapVal || !this.imgCapVal || smoothingfv.value === "" ||
+    anomalydv.value === "" || frameiv.value === "")
+    {
+      alert ("One or more required fields are missing")
+    }
+    else {
     // prevent default submit action
     // distribute data stored in state into new object
     const formData = {
@@ -178,11 +404,12 @@ class OrgForm extends Component {
     axios.post(`/orgs`, formData)
          .then(res => {
           if (res.status === 200) {
-            this.props.history.push('/add-test-confirmation')
+            this.props.history.push('/add-org-confirmation')
            } 
          })
          // else, display error
          .catch(error => alert(error))   
+    }
   }
       state = {
       isOpen: true,
@@ -298,7 +525,8 @@ class OrgForm extends Component {
       <div>
         <main className={classes.main}>
           <Heading2>Add Organizations</Heading2>
-          <form className={classes.wrapper} onSubmit={this.handleSubmit}>
+          <form className={classes.wrapper} 
+            onSubmit={this.handleSubmit}>
             <fieldset>
               <div className={classes.flexChild}>
                 <table>
@@ -314,19 +542,19 @@ class OrgForm extends Component {
                       className={classes.cell4} 
                       style={{textAlign:"left"}}>
                       <input 
-                        // onBlur = {()=> this.ValidatorN()} 
-                        // onChangeText={(text) => {this.setState({ name: text })}} 
                         style={textbxstyle2} 
                         type="text" 
                         id="orgname" 
                         name="orgname"
                         value={this.state.description}
                         onChange={this.handleNameChange}
+                        onBlur={this.orgnameVal}
                         />
-                      {/* <p 
-                        style={{color:"red"}}>
-                        {this.state.emptyErrorName}
-                      </p> */}
+                      <br/>
+                      <span 
+                          id="orgnameErrMsg"
+                          style={{color:"red"}}>
+                      </span>
                     </td>
                   </tr>
                   <tr>
@@ -349,7 +577,13 @@ class OrgForm extends Component {
                           id="orgID" 
                           name="orgID"
                           value={this.state.id}
+                          onBlur={this.orgidVal}
                           onChange={this.handleOrgIDChange}/>
+                        <br/>
+                        <span 
+                          id="orgidErrMsg"
+                          style={{color:"red"}}>
+                      </span>
                     </td>
                   </tr>
                   {/* <tr>
@@ -400,11 +634,13 @@ class OrgForm extends Component {
                                 type="text" 
                                 id="addresstype" 
                                 name="addresstype"
-                                //onChange={this.handleAChange}
+                                onBlur={this.addresstypeVal}
                                 />
-                                {/* <p style={{color:"red"}}>
-                                  {this.state.emptyErrorTofA}
-                                </p> */}
+                                <br/>
+                                <span 
+                                  id="addresstypeErrMsg"
+                                  style={{color:"red"}}>
+                                </span>
                               </td>
                             </tr>
                             <tr>
@@ -425,12 +661,13 @@ class OrgForm extends Component {
                                   type="text" 
                                   id="street" 
                                   name="street"
-                                  //onChange={this.handleAChange}
+                                  onBlur={this.streetVal}
                                   />
-                                {/* <p 
+                                <br/>
+                                <span 
+                                  id="streetErrMsg"
                                   style={{color:"red"}}>
-                                  {this.state.emptyErrorStreet}
-                                </p> */}
+                                </span>
                               </td>
                             </tr>
                             <tr>
@@ -451,12 +688,13 @@ class OrgForm extends Component {
                                   type="text" 
                                   id="city" 
                                   name="city"
-                                  //value={this.state.address.city}
-                                  //onChange={this.handleAChange}
+                                  onBlur={this.cityVal}
                                   />
-                                  {/* <p style={{color:"red"}}>
-                                    {this.state.emptyErrorCity}
-                                </p> */}
+                                <br/>
+                                <span 
+                                  id="cityErrMsg"
+                                  style={{color:"red"}}>
+                                </span>
                               </td>
                             </tr>
                             <tr> 
@@ -477,12 +715,13 @@ class OrgForm extends Component {
                                   type="text" 
                                   id="state" 
                                   name="state"
-                                  // value={this.state.address.state}
-                                  //onChange={this.handleAChange}
+                                  onBlur={this.stateVal}
                                   />
-                                {/* <p style={{color:"red"}}>
-                                  {this.state.emptyErrorState}
-                                </p> */}
+                                <br/>
+                                <span 
+                                  id="stateErrMsg"
+                                  style={{color:"red"}}>
+                                </span>
                               </td>
                             </tr>
                             <tr>
@@ -499,18 +738,17 @@ class OrgForm extends Component {
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
                                 <input 
-                                  // onBlur = {()=> this.ValidatorZC()} 
                                   style={textbxstyle2} 
-                                  // onChangeText={(text) => {this.setState({ zipcode: text })}} 
                                   type="text" 
                                   id="zip" 
                                   name="zip"
-                                  // value={this.state.address.zip}
-                                  //onChange={this.handleAChange}
+                                  onBlur={this.zipVal}
                                   />
-                                {/* <p style={{color:"red"}}>
-                                  {this.state.emptyErrorZipcode}
-                                </p> */}
+                                <br/>
+                                <span 
+                                  id="zipErrMsg"
+                                  style={{color:"red"}}>
+                                </span>
                               </td>
                             </tr>
                             <tr>
@@ -527,18 +765,17 @@ class OrgForm extends Component {
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
                                 <input 
-                                // onBlur = {()=> this.ValidatorCountry()} 
                                 style={textbxstyle2} 
-                                // onChangeText={(text) => {this.setState({ country: text })}}
                                 type="text" 
                                 id="country" 
                                 name="country"
-                                // value={this.state.address.country}
-                                //onChange={this.handleAChange}
+                                onBlur={this.countryVal}
                                 />
-                                {/* <p style={{color:"red"}}>
-                                  {this.state.emptyErrorCountry}
-                                </p> */}
+                                <br/>
+                                <span 
+                                  id="countryErrMsg"
+                                  style={{color:"red"}}>
+                                </span>
                               </td>
                             </tr>
                           </table>
@@ -649,7 +886,6 @@ class OrgForm extends Component {
                                 style={{textAlign:"left"}}>
                                 <input 
                                   style={textbxstyle2} 
-                                  // onChangeText={(text) => {this.setState({ zipcode2: text })}} 
                                   type="text" 
                                   id="zip2" 
                                   name="zip2"
@@ -670,12 +906,10 @@ class OrgForm extends Component {
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
                                 <input 
-                                  // onChangeText={(text) => {this.setState({ country2: text })}} 
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="country2" 
                                   name="country2"
-                                  //onChange={this.handleAChange}
                                   />
                               </td>
                             </tr>
@@ -705,12 +939,13 @@ class OrgForm extends Component {
                                     type="text" 
                                     id="contacttype" 
                                     name="contacttype"
-                                    //onChange={this.handleCChange}
+                                    onBlur={this.contacttypeVal}
                                     />
-                                    {/* <p 
+                                    <br/>
+                                    <span 
+                                      id="contacttypeErrMsg"
                                       style={{color:"red"}}>
-                                      {this.state.emptyErrorTofC}
-                                    </p> */}
+                                    </span>
                                 </td>
                               </tr>           
                               <tr>
@@ -727,17 +962,17 @@ class OrgForm extends Component {
                                   className={classes.cell2} 
                                   style={{textAlign:"left", width:"30%"}}>
                                   <input 
-                                    // onBlur = {()=> this.Validatorfname()} 
                                     style={textbxstyle}
                                     type="text" 
                                     id="fname" 
                                     name="fname"
-                                    //onChange={this.handleCChange}
+                                    onBlur={this.fnameVal}
                                    />
-                                    {/* <p 
-                                      style={{color:"red"}}>
-                                      {this.state.emptyErrorfname}
-                                    </p> */}
+                                  <br/>
+                                  <span 
+                                    id="fnameErrMsg"
+                                    style={{color:"red"}}>
+                                  </span>
                                 </td>
                               </tr>
                               <tr>
@@ -754,17 +989,17 @@ class OrgForm extends Component {
                                   className={classes.cell2} 
                                   style={{textAlign:"left"}}>
                                   <input 
-                                    // onBlur = {()=> this.Validatorlname()} 
                                     style={textbxstyle} 
                                     type="text" 
                                     id="lname" 
                                     name="lname"
-                                    //onChange={this.handleCChange}
+                                    onBlur={this.lnameVal}
                                     />
-                                  {/* <p 
+                                  <br/>
+                                  <span 
+                                    id="lnameErrMsg"
                                     style={{color:"red"}}>
-                                    {this.state.emptyErrorlname}
-                                  </p> */}
+                                  </span>
                                 </td>
                               </tr>               
                               <tr>
@@ -781,17 +1016,17 @@ class OrgForm extends Component {
                                   className={classes.cell2} 
                                   style={{textAlign:"left"}}>
                                   <input 
-                                    // onBlur = {()=> this.Validatoremail()} 
                                     style={textbxstyle} 
                                     type="text" 
                                     id="email" 
                                     name="email"
-                                    //onChange={this.handleCChange}
+                                    onBlur={this.emailVal}                                   
                                     />
-                                  {/* <p 
+                                  <br/>
+                                  <span 
+                                    id="emailErrMsg"
                                     style={{color:"red"}}>
-                                    {this.state.emptyErroremail}
-                                  </p> */}
+                                </span>
                                 </td>
                               </tr>                
                               <tr>
@@ -809,16 +1044,17 @@ class OrgForm extends Component {
                                   style={{textAlign:"left"}}>
                                   <input 
                                     // onBlur = {()=> this.Validatorphone()} 
-                                    // onChangeText={(text) => {this.setState({ phone: text })}} 
                                     style={textbxstyle} 
                                     type="text" 
                                     id="phone" 
                                     name="phone"
-                                    //onChange={this.handleCChange}
+                                    onBlur={this.phoneVal}
                                     />
-                                  {/* <p style={{color:"red"}}>
-                                    {this.state.emptyErrorphone}
-                                  </p> */}
+                                  <br/>
+                                  <span 
+                                    id="phoneErrMsg"
+                                    style={{color:"red"}}>
+                                  </span>
                                 </td>
                               </tr>
                             </table>
@@ -928,12 +1164,10 @@ class OrgForm extends Component {
                                 className={classes.cell2} 
                                 style={{textAlign:"left"}}>
                                 <input 
-                                  // onChangeText={(text) => {this.setState({ phone2: text })}} 
                                   style={textbxstyle} 
                                   type="text" 
                                   id="phone2" 
                                   name="phone2"
-                                  //onChange={this.handleCChange}
                                   />
                               </td>
                             </tr>
@@ -967,6 +1201,11 @@ class OrgForm extends Component {
                                   style={{paddingBottom:"0", color: "#3cB650"}}>
                                   Yes
                                 </label>
+                                <br/>
+                                <span 
+                                    id="imgCaptureErrMsg"
+                                    style={{color:"red"}}>
+                                  </span>
                               </td>
                               <td 
                                 className={classes.cell16} 
@@ -979,7 +1218,7 @@ class OrgForm extends Component {
                                       name="imgCaptureNo" 
                                       id="imgCaptureNo"
                                       value="false"
-                                      onChange={this.handleimgCapture}  
+                                      onChange={this.handleimgCapture} 
                                        />
                                     <span 
                                       className={classes.checkmark}>
@@ -1028,6 +1267,11 @@ class OrgForm extends Component {
                                   style={{paddingBottom:"0", color: "#3cB650"}}>
                                   Yes
                                 </label>
+                                <br/>
+                                <span 
+                                    id="idCaptureErrMsg"
+                                    style={{color:"red"}}>
+                                </span>
                               </td>
                               <td 
                                 className={classes.cell16} 
@@ -1079,14 +1323,17 @@ class OrgForm extends Component {
                               className={classes.cell2} 
                               style={{textAlign:"left", width:"30%"}}>
                               <input 
-                                // onChangeText={(text) => {this.setState({ frameinterval: text })}} 
                                 style={textbxstyle} 
                                 type="text" 
                                 id="frameinterval" 
                                 name="frameinterval"
-                                // value={this.state.frameInterval}
-                                //onChange={this.handleConfigChange}
+                                onBlur={this.frameintervalVal}                                
                                 />
+                              <br/>
+                              <span 
+                                id="frameintervalErrMsg"
+                                style={{color:"red"}}>
+                              </span>
                             </td>
                           </tr>
                           <tr>
@@ -1108,9 +1355,13 @@ class OrgForm extends Component {
                                 type="text" 
                                 id="anomalyduration" 
                                 name="anomalyduration"
-                                // value={this.state.anomalyDuration}
-                                //onChange={this.handleConfigChange}
+                                onBlur={this.anomalydurationVal}
                                 />
+                              <br/>
+                              <span 
+                                id="anomalydurationErrMsg"
+                                style={{color:"red"}}>
+                              </span>
                             </td>
                           </tr>
                           <tr>
@@ -1127,14 +1378,17 @@ class OrgForm extends Component {
                               className={classes.cell2} 
                               style={{textAlign:"left"}}>
                               <input 
-                                // onChangeText={(text) => {this.setState({ smoothingFrame: text })}} 
                                 style={textbxstyle} 
                                 type="text" 
                                 id="smoothingframe" 
                                 name="smoothingframe"
-                                // value={this.state.smoothingFrame}
-                                //onChange={this.handleConfigChange}
+                                onBlur={this.smoothingframeVal}
                                 />
+                              <br/>
+                              <span 
+                                id="smoothingframeErrMsg"
+                                style={{color:"red"}}>
+                              </span>
                             </td>
                           </tr>
                           </table>
@@ -1146,10 +1400,8 @@ class OrgForm extends Component {
                               <td 
                                 className={classes.cell7} 
                                 style={{textAlign:"right", paddingRight: "2%", paddingTop:"2%"}}>
-                                <input 
-                                  onClick={() => {this.handleAChange();
-                                  this.handleCChange();
-                                  this.handleConfigChange();}}
+                                <input
+                                  onClick={this.stateUpdate}
                                   type="submit" value="Submit" 
                                   style={buttonstyle}/>
                               </td>
@@ -1165,139 +1417,3 @@ class OrgForm extends Component {
 }
 
 export default withRouter(OrgForm);
-
-// ValidatorN() {
-
-//   if (this.state.name === "")
-//   {
-//     this.setState ({emptyErrorName: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErrorName: ""})
-//   }
-// }
-// ValidatorTofA() {
-//   if (this.state.typeofaddress === "" )
-//   {
-//     this.setState ({emptyErrorTofA: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErrorTofA: ""})
-//   }
-// }
-// ValidatorStr() {
-//   if (this.state.street === "")
-//   {
-//     this.setState ({emptyErrorStreet: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErrorStreet: ""})
-//   }
-// }
-// ValidatorCit() {
-//   if (this.state.city === "" )
-//   {
-//     this.setState ({emptyErrorCity: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErrorCity: ""})
-//   }
-// }
-
-// ValidatorSt() {
-//   if (this.state.statea === "")
-//   {
-//     this.setState ({emptyErrorState: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErrorState: ""})
-//   }
-// }
-// ValidatorZC() {
-//   if (this.state.zipcode === "")
-//   {
-//     this.setState ({emptyErrorZipcode: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErrorZipcode: ""})
-//   }
-// }
-// ValidatorCountry() {
-//   if (this.state.country === "")
-//   {
-//     this.setState ({emptyErrorCountry: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErrorCountry: ""})
-//   }
-// }
-// ValidatorTofC () {
-//   if (this.state.typeofcontact === "" )
-//   {
-//     this.setState ({emptyErrorTofC: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErrorTofC: ""})
-//   }
-// }
-// Validatorfname() {
-//   if (this.state.fname === "")
-//   {
-//     this.setState ({emptyErrorfname: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErrorfname: ""})
-//   }
-// }
-// Validatorlname() {
-//   if (this.state.lname === "" )
-//   {
-//     this.setState ({emptyErrorlname: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErrorlname: ""})
-//   }
-// }
-// Validatorphone() {
-//   if (this.state.phone === "")
-//   {
-//     this.setState ({emptyErrorphone: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErrorphone: ""})
-//   }
-// }
-// Validatoremail() {
-//   if (this.state.email === "")
-//   {
-//     this.setState ({emptyErroremail: "This field cannot be empty"})
-//   }
-//   else 
-//   {
-//     this.setState ({emptyErroremail: ""})
-//   }
-// }
-// Validatoremailrg() {
-// let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-// let isValid= rg.test(this.state.email)
-// if (isValid)
-// {
-//   this.setState ({emailError: "The email address entered has an incorrect format"})
-//   alert("The email address entered has an incorrect format")
-// }
-// else 
-// {
-//   this.setState ({emailError: ""})
-// }
-// }
