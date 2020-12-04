@@ -176,6 +176,8 @@ class OrgForm extends Component {
     this.handleCChange();
     this.handleAChange();
     this.handleConfigChange();
+    this.idcaptureVal();
+    this.imgcaptureVal();
   }
 
   orgnameVal(event) {
@@ -376,15 +378,21 @@ class OrgForm extends Component {
     let smoothingfv = document.getElementById("smoothingframe")
     let anomalydv = document.getElementById("anomalyduration")
     let frameiv = document.getElementById("frameinterval")
+    // let imageNov = document.getElementById("imgCaptureNo")
+    // let imageYesv = document.getElementById("imgCaptureYes")
+    // let idNov = document.getElementById("idCaptureNo")
+    // let idYesv = document.getElementById("idCaptureYes")
+    let emailv = document.getElementById("email")
+    let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let emailValid= rg.test(emailv.value)
 
-    // if (this.state.description === "" || this.state.id === "" || this.state.type === "" || this.state.street === "" || this.state.city === ""
-    // || this.state.zip === "" || this.state.state === "" || this.state.country === "" || this.state.type === "" || this.state.fname === ""
-    // || this.state.lname === "" || this.state.phone === "" || this.state.email === "" || this.idCapVal === false || this.imgCapVal === false || 
-    // this.state.frameInterval === "" || this.state.smoothingFrame === "" || this.state.anomalyDuration === "")
-
-    if (orgNamev.value === "" || orgIdv.value === "" || typeav.value === "" || streetav.value === "" || cityav.value === "" || 
+    if (!emailValid)
+    {
+      alert("The email entered is not valid")
+    }
+    else if (orgNamev.value === "" || orgIdv.value === "" || typeav.value === "" || streetav.value === "" || cityav.value === "" || 
     stateav.value === "" || zipav.value === "" || countryav.value === "" || fnamecv.value === "" || lnamecv.value === "" ||
-    typecv.value === "" || phonecv.value === "" || emailcv.value === "" || !this.idCapVal || !this.imgCapVal || smoothingfv.value === "" ||
+    typecv.value === "" || phonecv.value === "" || emailcv.value === "" || !this.idCapVal   || !this.imgCapVal || smoothingfv.value === "" ||
     anomalydv.value === "" || frameiv.value === "")
     {
       alert ("One or more required fields are missing")
