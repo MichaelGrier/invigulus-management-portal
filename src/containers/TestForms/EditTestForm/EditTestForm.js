@@ -56,6 +56,11 @@ class TestForm extends Component {
   handleSubmit(event) {
     // prevent default submit action
     event.preventDefault();
+    if (this.state.data.description === "" || this.state.data.tds === "")
+    {
+      alert("One or more required fields are missing.")
+    }
+    else {
     // store editable data in new object
     const newData = {
       description: this.state.data.description,
@@ -74,45 +79,30 @@ class TestForm extends Component {
          })
          // else, display error
          .catch(error => alert(error))    
+      }
+   }
+
+
+  descriptionVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("descriptionErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("descriptionErrMsg").innerHTML=""
+      }
   }
 
-  // formValChange = e => {
-  //   e.preventDefault();
-  //   const { name, value } = e.target;
-  //   let isError = { ...this.state.isError };
+  tdsVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("tdsErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("tdsErrMsg").innerHTML=""
+      }
+  }
 
-  //   switch (name) {
-  //       case "itemType":
-  //           isError.itemType =
-  //               value === ""? "This field is required" : "";
-  //           break;
-  //       case "testOrgId":
-  //           isError.testOrgId = value === ""? "This field is required": "";
-  //           break;
-  //       case "id":
-  //           isError.id =
-  //               value === ""? "This field is required": "";
-  //           break;
-  //       case "description":
-  //           isError.description =
-  //               value === ""? "This field is required": "";
-  //           break;
-  //       case "tds":
-  //           isError.tds =
-  //               value === ""? "This field is required": "";
-  //           break;
-  //       default:
-  //           break;
-  //   }
-
-  //   this.setState({
-  //       isError,
-  //       [name]: value
-  //   })
-  // };
 
   render () {
-    const { isError } = this.state
 
     const labelstyle = {
       color: "#3cB650",
@@ -193,14 +183,10 @@ class TestForm extends Component {
                           name="itemType"
                           readOnly
                           value={this.state.data.itemType} 
-                          // onChange={this.handleItemTypeChange}
+                          onChange={this.handleItemTypeChange}
                           onBlur={this.formValChange} 
                         />
                         <br/>
-                        <span 
-                          style={{color:"red"}}>
-                          {isError.itemType}
-                        </span>
                       </td>
                     </tr>               
                     <tr>
@@ -225,14 +211,10 @@ class TestForm extends Component {
                           name="testOrgId"
                           readOnly
                           value={this.state.data.testOrgId}
-                          // onChange={this.handleTestOrgIdChange}
+                          onChange={this.handleTestOrgIdChange}
                           onBlur={this.formValChange} 
                         />
                         <br/>
-                        <span 
-                          style={{color:"red"}}>
-                          {isError.testOrgId}
-                        </span>
                       </td>
                     </tr>
                     <tr>
@@ -260,14 +242,8 @@ class TestForm extends Component {
                           onChange={this.handleIdChange}
                           onBlur={this.formValChange} 
                         />
-                        <br/>
-                        <span 
-                          style={{color:"red"}}>
-                          {isError.id}
-                        </span>
                       </td>
                     </tr>
-
                     <tr >
                       <td 
                         className={classes.cell1}  
@@ -290,12 +266,12 @@ class TestForm extends Component {
                           name="description"
                           value={this.state.data.description} 
                           onChange={this.handleDescriptionChange}
-                          onBlur={this.formValChange} 
+                          onBlur={this.descriptionVal} 
                         />
                         <br/>
                         <span 
+                          id="descriptionErrMsg"
                           style={{color:"red"}}>
-                          {isError.description}
                         </span>
                       </td>
                     </tr>
@@ -321,12 +297,12 @@ class TestForm extends Component {
                           name="tds"
                           value={this.state.data.tds}
                           onChange={this.handleTdsChange}
-                          onBlur={this.formValChange}
+                          onBlur={this.tdsVal}
                         />
                         <br/>
                         <span 
+                          id="tdsErrMsg"
                           style={{color:"red"}}>
-                          {isError.tds}
                         </span>
                       </td>
                     </tr>

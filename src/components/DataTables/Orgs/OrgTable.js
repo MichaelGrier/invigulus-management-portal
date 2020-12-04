@@ -40,12 +40,12 @@ const OrgTable = () => {
           id: pathToData[Item].id,
           itemId: pathToData[Item].itemId,
           itemType: pathToData[Item].itemType,
-          // city: pathToData[Item].address[0].city,
-          // // // primary contact data
-          // firstName: pathToData[Item].contact[0].firstName,
-          // lastName: pathToData[Item].contact[0].lastName,
-          // email: pathToData[Item].contact[0].email,
-          // phone: pathToData[Item].contact[0].phone,
+          city: pathToData[Item].address[0].city,
+          // // primary contact data
+          firstName: pathToData[Item].contact[0].firstName,
+          lastName: pathToData[Item].contact[0].lastName,
+          email: pathToData[Item].contact[0].email,
+          phone: pathToData[Item].contact[0].phone,
           //full contact data
           contact: pathToData[Item].contact,
           // address

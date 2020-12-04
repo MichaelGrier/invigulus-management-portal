@@ -16,21 +16,19 @@ class TestForm extends Component {
         description: "",
         tds: "",
       },
-      isError: {
-        itemType: "",
-        testOrgId: "",
-        id: "",
-        description: "",
-        tds: "",
-      }
     }
-   
+    
     this.handleItemTypeChange = this.handleItemTypeChange.bind(this);
     this.handleTestOrgIdChange = this.handleTestOrgIdChange.bind(this);
     this.handleIdChange = this.handleIdChange.bind(this);
     this.handleTdsChange = this.handleTdsChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.itemTypeVal = this.itemTypeVal.bind(this);
+    this.testOrgIdVal = this.testOrgIdVal.bind(this);
+    this.idVal = this.idVal.bind(this);
+    this.descriptionVal = this.descriptionVal.bind(this);
+    this.tdsVal = this.tdsVal.bind(this);
   }
 
   // whenever a change is made to an input field, update the corresponding state property
@@ -64,11 +62,58 @@ class TestForm extends Component {
     this.setState({data});
   }
 
+  itemTypeVal(event) {
+    if (event.target.value === "")
+      {
+      document.getElementById("itemTypeErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("itemTypeErrMsg").innerHTML=""
+      }
+  }
+    
+  testOrgIdVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("testOrgIdErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("testOrgIdErrMsg").innerHTML=""
+      }
+  }
+
+  idVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("idErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("idErrMsg").innerHTML=""
+      }
+  }
+
+  descriptionVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("descriptionErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("descriptionErrMsg").innerHTML=""
+      }
+  }
+
+  tdsVal(event) {
+    if (event.target.value === ""){
+      document.getElementById("tdsErrMsg").innerHTML="Required"
+      }
+      else{
+      document.getElementById("tdsErrMsg").innerHTML=""
+      }
+  }
+
+
   handleSubmit(event) {
     // prevent default submit action
     event.preventDefault();
 
-    if (this.state.itemType === "" || this.state.testOrgId === "" || this.state.id === "" || this.state.description === "" || this.state.tds === "")
+    if (this.state.data.itemType === "" || this.state.data.testOrgId === "" || this.state.data.id === "" || this.state.data.description === "" || this.state.data.tds === "")
     {
       alert("One or more required fields are missing.")
     }
@@ -89,44 +134,7 @@ class TestForm extends Component {
     }
   }
 
-  // formValChange = e => {
-  //   e.preventDefault();
-  //   const { name, value } = e.target;
-  //   let isError = { ...this.state.isError };
-
-  //   switch (name) {
-  //       case "itemType":
-  //           isError.itemType =
-  //               value === ""? "This field is required" : "";
-  //           break;
-  //       case "testOrgId":
-  //           isError.testOrgId = value === ""? "This field is required": "";
-  //           break;
-  //       case "id":
-  //           isError.id =
-  //               value === ""? "This field is required": "";
-  //           break;
-  //       case "description":
-  //           isError.description =
-  //               value === ""? "This field is required": "";
-  //           break;
-  //       case "tds":
-  //           isError.tds =
-  //               value === ""? "This field is required": "";
-  //           break;
-  //       default:
-  //           break;
-  //   }
-
-  //   this.setState({
-  //       isError,
-  //       [name]: value
-  //   })
-  // };
-
   render () {
-    
-    const { isError } = this.state
 
     const labelstyle = {
       color: "#3cB650",
@@ -174,11 +182,11 @@ class TestForm extends Component {
                 <br/>
                 <table>
                   <tbody>
-                    <tr >
+                    <tr>
                       <td 
                         className={classes.cell1}  
                         style={{textAlign:"right"}}
-                      >
+                        >
                         <label 
                           htmlFor="itemType" 
                           style={labelstyle}
@@ -192,16 +200,16 @@ class TestForm extends Component {
                         <input
                           style={textbxstyle}                        
                           type="text" 
-                          id="itemType" 
-                          name="itemType"
+                          id="itemType"
+                          name="itemType" 
                           value={this.state.itemType} 
                           onChange={this.handleItemTypeChange}
-                          //onBlur={this.formValChange} 
+                          onBlur={this.itemTypeVal} 
                         />
                         <br/>
                         <span 
+                          id="itemTypeErrMsg"
                           style={{color:"red"}}>
-                          {isError.itemType}
                         </span>
                       </td>
                     </tr>               
@@ -227,12 +235,12 @@ class TestForm extends Component {
                           name="testOrgId"
                           value={this.state.testOrgId}
                           onChange={this.handleTestOrgIdChange}
-                          //onBlur={this.formValChange} 
+                          onBlur={this.testOrgIdVal} 
                         />
                         <br/>
                         <span 
-                          style={{color:"red"}}>
-                          {isError.testOrgId}
+                          id="testOrgIdErrMsg"
+                          style={{color:"red"}}>                          
                         </span>
                       </td>
                     </tr>
@@ -258,12 +266,12 @@ class TestForm extends Component {
                           name="id"
                           value={this.state.id} 
                           onChange={this.handleIdChange}
-                          //onBlur={this.formValChange} 
+                          onBlur={this.idVal} 
                         />
                         <br/>
                         <span 
+                          id="idErrMsg"
                           style={{color:"red"}}>
-                          {isError.id}
                         </span>
                       </td>
                     </tr>
@@ -290,12 +298,12 @@ class TestForm extends Component {
                           name="description"
                           value={this.state.description} 
                           onChange={this.handleDescriptionChange}
-                          //onBlur={this.formValChange} 
+                          onBlur={this.descriptionVal} 
                         />
                         <br/>
                         <span 
+                          id="descriptionErrMsg"
                           style={{color:"red"}}>
-                          {isError.description}
                         </span>
                       </td>
                     </tr>
@@ -321,12 +329,12 @@ class TestForm extends Component {
                           name="tds"
                           value={this.state.tds}
                           onChange={this.handleTdsChange}
-                          //onBlur={this.formValChange}
+                          onBlur={this.tdsVal}
                         />
                         <br/>
                         <span 
+                          id="tdsErrMsg"
                           style={{color:"red"}}>
-                          {isError.tds}
                         </span>
                       </td>
                     </tr>
