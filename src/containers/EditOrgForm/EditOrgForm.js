@@ -18,9 +18,9 @@ class EditOrgForm extends Component {
         data: {
           description: "",
           id: "",
-        //   contact: null,
-        //   address: null,
-        //   configuration: null,
+          contact: [{}],
+          address: [{}],
+          configuration: {}
         }
     }
     
@@ -374,21 +374,82 @@ class EditOrgForm extends Component {
   }
 
   componentDidMount() {
-    // parse query from URL string
-    const query = new URLSearchParams(this.props.location.search);
-    const data = {};
-    for (let param of query.entries()) {
-      // ['itemType', 'TST']
-      data[param[0]] = param[1];
+      // parse query from URL string to retrieve sessionId
+      const query = new URLSearchParams(this.props.location.search);
+      const orgId = {};
+      for (let param of query.entries()) {
+        orgId[param[0]] = param[1];
+      }
+      console.log(orgId)
+  
+      // extract itemId from sessionId object and process it for axios call (remove dynamodb prefix)
+      // const preProcesseditemId = orgId.itemId
+      // const stringToSlice = preProcesseditemId.toString();
+      // const processeditemId = stringToSlice.slice(4);
+  
+      // get session by sessionId
+      axios.get(`/orgs/${orgId}`).then(res => {
+        console.log(res.data.result.Items);
+        const pathToData = res.data.result.Items;
+        const loadedData = [];
+  
+        // push data objects into an array
+        for (const Item in pathToData) {
+          loadedData.push({
+          description: pathToData[Item].description,
+          id: pathToData[Item].id,
+          itemId: pathToData[Item].itemId,
+          itemType: pathToData[Item].itemType,
+          city: pathToData[Item].address[0].city,
+          country: pathToData[Item].address[0].country,
+          zip: pathToData[Item].address[0].zip,
+          street: pathToData[Item].address[0].street,
+          type: pathToData[Item].address[0].type,
+          city: pathToData[Item].address[1].city,
+          country: pathToData[Item].address[1].country,
+          zip: pathToData[Item].address[1].zip,
+          street: pathToData[Item].address[1].street,
+          type: pathToData[Item].address[1].type,
+          // // primary contact data
+          firstName: pathToData[Item].contact[0].firstName,
+          lastName: pathToData[Item].contact[0].lastName,
+          lastName: pathToData[Item].contact[0].type,
+          email: pathToData[Item].contact[0].email,
+          phone: pathToData[Item].contact[0].phone,
+          firstName: pathToData[Item].contact[1].firstName,
+          lastName: pathToData[Item].contact[1].lastName,
+          lastName: pathToData[Item].contact[1].type,
+          email: pathToData[Item].contact[1].email,
+          phone: pathToData[Item].contact[1].phone,
+          //full contact data
+          contact: pathToData[Item].contact,
+          // address
+          address: pathToData[Item].address,
+          // configuration params
+          configuration: pathToData[Item].configuration,
+          registration: pathToData[Item].configuration.registration,
+          postProcess: pathToData[Item].configuration.postProcess,
+          imageCapture: pathToData[Item].configuration.registration.imageCapture,
+          idCapture: pathToData[Item].configuration.registration.idCapture,
+          frameInterval: pathToData[Item].configuration.postProcess.frameInterval,
+          anomalyDuration: pathToData[Item].configuration.postProcess.anomalyDuration,
+          smoothingFrame: pathToData[Item].configuration.postProcess.smoothingFrame,
+          // timestamps
+          });
+        }
+        // update state
+        this.setState({data: loadedData[0]});
+        this.setState({dataLoaded: true});
+        //console.log(this.state);
+      });
     }
-    this.setState({data: data});
-  }
+
 
   handleSubmit(event) {
 
     event.preventDefault();
     let orgNamev = document.getElementById("orgname")
-    let orgIdv = document.getElementById("orgID")
+    //let orgIdv = document.getElementById("orgID")
     let typeav = document.getElementById("addresstype")
     let streetav = document.getElementById("street")
     let cityav = document.getElementById("city")
@@ -425,10 +486,10 @@ class EditOrgForm extends Component {
     else {
         // store editable data in new object
         const newData = {
-            description: this.state.description,
-            contact: this.state.contact,
-            address: this.state.address,
-            configuration: this.data.configuration
+            description: this.state.data.description,
+            contact: this.state.data.contact,
+            address: this.state.data.address,
+            configuration: this.state.data.configuration
         };
         // store value of id
         const itemToEdit = this.state.id;
@@ -592,7 +653,7 @@ class EditOrgForm extends Component {
                         type="text" 
                         id="orgname" 
                         name="orgname"
-                        value={this.state.description}
+                        value={this.state.data.description}
                         onChange={this.handleNameChange}
                         onBlur={this.orgnameVal}
                         />
@@ -623,7 +684,7 @@ class EditOrgForm extends Component {
                           id="orgID" 
                           name="orgID"
                           readOnly
-                          value={this.state.id}
+                          value={this.state.data.id}
                           onBlur={this.orgidVal}
                           onChange={this.handleOrgIDChange}/>
                         <br/>
@@ -679,7 +740,8 @@ class EditOrgForm extends Component {
                                 <input 
                                 style={textbxstyle2} 
                                 type="text" 
-                                id="addresstype" 
+                                id="addresstype"
+                                value={this.state.data.type} 
                                 name="addresstype"
                                 onBlur={this.addresstypeVal}
                                 />
@@ -707,6 +769,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="street" 
+                                  value={this.state.data.street}
                                   name="street"
                                   onBlur={this.streetVal}
                                   />
@@ -734,6 +797,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="city" 
+                                  value={this.state.data.city}
                                   name="city"
                                   onBlur={this.cityVal}
                                   />
@@ -761,6 +825,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="state" 
+                                  value={this.state.data.state}
                                   name="state"
                                   onBlur={this.stateVal}
                                   />
