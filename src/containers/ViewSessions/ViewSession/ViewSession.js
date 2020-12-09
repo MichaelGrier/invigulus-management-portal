@@ -45,6 +45,7 @@ class ViewSession extends Component {
 
     // extract itemId from sessionId object and process it for axios call (remove dynamodb prefix)
     const preProcessedItemId = sessionId.itemId
+    console.log(sessionId.itemId)
     const stringToSlice = preProcessedItemId.toString();
     const processedItemId = stringToSlice.slice(4);
 
@@ -82,7 +83,7 @@ class ViewSession extends Component {
       }
       // update state
       this.setState({data: loadedData[0]});
-      this.setState({dataLoaded: true});
+      this.setState({dataLoaded: true}); 
       //console.log(this.state);
     });
   }

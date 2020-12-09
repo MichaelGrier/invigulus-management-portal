@@ -118,12 +118,12 @@ const OrgTable = () => {
   // handle edit button click
   const HandleEditRequest = () => {
     // get properties to be passed to form and store in variable
-    const itemToEdit = selectedRow[0].original.itemId;
+    const itemToEdit = selectedRow[0].original.id
     // initialize query parameters array
     const queryParams = [];
 
     // loop through itemToEdit, encode data, and push into queryParams as strings
-      queryParams.push(encodeURIComponent("itemId") + '=' + encodeURIComponent(itemToEdit));
+      queryParams.push(encodeURIComponent("id") + '=' + encodeURIComponent(itemToEdit));
     // join queryParams strings and store in variable
     const queryString = queryParams.join('&');
 

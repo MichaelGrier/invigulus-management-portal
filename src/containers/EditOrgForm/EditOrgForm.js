@@ -17,12 +17,50 @@ class EditOrgForm extends Component {
     this.state = {
         data: {
           description: "",
-          id: "",
-          contact: [{}],
-          address: [{}],
-          configuration: {}
+          id: ""},
+          contact:
+          [{
+            firstName: "" ,
+            lastName: "" , 
+            typea: "", 
+            phone: "", 
+            email: "",
+          },
+          {
+            firstName2: "" ,
+            lastName2: "" , 
+            typea2: "", 
+            phone2: "", 
+            email2: "",
+          }],
+        address:
+        [{
+          zip: "",
+          country: "",
+          state: "",
+          typec: "",
+          city: "",
+          street: "",
+        },
+        {
+          zip2: "",
+          country2: "",
+          state2: "",
+          typec2: "",
+          city2: "",
+          street2: "",
+        }],
+      configuration: {
+        Registration: {
+          imageCapture: "",
+          idCapture: "",
+        },
+        postProcess: {
+          anomalyDuration: "",
+          smoothingFrame: "",
+          frameInterval: ""}
         }
-    }
+      }
     
     let RadioVal1 = null
     let RadioVal2 = null
@@ -58,6 +96,9 @@ class EditOrgForm extends Component {
     this.anomalydurationVal = this.anomalydurationVal.bind(this);
     this.frameintervalVal = this.frameintervalVal.bind(this);
     this.stateUpdate = this.stateUpdate.bind(this);
+    this.handleGetid = this.handleGetid.bind(this);
+    this.handleGetimg = this.handleGetimg.bind(this);
+    this.handleRadiobtnsGet = this.handleRadiobtnsGet(this);
   }
 
   // whenever a change is made to an input field, update the corresponding state property
@@ -67,11 +108,105 @@ class EditOrgForm extends Component {
     this.setState({data});
   }
 
-//   handleOrgIDChange(event) {
-//     let data = {...this.state.update}
-//     data.id = event.target.value
-//     this.setState({data});
-//   }
+  handleOrgIDChange(event) {
+    let data = {...this.state.update}
+    data.id = event.target.value
+    this.setState({data});
+  }
+
+  handletofaChange(event) {
+    this.setState({typea: event.target.value});
+  }
+
+  handlecityChange(event) {
+    this.setState({city: event.target.value});
+  }
+
+  handlecountryChange(event) {
+    this.setState({country: event.target.value});
+  }
+
+  handlestateChange(event) {
+    this.setState({state: event.target.value});
+  }
+
+  handlezipChange(event) {
+    this.setState({zip: event.target.value});
+  }
+
+  handletofa2Change(event) {
+    this.setState({typea2: event.target.value});
+  }
+
+  handlecity2Change(event) {
+    this.setState({city2: event.target.value});
+  }
+
+  handlecountry2Change(event) {
+    this.setState({country2: event.target.value});
+  }
+
+  handlestate2Change(event) {
+    this.setState({state2: event.target.value});
+  }
+
+  handlezip2Change(event) {
+    this.setState({zip2: event.target.value});
+  }
+
+  handletofcChange(event) {
+    this.setState({typec: event.target.value});
+  }
+
+  handlefnameChange(event) {
+    this.setState({firstName: event.target.value});
+  }
+
+  handlelnameChange(event) {
+    this.setState({lastName: event.target.value});
+  }
+
+  handlephoneChange(event) {
+    this.setState({phone: event.target.value});
+  }
+
+  handleemailChange(event) {
+    this.setState({email: event.target.value});
+  }
+
+  handletofc2Change(event) {
+    this.setState({typec2: event.target.value});
+  }
+
+  handlefname2Change(event) {
+    this.setState({firstName: event.target.value});
+  }
+
+  handlelname2Change(event) {
+    this.setState({lastName: event.target.value});
+  }
+
+  handlephone2Change(event) {
+    this.setState({phone: event.target.value});
+  }
+
+  handleemail2Change(event) {
+    this.setState({email: event.target.value});
+  }
+
+  handleframeiChange(event) {
+    this.setState({frameInterval: event.target.value});
+  }
+
+  handleanomDChange(event) {
+    this.setState({anomalyDuration: event.target.value});
+  }
+
+  handlesmoothfChange(event) {
+    this.setState({smoothingFrame: event.target.value});
+  }
+
+
 
 //   handleDescriptionChange(event) {
 //     let data = {...this.state.data};
@@ -92,8 +227,8 @@ class EditOrgForm extends Component {
     let statea2 = document.getElementById("state2")
     let zipa2 = document.getElementById("zip2")
     let countrya2 = document.getElementById("country2")
-    let data = {...this.state.data};
-    data.address = 
+    let address = {...this.state.address};
+    address = 
         [{zip: zipa.value,
         country: countrya.value,
         state: statea.value,
@@ -108,7 +243,7 @@ class EditOrgForm extends Component {
         city: citya2.value,
         street: streeta2.value }]
         
-    this.setState({data});  
+    this.setState({address});  
     
     } 
 
@@ -124,8 +259,8 @@ class EditOrgForm extends Component {
     let typec2 = document.getElementById("contacttype2")
     let phonec2 = document.getElementById("phone2")
     let emailc2 = document.getElementById("email2")
-    let data = {...this.state.data}
-    data.contact = [{firstName: fnamec.value,
+    let contact = {...this.state.contact}
+    contact = [{firstName: fnamec.value,
         lastName: lnamec.value, 
         type: typec.value, 
         phone: phonec.value, 
@@ -138,7 +273,7 @@ class EditOrgForm extends Component {
         phone: phonec2.value, 
         email: emailc2.value}]
     
-    this.setState({data}); 
+    this.setState({contact}); 
 
   }
 
@@ -165,14 +300,37 @@ class EditOrgForm extends Component {
       this.RadioVal2 = "true"
     }
   }
+  handleGetid(){
+    let RadioidNo = document.getElementById("idCaptureNo")
+    let RadioidYes = document.getElementById("idCaptureYes")
+
+    if (this.state.idCapture === "true") {
+        RadioidYes.checked = true
+    }
+    if (this.state.idCapture === "false") {
+      RadioidNo.checked = true
+    }
+  }
+
+  handleGetimg() {
+    let RadioimgNo = document.getElementById("imgCaptureNo")
+    let RadioimgYes = document.getElementById("imgCaptureYes")
+    if (this.state.imageCapture === "true") {
+      RadioimgYes.checked = true
+    }
+
+    if (this.state.imageCapture === "false") {
+      RadioimgNo.checked = true
+    }
+  }
 
   handleConfigChange() {
     let smoothingf = document.getElementById("smoothingframe")
     let anomalyd = document.getElementById("anomalyduration")
     let framei = document.getElementById("frameinterval")
-    let data = {...this.state.data}
+    let configuration = {...this.state.configuration}
  
-    data.configuration = {
+    configuration = {
         Registration: {
           imageCapture: this.RadioVal1,
           idCapture: this.RadioVal2
@@ -182,8 +340,7 @@ class EditOrgForm extends Component {
           smoothingFrame: smoothingf.value,
           frameInterval: framei.value,}
       }
-    
-    this.setState({data}); 
+    this.setState({configuration}); 
 
     }
   
@@ -374,7 +531,7 @@ class EditOrgForm extends Component {
   }
 
   componentDidMount() {
-      // parse query from URL string to retrieve sessionId
+      // parse query from URL string to retrieve orgId
       const query = new URLSearchParams(this.props.location.search);
       const orgId = {};
       for (let param of query.entries()) {
@@ -382,67 +539,108 @@ class EditOrgForm extends Component {
       }
       console.log(orgId)
   
-      // extract itemId from sessionId object and process it for axios call (remove dynamodb prefix)
-      // const preProcesseditemId = orgId.itemId
-      // const stringToSlice = preProcesseditemId.toString();
-      // const processeditemId = stringToSlice.slice(4);
+      //convert orgId to string.
+      const preProcesseditemId = orgId.id
+      const processeditemId = preProcesseditemId.toString();
+
+      console.log(preProcesseditemId)
+      console.log(processeditemId)
   
-      // get session by sessionId
-      axios.get(`/orgs/${orgId}`).then(res => {
+      // get org information by orgID
+      axios.get(`/orgs/${processeditemId}`).then(res => {
         console.log(res.data.result.Items);
         const pathToData = res.data.result.Items;
-        const loadedData = [];
-  
+        const basicData = [];
+        const addressData = [];
+        const contactData = [];
+        //const regisData = [];
+        //const pprocessData = [];
+        const configData = [];
         // push data objects into an array
         for (const Item in pathToData) {
-          loadedData.push({
+          basicData.push({
           description: pathToData[Item].description,
           id: pathToData[Item].id,
           itemId: pathToData[Item].itemId,
           itemType: pathToData[Item].itemType,
-          city: pathToData[Item].address[0].city,
-          country: pathToData[Item].address[0].country,
-          zip: pathToData[Item].address[0].zip,
-          street: pathToData[Item].address[0].street,
-          type: pathToData[Item].address[0].type,
-          city: pathToData[Item].address[1].city,
-          country: pathToData[Item].address[1].country,
-          zip: pathToData[Item].address[1].zip,
-          street: pathToData[Item].address[1].street,
-          type: pathToData[Item].address[1].type,
+          }) }
+
+          for (const addressItem in pathToData) {
+          addressData.push({
+          city: pathToData[addressItem].address[0].city,
+          country: pathToData[addressItem].address[0].country,
+          zip: pathToData[addressItem].address[0].zip,
+          street: pathToData[addressItem].address[0].street,
+          typea: pathToData[addressItem].address[0].type,
+          state: pathToData[addressItem].address[0].state,
+          city2: pathToData[addressItem].address[1].city,
+          country2: pathToData[addressItem].address[1].country,
+          zip2: pathToData[addressItem].address[1].zip,
+          street2: pathToData[addressItem].address[1].street,
+          typea2: pathToData[addressItem].address[1].type,
+          state2: pathToData[addressItem].address[1].state 
+           }) }
           // // primary contact data
-          firstName: pathToData[Item].contact[0].firstName,
-          lastName: pathToData[Item].contact[0].lastName,
-          lastName: pathToData[Item].contact[0].type,
-          email: pathToData[Item].contact[0].email,
-          phone: pathToData[Item].contact[0].phone,
-          firstName: pathToData[Item].contact[1].firstName,
-          lastName: pathToData[Item].contact[1].lastName,
-          lastName: pathToData[Item].contact[1].type,
-          email: pathToData[Item].contact[1].email,
-          phone: pathToData[Item].contact[1].phone,
-          //full contact data
-          contact: pathToData[Item].contact,
-          // address
-          address: pathToData[Item].address,
-          // configuration params
-          configuration: pathToData[Item].configuration,
-          registration: pathToData[Item].configuration.registration,
-          postProcess: pathToData[Item].configuration.postProcess,
-          imageCapture: pathToData[Item].configuration.registration.imageCapture,
-          idCapture: pathToData[Item].configuration.registration.idCapture,
-          frameInterval: pathToData[Item].configuration.postProcess.frameInterval,
-          anomalyDuration: pathToData[Item].configuration.postProcess.anomalyDuration,
-          smoothingFrame: pathToData[Item].configuration.postProcess.smoothingFrame,
-          // timestamps
-          });
-        }
+          for (const contactItem in pathToData) {
+          contactData.push({
+          firstName: pathToData[contactItem].contact[0].firstName,
+          lastName: pathToData[contactItem].contact[0].lastName,
+          typec: pathToData[contactItem].contact[0].type,
+          email: pathToData[contactItem].contact[0].email,
+          phone: pathToData[contactItem].contact[0].phone,
+          firstName2: pathToData[contactItem].contact[1].firstName,
+          lastName2: pathToData[contactItem].contact[1].lastName,
+          typec2: pathToData[contactItem].contact[1].type,
+          email2: pathToData[contactItem].contact[1].email,
+          phone2: pathToData[contactItem].contact[1].phone
+          }) }
+          for (const configItem in pathToData) {
+          configData.push({
+          imageCapture: pathToData[configItem].configuration.Registration.imageCapture,
+          idCapture: pathToData[configItem].configuration.Registration.idCapture,
+          // }) }
+          // for (const processItem in pathToData) {
+          // pprocessData.push({
+          frameInterval: pathToData[configItem].configuration.postProcess.frameInterval,
+          anomalyDuration: pathToData[configItem].configuration.postProcess.anomalyDuration,
+          smoothingFrame: pathToData[configItem].configuration.postProcess.smoothingFrame
+          }) }
+          console.log(configData)
         // update state
-        this.setState({data: loadedData[0]});
+        this.setState({
+            data: basicData[0],
+            contact: contactData[0],
+            address: addressData[0],
+            configuration: configData[0]});
         this.setState({dataLoaded: true});
-        //console.log(this.state);
-      });
+        let RadioimgNo = document.getElementById("imgCaptureNo")
+        let RadioimgYes = document.getElementById("imgCaptureYes")
+        if (this.state.configuration.imageCapture === "true") {
+          RadioimgYes.checked = true
+        }
+
+        if (this.state.configuration.imageCapture === "false") {
+          RadioimgNo.checked = true
+        }
+
+        let RadioidNo = document.getElementById("idCaptureNo")
+        let RadioidYes = document.getElementById("idCaptureYes")
+
+        if (this.state.configuration.idCapture === "true") {
+            RadioidYes.checked = true
+        }
+        if (this.state.configuration.idCapture === "false") {
+          RadioidNo.checked = true
+        }
+
+        console.log(this.state);
+      }).catch(error => alert(error));
     }
+
+  handleRadiobtnsGet() {
+    this.handleGetid();
+    this.handleGetimg();
+  }
 
 
   handleSubmit(event) {
@@ -487,12 +685,13 @@ class EditOrgForm extends Component {
         // store editable data in new object
         const newData = {
             description: this.state.data.description,
-            contact: this.state.data.contact,
-            address: this.state.data.address,
-            configuration: this.state.data.configuration
+            id: this.state.data.id,
+            contact: this.state.contact,
+            address: this.state.address,
+            configuration: this.state.configuration
         };
         // store value of id
-        const itemToEdit = this.state.id;
+        const itemToEdit = this.state.data.id;
     
         // make api call to update data
         axios.patch(`/orgs/${itemToEdit}`, newData)
@@ -677,21 +876,17 @@ class EditOrgForm extends Component {
                     <td 
                       className={classes.cell4} 
                       style={{textAlign:"left"}}>
-                        <input 
-                          // onChangeText={(text) => {this.setState({ ID: text })}} 
+                        <input  
                           style={uneditabletextbxstyle} 
                           type="text" 
                           id="orgID" 
                           name="orgID"
                           readOnly
                           value={this.state.data.id}
-                          onBlur={this.orgidVal}
-                          onChange={this.handleOrgIDChange}/>
+                          //onBlur={this.orgidVal}
+                          onChange={this.handleOrgIDChange}
+                          />
                         <br/>
-                        <span 
-                          id="orgidErrMsg"
-                          style={{color:"red"}}>
-                      </span>
                     </td>
                   </tr>
                   {/* <tr>
@@ -741,7 +936,7 @@ class EditOrgForm extends Component {
                                 style={textbxstyle2} 
                                 type="text" 
                                 id="addresstype"
-                                value={this.state.data.type} 
+                                value={this.state.address.typea} 
                                 name="addresstype"
                                 onBlur={this.addresstypeVal}
                                 />
@@ -769,7 +964,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="street" 
-                                  value={this.state.data.street}
+                                  value={this.state.address.street}
                                   name="street"
                                   onBlur={this.streetVal}
                                   />
@@ -797,7 +992,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="city" 
-                                  value={this.state.data.city}
+                                  value={this.state.address.city}
                                   name="city"
                                   onBlur={this.cityVal}
                                   />
@@ -825,7 +1020,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="state" 
-                                  value={this.state.data.state}
+                                  value={this.state.address.state}
                                   name="state"
                                   onBlur={this.stateVal}
                                   />
@@ -853,6 +1048,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="zip" 
+                                  value={this.state.address.zip}
                                   name="zip"
                                   onBlur={this.zipVal}
                                   />
@@ -879,7 +1075,8 @@ class EditOrgForm extends Component {
                                 <input 
                                 style={textbxstyle2} 
                                 type="text" 
-                                id="country" 
+                                id="country"
+                                value={this.state.address.country} 
                                 name="country"
                                 onBlur={this.countryVal}
                                 />
@@ -912,7 +1109,8 @@ class EditOrgForm extends Component {
                                 <input 
                                   // onChangeText={(text) => {this.setState({ typeofaddress2: text })}} 
                                   style={textbxstyle2} 
-                                  type="text" 
+                                  type="text"
+                                  value={this.state.address.typea2} 
                                   id="addresstype2" 
                                   name="addresstype2"
                                   />
@@ -935,7 +1133,8 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   // onChangeText={(text) => {this.setState({ street2: text })}}
                                   type="text" 
-                                  id="street2" 
+                                  id="street2"
+                                  value={this.state.address.street2} 
                                   name="street2"
                                   />
                               </td>
@@ -958,6 +1157,7 @@ class EditOrgForm extends Component {
                                   // onChangeText={(text) => {this.setState({ city2: text })}} 
                                   type="text" 
                                   id="city2" 
+                                  value={this.state.address.city2}
                                   name="city2"
                                   />
                               </td>
@@ -978,6 +1178,7 @@ class EditOrgForm extends Component {
                                 style={textbxstyle2} 
                                 //onChangeText={(text) => {this.setState({ statea2: text })}} 
                                 type="text" 
+                                value={this.state.address.state2}
                                 id="state2" 
                                 name="state2"
                                 />
@@ -1000,6 +1201,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="zip2" 
+                                  value={this.state.address.zip2}
                                   name="zip2"
                                   />
                               </td>
@@ -1021,6 +1223,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="country2" 
+                                  value={this.state.address.country2}
                                   name="country2"
                                   />
                               </td>
@@ -1048,7 +1251,8 @@ class EditOrgForm extends Component {
                                   <input 
                                     // onBlur = {()=> this.ValidatorTofC()} 
                                     style={textbxstyle} 
-                                    type="text" 
+                                    type="text"
+                                    value={this.state.contact.typec} 
                                     id="contacttype" 
                                     name="contacttype"
                                     onBlur={this.contacttypeVal}
@@ -1076,7 +1280,8 @@ class EditOrgForm extends Component {
                                   <input 
                                     style={textbxstyle}
                                     type="text" 
-                                    id="fname" 
+                                    id="fname"
+                                    value={this.state.contact.firstName}  
                                     name="fname"
                                     onBlur={this.fnameVal}
                                    />
@@ -1103,7 +1308,8 @@ class EditOrgForm extends Component {
                                   <input 
                                     style={textbxstyle} 
                                     type="text" 
-                                    id="lname" 
+                                    id="lname"
+                                    value={this.state.contact.lastName}  
                                     name="lname"
                                     onBlur={this.lnameVal}
                                     />
@@ -1131,6 +1337,7 @@ class EditOrgForm extends Component {
                                     style={textbxstyle} 
                                     type="text" 
                                     id="email" 
+                                    value={this.state.contact.email} 
                                     name="email"
                                     onBlur={this.emailVal}                                   
                                     />
@@ -1155,10 +1362,11 @@ class EditOrgForm extends Component {
                                   className={classes.cell2} 
                                   style={{textAlign:"left"}}>
                                   <input 
-                                    // onBlur = {()=> this.Validatorphone()} 
+                                    //onBlur = {()=> this.Validatorphone()} 
                                     style={textbxstyle} 
                                     type="text" 
-                                    id="phone" 
+                                    id="phone"
+                                    value={this.state.contact.phone}  
                                     name="phone"
                                     onBlur={this.phoneVal}
                                     />
@@ -1192,7 +1400,8 @@ class EditOrgForm extends Component {
                                   // onChangeText={(text) => {this.setState({ typeofcontact2: text })}} 
                                   style={textbxstyle} 
                                   type="text" 
-                                  id="contacttype2" 
+                                  id="contacttype2"
+                                  value={this.state.contact.typec2}  
                                   name="contacttype2"
                                   />
                               </td>
@@ -1214,7 +1423,8 @@ class EditOrgForm extends Component {
                                   style={textbxstyle} 
                                   // onChangeText={(text) => {this.setState({ fname2: text })}} 
                                   type="text" 
-                                  id="fname2" 
+                                  id="fname2"
+                                  value={this.state.contact.firstName2}  
                                   name="fname2"
                                   />
                               </td>
@@ -1236,7 +1446,8 @@ class EditOrgForm extends Component {
                                   style={textbxstyle} 
                                   // onChangeText={(text) => {this.setState({ lname2: text })}} 
                                   type="text" 
-                                  id="lname2" 
+                                  id="lname2"
+                                  value={this.state.contact.lastName2} 
                                   name="lname2"
                                   />
                               </td>
@@ -1257,7 +1468,8 @@ class EditOrgForm extends Component {
                                   // onChangeText={(text) => {this.setState({ email2: text })}} 
                                   style={textbxstyle} 
                                   type="text" 
-                                  id="email2" 
+                                  id="email2"
+                                  value={this.state.contact.email2}  
                                   name="email2"
                                   />
                               </td>
@@ -1278,7 +1490,8 @@ class EditOrgForm extends Component {
                                 <input 
                                   style={textbxstyle} 
                                   type="text" 
-                                  id="phone2" 
+                                  id="phone2"
+                                  value={this.state.contact.phone2}  
                                   name="phone2"
                                   />
                               </td>
@@ -1437,7 +1650,8 @@ class EditOrgForm extends Component {
                               <input 
                                 style={textbxstyle} 
                                 type="text" 
-                                id="frameinterval" 
+                                id="frameinterval"
+                                value={this.state.configuration.frameInterval} 
                                 name="frameinterval"
                                 onBlur={this.frameintervalVal}                                
                                 />
@@ -1465,7 +1679,8 @@ class EditOrgForm extends Component {
                                 // onChangeText={(text) => {this.setState({ anomalyduration: text })}} 
                                 style={textbxstyle} 
                                 type="text" 
-                                id="anomalyduration" 
+                                id="anomalyduration"
+                                value={this.state.configuration.anomalyDuration}  
                                 name="anomalyduration"
                                 onBlur={this.anomalydurationVal}
                                 />
@@ -1492,7 +1707,8 @@ class EditOrgForm extends Component {
                               <input 
                                 style={textbxstyle} 
                                 type="text" 
-                                id="smoothingframe" 
+                                id="smoothingframe"
+                                value={this.state.configuration.smoothingFrame} 
                                 name="smoothingframe"
                                 onBlur={this.smoothingframeVal}
                                 />
