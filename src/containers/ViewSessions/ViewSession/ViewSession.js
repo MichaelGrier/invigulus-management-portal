@@ -41,11 +41,16 @@ class ViewSession extends Component {
     for (let param of query.entries()) {
       sessionId[param[0]] = param[1];
     }
+    console.log(sessionId)
 
     // extract itemId from sessionId object and process it for axios call (remove dynamodb prefix)
     const preProcessedItemId = sessionId.itemId
+    console.log(sessionId.itemId)
     const stringToSlice = preProcessedItemId.toString();
     const processedItemId = stringToSlice.slice(4);
+
+    console.log(preProcessedItemId)
+    console.log (processedItemId)
 
     // get session by sessionId
     axios.get(`/sessions/${processedItemId}`).then(res => {
@@ -78,7 +83,7 @@ class ViewSession extends Component {
       }
       // update state
       this.setState({data: loadedData[0]});
-      this.setState({dataLoaded: true});
+      this.setState({dataLoaded: true}); 
       //console.log(this.state);
     });
   }

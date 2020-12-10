@@ -15,13 +15,6 @@ class TestForm extends Component {
         id: "",
         description: "",
         tds: "",
-      },
-      isError: {
-        itemType: "",
-        testOrgId: "",
-        id: "",
-        description: "",
-        tds: "",
       }
     }
    

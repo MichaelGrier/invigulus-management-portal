@@ -16,6 +16,7 @@ import TestForm from './TestForms/TestForm/TestForm';
 import AddTestConfirmation from './ConfirmationPages/AddTestConfirmation/AddTestConfirmation';
 import EditTestForm from './TestForms/EditTestForm/EditTestForm';
 import AddOrgConfirmation from './ConfirmationPages/AddOrgConfirmation/AddOrgConfirmation';
+import EditOrgForm from '../containers/EditOrgForm/EditOrgForm';
 
 class ManagementPortal extends Component {
   render() {
@@ -36,6 +37,7 @@ class ManagementPortal extends Component {
         <Route path= '/add-test-confirmation' exact component={AddTestConfirmation} />
         <Route path= '/edit-test' component={EditTestForm} />
         <Route path= '/add-org-confirmation' exact component={AddOrgConfirmation} />
+        <Route path= '/edit-org' component={EditOrgForm} />
         <Footer />
       </>
     );

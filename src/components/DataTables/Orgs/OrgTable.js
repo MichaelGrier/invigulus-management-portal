@@ -7,8 +7,8 @@ import {
   useRowSelect
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
-import {Link} from 'react-router-dom';
 import axios from '../../../axios';
+import {Link, withRouter, useHistory} from 'react-router-dom';
 
 import {COLUMNS} from './columns';
 
@@ -24,6 +24,8 @@ import SmallButton from '../../UI/SmallButton/SmallButton';
 
 const OrgTable = () => {
   const [orgs, setOrgs] = useState([])
+  const [loaded, setLoaded] = useState(false);
+  const history = useHistory();
 
   // get data from api
   useEffect(() => {
@@ -113,6 +115,25 @@ const OrgTable = () => {
   let selectedRow = selectedFlatRows
   console.log(selectedRow);
 
+  // handle edit button click
+  const HandleEditRequest = () => {
+    // get properties to be passed to form and store in variable
+    const itemToEdit = selectedRow[0].original.id
+    // initialize query parameters array
+    const queryParams = [];
+
+    // loop through itemToEdit, encode data, and push into queryParams as strings
+      queryParams.push(encodeURIComponent("id") + '=' + encodeURIComponent(itemToEdit));
+    // join queryParams strings and store in variable
+    const queryString = queryParams.join('&');
+
+    // pass queryString data to EditTestForm via router
+    history.push({
+      pathname: '/edit-org',
+      search: '?' + queryString
+    });
+  }
+
   const handleDeleteRequest = () => {
     let userConfirmation;
     userConfirmation = window.confirm('Are you sure you want to delete this test?');
@@ -191,9 +212,9 @@ const OrgTable = () => {
         >Next</button>
       </div>
       <br/>
-      <Link to={{pathname: 'add-edit-orgs'}}><SmallButton>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton></Link> 
+      <SmallButton clicked={HandleEditRequest}>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
       <SmallButton clicked={handleDeleteRequest}>Delete</SmallButton>
     </> 
   );
 }
-export default OrgTable
+export default withRouter(OrgTable);
