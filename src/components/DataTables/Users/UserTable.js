@@ -17,7 +17,6 @@ import classes from './UserTable.module.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
-import Checkbox from '../../UI/Checkbox/Checkbox';
 import Spinner from '../../UI/Spinner/Spinner';
 
 const UserTable = () => {
@@ -80,21 +79,6 @@ const UserTable = () => {
     },
     // add sorting, filtering, pagination and row select
     useGlobalFilter,  useSortBy, usePagination, useRowSelect,
-    // add a column for checkbox to tables
-    (hooks) => {
-      hooks.visibleColumns.push((columns) => {
-        return [
-          {
-            id: 'selection',
-            Header: 'select',
-            Cell: ({row}) => (
-              <Checkbox {...row.getToggleRowSelectedProps()} />
-            )
-          },
-          ...columns
-        ]
-      });
-    }
   );
 
   // destructure global filter and page index from state object

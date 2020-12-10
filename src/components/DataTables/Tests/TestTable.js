@@ -99,41 +99,52 @@ const TestTable = () => {
   const {globalFilter, pageIndex} =  state;
 
   // data from selected row is stored here
-  let selectedRow = selectedFlatRows
-  console.log(selectedRow);
+  let selectedRow; 
+  selectedRow = selectedFlatRows
+  //console.log(selectedRow);
 
   // handle edit button click
   const HandleEditRequest = () => {
-    // get properties to be passed to form and store in variable
-    const itemToEdit = selectedRow[0].original;
-    // initialize query parameters array
-    const queryParams = [];
+    try{
+      // get properties to be passed to form and store in variable
+      const itemToEdit = selectedRow[0].original;
+      // initialize query parameters array
+      const queryParams = [];
 
-    // loop through itemToEdit, encode data, and push into queryParams as strings
-    for (let i in itemToEdit) {
-      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(itemToEdit[i]));
+      // loop through itemToEdit, encode data, and push into queryParams as strings
+      for (let i in itemToEdit) {
+        queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(itemToEdit[i]));
+      }
+      // join queryParams strings and store in variable
+      const queryString = queryParams.join('&');
+
+      // pass queryString data to EditTestForm via router
+      history.push({
+        pathname: '/edit-test',
+        search: '?' + queryString
+      });
+    } catch(err) {
+      alert('please select a row to edit')
     }
-    // join queryParams strings and store in variable
-    const queryString = queryParams.join('&');
-
-    // pass queryString data to EditTestForm via router
-    history.push({
-      pathname: '/edit-test',
-      search: '?' + queryString
-    });
   }
 
   // handle delete button click
   const handleDeleteRequest = () => {
-    // get id of test to be deleted from selectedRow object
-    let itemToDelete = selectedRow[0].original.id
-    
-    // make axios call, then reload page
-    axios.delete(`/tests/${itemToDelete}`)
-         .then(response => {
-          window.location.reload();
-         })
-         .catch(error => alert(error));
+    let userConfirmation;
+    userConfirmation = window.confirm('Are you sure you want to delete this test?')
+
+    // check for user confirmation
+    if (userConfirmation) {
+      // get id of test to be deleted from selectedRow object
+      let itemToDelete = selectedRow[0].original.id
+      
+      // make axios call, then reload page
+      axios.delete(`/tests/${itemToDelete}`)
+          .then(response => {
+            window.location.reload();
+          })
+          .catch(error => alert(error));
+    }
   }
 
   return (

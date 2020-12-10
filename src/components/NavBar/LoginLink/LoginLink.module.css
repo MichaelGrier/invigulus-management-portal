@@ -2,11 +2,12 @@
   -webkit-text-decoration: none;
     text-decoration: none;
   font-size: 120%;
-  font-weight: bold ;
+  font-weight: bold;
   color: #3cb650;
   padding-bottom: 1px;
   border-bottom: 2px solid transparent;
   transition: border-bottom 0.2s;
+  font-family: 'Lato', sans-serif;
 }
 
 .loginLink:hover,

@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 
 import classes from './LoginPage.module.css';
-import Button from '../../components/UI/Button/Button'; 
-import FormContainer from '../../containers/FormContainer/FormContainer';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
-import LoginLink from '../../components/NavBar/LoginLink/LoginLink'
 
 class LoginPage extends Component {
   constructor() {
@@ -105,7 +102,7 @@ class LoginPage extends Component {
         textDecoration: "none",
         display: "inline-block",
         fontSize: "16px",
-        margin: "4px 2px",
+        margin: ".75rem 0 1.75rem 0",
         cursor: "pointer",
         borderRadius:"30px",
       };
@@ -179,7 +176,6 @@ class LoginPage extends Component {
               style={buttonstyle}>
               </input> 
             <br/>
-            <LoginLink>Forgot Password?</LoginLink>
         </fieldset>
         </form>
       </main>

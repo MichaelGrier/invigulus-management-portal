@@ -1,20 +1,22 @@
-.UserPage {
+.main {
+  background-color: #f2f2f2;
   height: 85vh;
-  background-color: #e5e5e5;
-  width: 100%;
-  color: #3cB650 ;
   font-family: 'Lato', sans-serif;
-  font-weight: 400;
-  overflow-x: hidden;
+  overflow: auto;
   text-rendering: optimizeLegibility;
-  background-color: #3cB650;
+  font-weight: 400;
+}
+
+.header {
+  color: #3cB650;
+  padding: 3rem 0 .5rem 0;
 }
 
 .wrapper {
   padding: 55px 20px;
   height: 73vh;
   overflow: auto;
-  background-color: #e5e5e5;
+  background-color: #f2f2f2;
 }
 
 /* .wrapper fieldset {
@@ -38,7 +40,7 @@
 .wrapper fieldset {
   margin: 20px 0;
   border-radius: 10px;
-  background-color: #f2f2f2;
+  background-color: #e5e5e5;
   padding: 20px;
   list-style-type: none;
   clear: left;

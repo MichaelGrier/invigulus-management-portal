@@ -114,16 +114,21 @@ const OrgTable = () => {
   console.log(selectedRow);
 
   const handleDeleteRequest = () => {
-    // get id of test to be deleted from selectedRow object
-    let itemToDelete = selectedRow[0].original.id
-    
-    // make axios call, then reload page
-    axios.delete(`/orgs/${itemToDelete}`)
-         .then(response => {
-          console.log(response);
-          window.location.reload();
-         })
-         .catch(error => alert(error));
+    let userConfirmation;
+    userConfirmation = window.confirm('Are you sure you want to delete this test?');
+
+    // check for user confirmation
+    if (userConfirmation) {
+      // get id of test to be deleted from selectedRow object
+      let itemToDelete = selectedRow[0].original.id
+      
+      // make axios call, then reload page
+      axios.delete(`/orgs/${itemToDelete}`)
+          .then(response => {
+            window.location.reload();
+          })
+          .catch(error => alert(error));
+    }
   }
 
   return (

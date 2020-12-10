@@ -1,7 +1,7 @@
 .toggler {
     position: relative;
     display: block;
-    background-color: #f9f9f9;
+    background-color: #f2f2f2;
     color: #3cB650;
     cursor: pointer;
     padding: 8px;
@@ -27,7 +27,7 @@
   
   .panel {
     transition: 0.4s;
-    background-color: #f2f2f2;
+    background-color: #e5e5e5;
     overflow: hidden;
     max-height: 0;  /*//Keep the panel hidden */
   }

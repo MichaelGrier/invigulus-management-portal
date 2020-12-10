@@ -9,6 +9,7 @@ import {
 import Table from 'react-bootstrap/Table';
 import axios from '../../../axios';
 import {withRouter, useHistory} from 'react-router-dom';
+import {CSVLink} from 'react-csv';
 
 import {COLUMNS} from './columns';
 
@@ -43,8 +44,8 @@ const SessionTable = () => {
           // time data
           created: new Date(pathToData[Item].created).toLocaleDateString(),
           updated: new Date(pathToData[Item].updated).toLocaleDateString(),
-          startTime: new Date(pathToData[Item].startTime).toLocaleTimeString(),
-          endTime: new Date(pathToData[Item].endTime).toLocaleTimeString(),
+          startTime: new Date(pathToData[Item].startTime),
+          endTime: new Date(pathToData[Item].endTime),
           // session ids and process state
           sessionOrgId: pathToData[Item].sessionOrgId,
           sessionTestId: pathToData[Item].sessionTestId,
@@ -55,6 +56,8 @@ const SessionTable = () => {
           email: pathToData[Item].examinee.email,
           firstName: pathToData[Item].examinee.firstName,
           lastName: pathToData[Item].examinee.lastName,
+          code: pathToData[Item].examinee.code,
+          state: pathToData[Item].examinee.state,
           // test data
           description: pathToData[Item].test.description,
           testId: pathToData[Item].test.id,
@@ -124,28 +127,101 @@ const SessionTable = () => {
   const {pageIndex} =  state;
 
   // data from selected row is stored here
-  let selectedRow = selectedFlatRows
-  //console.log(selectedRow);
+  let selectedRows = selectedFlatRows
+  //console.log(selectedRows);
 
   const handleViewDetailsRequest = () => {
-    // get sessionId of selected row and store in variable
-    const sessionToDisplay = selectedRow[0].original.itemId;
+    try {
+      // get sessionId of selected row and store in variable
+      const sessionToDisplay = selectedRows[0].original.itemId;
 
-    // initialize query parameters array
-    const queryParams = [];
+      // initialize query parameters array
+      const queryParams = [];
 
-    // encode sessionId and push into queryParams as strings
-    queryParams.push(encodeURIComponent('itemId') + '=' + encodeURIComponent(sessionToDisplay));
+      // encode sessionId and push into queryParams as strings
+      queryParams.push(encodeURIComponent('itemId') + '=' + encodeURIComponent(sessionToDisplay));
 
-    // join queryParams strings and store in variable
-    const queryString = queryParams.join('&');
-    
-    // pass queryString data to ViewSession container via router
-    history.push({
-      pathname: '/view-selected-session',
-      search: '?' + queryString
+      // join queryParams strings and store in variable
+      const queryString = queryParams.join('&');
+      
+      // pass queryString data to ViewSession container via router
+      history.push({
+        pathname: '/view-selected-session',
+        search: '?' + queryString
+      });
+    } catch(err) {
+      alert('Please select a session to view')
+    }
+  }
+
+  // loop through array of anomalies and count how many have more than one face detected
+  const countAnomaliesWithMoreThanOneFace = (anomaliesArray) => {
+    let counter = 0;
+    anomaliesArray.forEach(el => {
+      if (el.faces > 1) {
+        counter++;
+      }
+    });
+    return counter;
+  }
+
+  // loop through array of anomalies and count how many have zero faces detected
+  const countAnomaliesWithZeroFaces = (anomaliesArray) => {
+    let counter = 0;
+    anomaliesArray.forEach(el => {
+      if (el.faces === 0) {
+        counter++;
+      }
+    });
+    return counter;
+  }
+
+  // push relevant data for selected sessions into a new array for CSV export
+  const selectedData = selectedRows;
+  const dataToExport = [];
+  for (const session in selectedData) {
+    dataToExport.push({
+      SessionID: selectedData[session].original.itemId,
+      OrganizationID: selectedData[session].original.sessionOrgId,
+      ExamName: selectedData[session].original.description,
+      ExamID: selectedData[session].original.testId,
+      SessionStart: selectedData[session].original.startTime.toISOString(), // convert to ISO datetime format
+      SessionEnd: selectedData[session].original.endTime.toISOString(),
+      // calculate number of minutes between beginning and end of the exam
+      SessionDuration: (selectedData[session].original.endTime.getMinutes()) - (selectedData[session].original.startTime.getMinutes()) + ' minutes',
+      ExamineeFirst: selectedData[session].original.firstName,
+      ExamineeLast: selectedData[session].original.lastName,
+      ExamineeEmail: selectedData[session].original.email,
+      ExamineeState: selectedData[session].original.state,
+      LaunchCode: selectedData[session].original.code,
+      FrameInterval: selectedData[session].original.analytics.postProcess.parameters.interval,
+      GreaterThanOneFaceAnomalies: countAnomaliesWithMoreThanOneFace(selectedData[session].original.analytics.postProcess.anomalies),
+      ZeroFaceAnomalies: countAnomaliesWithZeroFaces(selectedData[session].original.analytics.postProcess.anomalies),
+      TotalAnomalies: selectedData[session].original.analytics.postProcess.anomalies.length, // length of anomalies array
+      ConfidenceLevel: null
     });
   }
+
+  // set headers for CSV export
+  const csvHeaders = [
+    {label: 'Session ID', key: 'SessionID'},
+    {label: 'Organization ID', key: 'OrganizationID'},
+    {label: 'Exam Name', key: 'ExamName'},
+    {label: 'Exam ID', key: 'ExamID'},
+    {label: 'Session Start', key: 'SessionStart'},
+    {label: 'Session End', key: 'SessionEnd'},
+    {label: 'Session Duration', key: 'SessionDuration'},
+    {label: 'Examinee First Name', key: 'ExamineeFirst'},
+    {label: 'Examinee Last Name', key: 'ExamineeLast'},
+    {label: 'Examinee Email', key: 'ExamineeEmail'},
+    {label: 'Examinee State', key: 'ExamineeState'},
+    {label: 'Launch Code', key: 'LaunchCode'},
+    {label: 'Frame Interval', key: 'FrameInterval'},
+    {label: '>1 Face Anomalies', key: 'GreaterThanOneFaceAnomalies'},
+    {label: '0 Face Anomalies', key: 'ZeroFaceAnomalies'},
+    {label: 'Total Anomalies', key: 'TotalAnomalies'},
+    {label: 'Confidence Level', key: 'ConfidenceLevel'}
+  ]
 
   return (
     <div className={classes.tableWrap}>
@@ -206,15 +282,23 @@ const SessionTable = () => {
             >Next</button>
           </div>
           <br/>
+          {/* link to view details for selected session */}
           <SmallButton clicked={handleViewDetailsRequest}>View Details</SmallButton>
+
+          {/* link to export selected sessions to csv file */}
+          <CSVLink
+            data={dataToExport}
+            headers={csvHeaders}
+            filename={'session-data.csv'}
+          >
+            <SmallButton>Export to CSV</SmallButton>
+          </CSVLink>
         </div>
         :
         <div className={classes.spinnerWrap}> 
           <Spinner/>
         </div>
       }
-    
-
     </div>
   );
 }

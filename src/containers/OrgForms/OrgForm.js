@@ -3,14 +3,12 @@ import {withRouter} from 'react-router-dom';
 import axios from '../../axios';
 
 import classes from './OrgForm.module.css';
-import RadioButton from '../../components/Form Inputs/RadioButton/RadioButton';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
 import Accordion from '../../components/Accordion/Accordion';
 import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
 import Accordion4 from '../../components/Accordion/Accordion4';
 import Accordion5 from '../../components/Accordion/Accodion5';
-import { faBoxTissue } from '@fortawesome/free-solid-svg-icons';
 
 class OrgForm extends Component {
   constructor() {
@@ -532,7 +530,7 @@ class OrgForm extends Component {
     return (
       <div>
         <main className={classes.main}>
-          <Heading2>Add Organizations</Heading2>
+          <h1 className={classes.header}>Add Organizations</h1>
           <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
@@ -1407,7 +1405,7 @@ class OrgForm extends Component {
                             <tr>
                               <td 
                                 className={classes.cell7} 
-                                style={{textAlign:"right", paddingRight: "2%", paddingTop:"2%"}}>
+                                style={{textAlign:"center", paddingRight: "2%", paddingTop:"2%"}}>
                                 <input
                                   onClick={this.stateUpdate}
                                   type="submit" value="Submit" 

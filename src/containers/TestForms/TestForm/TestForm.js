@@ -166,7 +166,7 @@ class TestForm extends Component {
       textDecoration: "none",
       display: "inline-block",
       fontSize: "16px",
-      margin: "4px 2px",
+      margin: "1rem 0 1.5rem 0",
       cursor: "pointer",
       borderRadius:"30px",
     };
@@ -175,7 +175,7 @@ class TestForm extends Component {
     return (
       <div>
         <main className={classes.main}>
-          <Heading2>Add Test</Heading2>
+          <h1 className={classes.header}>Add Test</h1>
           <form className={classes.wrapper} onSubmit={this.handleSubmit}>
             <fieldset>
               <div className={classes.flexChild}>
