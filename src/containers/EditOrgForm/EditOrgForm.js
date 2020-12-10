@@ -10,6 +10,7 @@ import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
 import Accordion4 from '../../components/Accordion/Accordion4';
 import Accordion5 from '../../components/Accordion/Accodion5';
+import { faBoxTissue } from '@fortawesome/free-solid-svg-icons';
 
 class EditOrgForm extends Component {
   constructor() {
@@ -25,14 +26,16 @@ class EditOrgForm extends Component {
             typea: "", 
             phone: "", 
             email: "",
-          },
+            type: "",
+          }],
+          contact2:
           {
             firstName2: "" ,
             lastName2: "" , 
             typea2: "", 
             phone2: "", 
             email2: "",
-          }],
+          },
         address:
         [{
           zip: "",
@@ -41,7 +44,9 @@ class EditOrgForm extends Component {
           typec: "",
           city: "",
           street: "",
-        },
+          type:"",
+        }],
+        address2:
         {
           zip2: "",
           country2: "",
@@ -49,7 +54,7 @@ class EditOrgForm extends Component {
           typec2: "",
           city2: "",
           street2: "",
-        }],
+        },
       configuration: {
         Registration: {
           imageCapture: "",
@@ -59,8 +64,8 @@ class EditOrgForm extends Component {
           anomalyDuration: "",
           smoothingFrame: "",
           frameInterval: ""}
-        }
       }
+    }
     
     let RadioVal1 = null
     let RadioVal2 = null
@@ -96,117 +101,198 @@ class EditOrgForm extends Component {
     this.anomalydurationVal = this.anomalydurationVal.bind(this);
     this.frameintervalVal = this.frameintervalVal.bind(this);
     this.stateUpdate = this.stateUpdate.bind(this);
-    this.handleGetid = this.handleGetid.bind(this);
-    this.handleGetimg = this.handleGetimg.bind(this);
-    this.handleRadiobtnsGet = this.handleRadiobtnsGet(this);
+    // this.handleGetid = this.handleGetid.bind(this);
+    // this.handleGetimg = this.handleGetimg.bind(this);
+    // this.handleRadiobtnsGet = this.handleRadiobtnsGet(this);
+    this.handletofaChange = this.handletofaChange.bind(this);
+    this.handletofcChange = this.handletofcChange.bind(this);
+    this.handletofa2Change = this.handletofa2Change.bind(this);
+    this.handletofc2Change = this.handletofc2Change.bind(this);
+    this.handlecityChange = this.handlecityChange.bind(this);
+    this.handlecity2Change = this.handlecity2Change.bind(this);
+    this.handlestreetChange = this.handlestreetChange.bind(this);
+    this.handlestreet2Change = this.handlestreet2Change.bind(this);
+    this.handlecountryChange = this.handlecountryChange.bind(this);
+    this.handlecountry2Change = this.handlecountry2Change.bind(this);
+    this.handlestateChange = this.handlestateChange.bind(this);
+    this.handlestate2Change = this.handlestate2Change.bind(this);
+    this.handlezipChange = this.handlezipChange.bind(this);
+    this.handlezip2Change = this.handlezip2Change.bind(this);
+    this.handlefnameChange = this.handlefnameChange.bind(this);
+    this.handlefname2Change = this.handlefname2Change.bind(this);
+    this.handlelnameChange = this.handlelnameChange.bind(this);
+    this.handlelname2Change = this.handlelname2Change.bind(this);
+    this.handlephoneChange = this.handlephoneChange.bind(this);
+    this.handlephone2Change = this.handlephone2Change.bind(this);
+    this.handleemailChange = this.handleemailChange.bind(this);
+    this.handleemail2Change = this.handleemail2Change.bind(this);
+    this.handlesmoothfChange = this.handlesmoothfChange.bind(this);
+    this.handleframeiChange = this.handleframeiChange.bind(this);
+    this.handleanomdChange = this.handleanomdChange.bind(this);
   }
 
   // whenever a change is made to an input field, update the corresponding state property
   handleNameChange(event) {
-    let data = {...this.state.update}
+    let data = {...this.state.data}
     data.description = event.target.value
     this.setState({data});
   }
 
   handleOrgIDChange(event) {
-    let data = {...this.state.update}
+    let data = {...this.state.data}
     data.id = event.target.value
     this.setState({data});
   }
 
   handletofaChange(event) {
-    this.setState({typea: event.target.value});
+    let address = {...this.state.address}
+    address.typea = event.target.value
+    this.setState({address});
   }
 
   handlecityChange(event) {
-    this.setState({city: event.target.value});
+    let address = {...this.state.address}
+    address.city = event.target.value
+    this.setState({address});
+  }
+
+  handlestreetChange(event) {
+    let address = {...this.state.address}
+    address.street = event.target.value
+    this.setState({address});
   }
 
   handlecountryChange(event) {
-    this.setState({country: event.target.value});
+    let address = {...this.state.address}
+    address.country = event.target.value
+    this.setState({address});
   }
 
   handlestateChange(event) {
-    this.setState({state: event.target.value});
+    let address = {...this.state.address}
+    address.state = event.target.value
+    this.setState({address});
   }
 
   handlezipChange(event) {
-    this.setState({zip: event.target.value});
+    let address = {...this.state.address}
+    address.zip = event.target.value
+    this.setState({address});
   }
 
   handletofa2Change(event) {
-    this.setState({typea2: event.target.value});
+    let address2 = {...this.state.address2}
+    address2.typea2 = event.target.value
+    this.setState({address2});
   }
 
   handlecity2Change(event) {
-    this.setState({city2: event.target.value});
+    let address2 = {...this.state.address2}
+    address2.city2 = event.target.value
+    this.setState({address2});
+  }
+
+  handlestreet2Change(event) {
+    let address2 = {...this.state.address2}
+    address2.street2 = event.target.value
+    this.setState({address2});
   }
 
   handlecountry2Change(event) {
-    this.setState({country2: event.target.value});
+    let address2 = {...this.state.address2}
+    address2.country2 = event.target.value
+    this.setState({address2});
   }
 
   handlestate2Change(event) {
-    this.setState({state2: event.target.value});
+    let address2 = {...this.state.address2}
+    address2.state2 = event.target.value
+    this.setState({address2});
   }
 
   handlezip2Change(event) {
-    this.setState({zip2: event.target.value});
+    let address2 = {...this.state.address2}
+    address2.zip2 = event.target.value
+    this.setState({address2});
   }
 
   handletofcChange(event) {
-    this.setState({typec: event.target.value});
+    let contact = {...this.state.contact}
+    contact.typec = event.target.value
+    this.setState({contact});
   }
 
   handlefnameChange(event) {
-    this.setState({firstName: event.target.value});
+    let contact = {...this.state.contact}
+    contact.firstName = event.target.value
+    this.setState({contact});
   }
 
   handlelnameChange(event) {
-    this.setState({lastName: event.target.value});
+    let contact = {...this.state.contact}
+    contact.lastName = event.target.value
+    this.setState({contact});
   }
 
   handlephoneChange(event) {
-    this.setState({phone: event.target.value});
+    let contact = {...this.state.contact}
+    contact.phone = event.target.value
+    this.setState({contact});
   }
 
   handleemailChange(event) {
-    this.setState({email: event.target.value});
+    let contact = {...this.state.contact}
+    contact.email = event.target.value
+    this.setState({contact});
   }
 
   handletofc2Change(event) {
-    this.setState({typec2: event.target.value});
+    let contact2 = {...this.state.contact2}
+    contact2.typec2 = event.target.value
+    this.setState({contact2});
   }
 
   handlefname2Change(event) {
-    this.setState({firstName: event.target.value});
+    let contact2 = {...this.state.contact2}
+    contact2.firstName2 = event.target.value
+    this.setState({contact2});
   }
 
   handlelname2Change(event) {
-    this.setState({lastName: event.target.value});
+    let contact2 = {...this.state.contact2}
+    contact2.lastName2 = event.target.value
+    this.setState({contact2});
   }
 
   handlephone2Change(event) {
-    this.setState({phone: event.target.value});
+    let contact2 = {...this.state.contact2}
+    contact2.phone2 = event.target.value
+    this.setState({contact2});
   }
 
   handleemail2Change(event) {
-    this.setState({email: event.target.value});
+    let contact2 = {...this.state.contact2}
+    contact2.email2 = event.target.value
+    this.setState({contact2});
   }
 
   handleframeiChange(event) {
-    this.setState({frameInterval: event.target.value});
+    let configuration = {...this.state.configuration}
+    configuration.frameInterval = event.target.value
+    this.setState({configuration});
   }
 
-  handleanomDChange(event) {
-    this.setState({anomalyDuration: event.target.value});
+  handleanomdChange(event) {
+    let configuration = {...this.state.configuration}
+    configuration.anomalyDuration = event.target.value
+    this.setState({configuration});
   }
 
   handlesmoothfChange(event) {
-    this.setState({smoothingFrame: event.target.value});
+    let configuration = {...this.state.configuration}
+    configuration.smoothingFrame = event.target.value
+    this.setState({configuration});
   }
-
-
 
 //   handleDescriptionChange(event) {
 //     let data = {...this.state.data};
@@ -274,7 +360,6 @@ class EditOrgForm extends Component {
         email: emailc2.value}]
     
     this.setState({contact}); 
-
   }
 
   handleimgCapture() {
@@ -345,13 +430,15 @@ class EditOrgForm extends Component {
     }
   
 
-  stateUpdate() {
-    this.handleCChange();
-    this.handleAChange();
-    this.handleConfigChange();
-    this.idcaptureVal();
-    this.imgcaptureVal();
-  }
+    stateUpdate() {
+      this.handleCChange();
+      this.handleAChange();
+      this.handleidCapture();
+      this.handleimgCapture();
+      this.handleConfigChange();
+      this.idcaptureVal();
+      this.imgcaptureVal();
+    }
 
   orgnameVal(event) {
     if (event.target.value === ""){
@@ -533,37 +620,49 @@ class EditOrgForm extends Component {
   componentDidMount() {
       // parse query from URL string to retrieve orgId
       const query = new URLSearchParams(this.props.location.search);
-      const orgId = {};
+      const orgid = {};
       for (let param of query.entries()) {
-        orgId[param[0]] = param[1];
+        orgid[param[0]] = param[1];
       }
-      console.log(orgId)
+      console.log(orgid)
   
       //convert orgId to string.
-      const preProcesseditemId = orgId.id
-      const processeditemId = preProcesseditemId.toString();
+      const preProcessedItemId = orgid.id
+      console.log(orgid.id)
+      const processedItemId = preProcessedItemId.toString();
+      //const processeditemId = stringToSlice.slice(4);
 
-      console.log(preProcesseditemId)
-      console.log(processeditemId)
+      console.log(preProcessedItemId)
+      console.log(processedItemId)
   
       // get org information by orgID
-      axios.get(`/orgs/${processeditemId}`).then(res => {
+      axios.get(`/orgs/${processedItemId}`).then(res => {
         console.log(res.data.result.Items);
         const pathToData = res.data.result.Items;
         const basicData = [];
         const addressData = [];
+        const address2Data = [];
         const contactData = [];
+        const contact2Data = [];
+        //const basic1Data = [];
         //const regisData = [];
         //const pprocessData = [];
         const configData = [];
         // push data objects into an array
-        for (const Item in pathToData) {
+        for (const dataItem in pathToData) {
           basicData.push({
-          description: pathToData[Item].description,
-          id: pathToData[Item].id,
-          itemId: pathToData[Item].itemId,
-          itemType: pathToData[Item].itemType,
+          description: pathToData[dataItem].description,
+          id: pathToData[dataItem].id,
+          itemId: pathToData[dataItem].itemId,
+          itemType: pathToData[dataItem].itemType,
           }) }
+
+          // for (const data1Item in pathToData) {
+          // basic1Data.push({
+          //   id: pathToData[data1Item].id,
+          //   itemId: pathToData[data1Item].itemId,
+          //   itemType: pathToData[data1Item].itemType,
+          // }) }
 
           for (const addressItem in pathToData) {
           addressData.push({
@@ -573,12 +672,21 @@ class EditOrgForm extends Component {
           street: pathToData[addressItem].address[0].street,
           typea: pathToData[addressItem].address[0].type,
           state: pathToData[addressItem].address[0].state,
-          city2: pathToData[addressItem].address[1].city,
-          country2: pathToData[addressItem].address[1].country,
-          zip2: pathToData[addressItem].address[1].zip,
-          street2: pathToData[addressItem].address[1].street,
-          typea2: pathToData[addressItem].address[1].type,
-          state2: pathToData[addressItem].address[1].state 
+          // city2: pathToData[addressItem].address[1].city,
+          // country2: pathToData[addressItem].address[1].country,
+          // zip2: pathToData[addressItem].address[1].zip,
+          // street2: pathToData[addressItem].address[1].street,
+          // typea2: pathToData[addressItem].address[1].type,
+          // state2: pathToData[addressItem].address[1].state
+          }) }
+          for (const address2Item in pathToData){
+          address2Data.push({
+          city2: pathToData[address2Item].address[1].city,
+          country2: pathToData[address2Item].address[1].country,
+          zip2: pathToData[address2Item].address[1].zip,
+          street2: pathToData[address2Item].address[1].street,
+          typea2: pathToData[address2Item].address[1].type,
+          state2: pathToData[address2Item].address[1].state 
            }) }
           // // primary contact data
           for (const contactItem in pathToData) {
@@ -588,11 +696,19 @@ class EditOrgForm extends Component {
           typec: pathToData[contactItem].contact[0].type,
           email: pathToData[contactItem].contact[0].email,
           phone: pathToData[contactItem].contact[0].phone,
-          firstName2: pathToData[contactItem].contact[1].firstName,
-          lastName2: pathToData[contactItem].contact[1].lastName,
-          typec2: pathToData[contactItem].contact[1].type,
-          email2: pathToData[contactItem].contact[1].email,
-          phone2: pathToData[contactItem].contact[1].phone
+          // firstName2: pathToData[contactItem].contact[1].firstName,
+          // lastName2: pathToData[contactItem].contact[1].lastName,
+          // typec2: pathToData[contactItem].contact[1].type,
+          // email2: pathToData[contactItem].contact[1].email,
+          // phone2: pathToData[contactItem].contact[1].phone
+          }) }
+          for (const contact2Item in pathToData) {
+          contact2Data.push({
+          firstName2: pathToData[contact2Item].contact[1].firstName,
+          lastName2: pathToData[contact2Item].contact[1].lastName,
+          typec2: pathToData[contact2Item].contact[1].type,
+          email2: pathToData[contact2Item].contact[1].email,
+          phone2: pathToData[contact2Item].contact[1].phone
           }) }
           for (const configItem in pathToData) {
           configData.push({
@@ -609,8 +725,11 @@ class EditOrgForm extends Component {
         // update state
         this.setState({
             data: basicData[0],
+            //data1: basic1Data[0],
             contact: contactData[0],
+            contact2: contact2Data[0],
             address: addressData[0],
+            address2: address2Data[0],
             configuration: configData[0]});
         this.setState({dataLoaded: true});
         let RadioimgNo = document.getElementById("imgCaptureNo")
@@ -637,10 +756,6 @@ class EditOrgForm extends Component {
       }).catch(error => alert(error));
     }
 
-  handleRadiobtnsGet() {
-    this.handleGetid();
-    this.handleGetimg();
-  }
 
 
   handleSubmit(event) {
@@ -685,7 +800,7 @@ class EditOrgForm extends Component {
         // store editable data in new object
         const newData = {
             description: this.state.data.description,
-            id: this.state.data.id,
+            //id: this.state.data.id,
             contact: this.state.contact,
             address: this.state.address,
             configuration: this.state.configuration
@@ -936,7 +1051,8 @@ class EditOrgForm extends Component {
                                 style={textbxstyle2} 
                                 type="text" 
                                 id="addresstype"
-                                value={this.state.address.typea} 
+                                value={this.state.address.typea}
+                                onChange={this.handletofaChange} 
                                 name="addresstype"
                                 onBlur={this.addresstypeVal}
                                 />
@@ -964,6 +1080,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="street" 
+                                  onChange={this.handlestreetChange}
                                   value={this.state.address.street}
                                   name="street"
                                   onBlur={this.streetVal}
@@ -992,6 +1109,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="city" 
+                                  onChange={this.handlecityChange}
                                   value={this.state.address.city}
                                   name="city"
                                   onBlur={this.cityVal}
@@ -1019,7 +1137,8 @@ class EditOrgForm extends Component {
                                 <input 
                                   style={textbxstyle2} 
                                   type="text" 
-                                  id="state" 
+                                  id="state"
+                                  onChange={this.handlestateChange} 
                                   value={this.state.address.state}
                                   name="state"
                                   onBlur={this.stateVal}
@@ -1048,6 +1167,7 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="zip" 
+                                  onChange={this.handlezipChange}
                                   value={this.state.address.zip}
                                   name="zip"
                                   onBlur={this.zipVal}
@@ -1076,6 +1196,7 @@ class EditOrgForm extends Component {
                                 style={textbxstyle2} 
                                 type="text" 
                                 id="country"
+                                onChange={this.handlecountryChange}
                                 value={this.state.address.country} 
                                 name="country"
                                 onBlur={this.countryVal}
@@ -1110,7 +1231,8 @@ class EditOrgForm extends Component {
                                   // onChangeText={(text) => {this.setState({ typeofaddress2: text })}} 
                                   style={textbxstyle2} 
                                   type="text"
-                                  value={this.state.address.typea2} 
+                                  onChange={this.handletofa2Change}
+                                  value={this.state.address2.typea2} 
                                   id="addresstype2" 
                                   name="addresstype2"
                                   />
@@ -1134,7 +1256,8 @@ class EditOrgForm extends Component {
                                   // onChangeText={(text) => {this.setState({ street2: text })}}
                                   type="text" 
                                   id="street2"
-                                  value={this.state.address.street2} 
+                                  onChange={this.handlestreet2Change}
+                                  value={this.state.address2.street2} 
                                   name="street2"
                                   />
                               </td>
@@ -1156,8 +1279,9 @@ class EditOrgForm extends Component {
                                   style={textbxstyle2} 
                                   // onChangeText={(text) => {this.setState({ city2: text })}} 
                                   type="text" 
-                                  id="city2" 
-                                  value={this.state.address.city2}
+                                  id="city2"
+                                  onChange={this.handlecity2Change} 
+                                  value={this.state.address2.city2}
                                   name="city2"
                                   />
                               </td>
@@ -1178,7 +1302,8 @@ class EditOrgForm extends Component {
                                 style={textbxstyle2} 
                                 //onChangeText={(text) => {this.setState({ statea2: text })}} 
                                 type="text" 
-                                value={this.state.address.state2}
+                                value={this.state.address2.state2}
+                                onChange={this.handlestate2Change}
                                 id="state2" 
                                 name="state2"
                                 />
@@ -1200,8 +1325,9 @@ class EditOrgForm extends Component {
                                 <input 
                                   style={textbxstyle2} 
                                   type="text" 
-                                  id="zip2" 
-                                  value={this.state.address.zip2}
+                                  id="zip2"
+                                  onChange={this.handlezip2Change} 
+                                  value={this.state.address2.zip2}
                                   name="zip2"
                                   />
                               </td>
@@ -1222,8 +1348,9 @@ class EditOrgForm extends Component {
                                 <input 
                                   style={textbxstyle2} 
                                   type="text" 
-                                  id="country2" 
-                                  value={this.state.address.country2}
+                                  id="country2"
+                                  onChange={this.handlecountry2Change} 
+                                  value={this.state.address2.country2}
                                   name="country2"
                                   />
                               </td>
@@ -1255,6 +1382,7 @@ class EditOrgForm extends Component {
                                     value={this.state.contact.typec} 
                                     id="contacttype" 
                                     name="contacttype"
+                                    onChange={this.handletofcChange}
                                     onBlur={this.contacttypeVal}
                                     />
                                     <br/>
@@ -1281,7 +1409,8 @@ class EditOrgForm extends Component {
                                     style={textbxstyle}
                                     type="text" 
                                     id="fname"
-                                    value={this.state.contact.firstName}  
+                                    value={this.state.contact.firstName}
+                                    onChange={this.handlefnameChange}  
                                     name="fname"
                                     onBlur={this.fnameVal}
                                    />
@@ -1309,6 +1438,7 @@ class EditOrgForm extends Component {
                                     style={textbxstyle} 
                                     type="text" 
                                     id="lname"
+                                    onChange={this.handlelnameChange}
                                     value={this.state.contact.lastName}  
                                     name="lname"
                                     onBlur={this.lnameVal}
@@ -1336,7 +1466,8 @@ class EditOrgForm extends Component {
                                   <input 
                                     style={textbxstyle} 
                                     type="text" 
-                                    id="email" 
+                                    id="email"
+                                    onChange={this.handleemailChange} 
                                     value={this.state.contact.email} 
                                     name="email"
                                     onBlur={this.emailVal}                                   
@@ -1366,6 +1497,7 @@ class EditOrgForm extends Component {
                                     style={textbxstyle} 
                                     type="text" 
                                     id="phone"
+                                    onChange={this.handlephoneChange}
                                     value={this.state.contact.phone}  
                                     name="phone"
                                     onBlur={this.phoneVal}
@@ -1401,7 +1533,8 @@ class EditOrgForm extends Component {
                                   style={textbxstyle} 
                                   type="text" 
                                   id="contacttype2"
-                                  value={this.state.contact.typec2}  
+                                  onChange={this.handletofc2Change}
+                                  value={this.state.contact2.typec2}  
                                   name="contacttype2"
                                   />
                               </td>
@@ -1424,7 +1557,8 @@ class EditOrgForm extends Component {
                                   // onChangeText={(text) => {this.setState({ fname2: text })}} 
                                   type="text" 
                                   id="fname2"
-                                  value={this.state.contact.firstName2}  
+                                  onChange={this.handlefname2Change}
+                                  value={this.state.contact2.firstName2}  
                                   name="fname2"
                                   />
                               </td>
@@ -1447,7 +1581,8 @@ class EditOrgForm extends Component {
                                   // onChangeText={(text) => {this.setState({ lname2: text })}} 
                                   type="text" 
                                   id="lname2"
-                                  value={this.state.contact.lastName2} 
+                                  onChange={this.handlelname2Change}
+                                  value={this.state.contact2.lastName2} 
                                   name="lname2"
                                   />
                               </td>
@@ -1469,7 +1604,8 @@ class EditOrgForm extends Component {
                                   style={textbxstyle} 
                                   type="text" 
                                   id="email2"
-                                  value={this.state.contact.email2}  
+                                  onChange={this.handleemail2Change}
+                                  value={this.state.contact2.email2}  
                                   name="email2"
                                   />
                               </td>
@@ -1491,7 +1627,8 @@ class EditOrgForm extends Component {
                                   style={textbxstyle} 
                                   type="text" 
                                   id="phone2"
-                                  value={this.state.contact.phone2}  
+                                  onChange={this.handlephone2Change}
+                                  value={this.state.contact2.phone2}  
                                   name="phone2"
                                   />
                               </td>
@@ -1651,7 +1788,8 @@ class EditOrgForm extends Component {
                                 style={textbxstyle} 
                                 type="text" 
                                 id="frameinterval"
-                                value={this.state.configuration.frameInterval} 
+                                value={this.state.configuration.frameInterval}
+                                onChange={this.handleframeiChange} 
                                 name="frameinterval"
                                 onBlur={this.frameintervalVal}                                
                                 />
@@ -1680,6 +1818,7 @@ class EditOrgForm extends Component {
                                 style={textbxstyle} 
                                 type="text" 
                                 id="anomalyduration"
+                                onChange={this.handleanomdChange}
                                 value={this.state.configuration.anomalyDuration}  
                                 name="anomalyduration"
                                 onBlur={this.anomalydurationVal}
@@ -1709,6 +1848,7 @@ class EditOrgForm extends Component {
                                 type="text" 
                                 id="smoothingframe"
                                 value={this.state.configuration.smoothingFrame} 
+                                onChange={this.handlesmoothfChange}
                                 name="smoothingframe"
                                 onBlur={this.smoothingframeVal}
                                 />
