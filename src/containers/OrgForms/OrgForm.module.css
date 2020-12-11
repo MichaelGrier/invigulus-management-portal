@@ -20,6 +20,16 @@
     background-color: #f2f2f2;
 }
 
+.combobox {
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: inline-block;
+}
+
 
 .wrapper fieldset {
     border-radius: 10px;
@@ -47,7 +57,7 @@
 	margin-left: 20px;
 	display: flex;
 	justify-content:center;
-	align-items:center;
+    align-items:center;
 }
 
 .RadioButton .checkmark {
@@ -66,7 +76,18 @@
 .RadioButton input:checked + .checkmark {
 	opacity: 1;
 }
-
+/* 
+.label {
+	color: #3cB650 ;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+    padding: 20px;
+    position: relative;
+    display: inline-block;
+    margin: auto;
+} */
 
 /* .flexChild {
 width: 100%;
