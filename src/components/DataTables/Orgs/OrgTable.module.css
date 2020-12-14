@@ -1,3 +1,7 @@
+.tableWrap {
+  width: 100%;
+}
+
 .toolBarWrap {
   display: flex;
   justify-content: space-between;
@@ -18,4 +22,9 @@
 .pageNum {
   margin-right: 1rem;
   margin-left: 1rem;
+}
+
+.spinnerWrap{
+  margin-top: 10rem;
+  margin-bottom: 15rem;
 }

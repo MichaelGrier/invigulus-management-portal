@@ -5,7 +5,13 @@ import classes from './LoginLink.module.css';
 
 const loginLink = (props) => {
   return (
-    <Link to={{pathname:'/login'}} className={classes.loginLink}>{props.children}</Link>
+    <Link 
+      to={{pathname:'/login'}} 
+    >
+      <button className={classes.loginLink}>
+        {props.children}
+      </button>
+    </Link>
   );
 }
 

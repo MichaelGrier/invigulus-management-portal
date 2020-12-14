@@ -8,7 +8,6 @@
 .wrapper {
   padding: 5px 20px;
   display: flex;
-  
 }
 
 
@@ -19,27 +18,14 @@
   padding: 20px;
   list-style-type: none;
   clear: left;
-  /* display: flex; */
   width: 60%;
   margin: 0px auto;
   border: 3;
   border-style: solid;
   border-width: thin;
   border-color: rgb(221, 218, 218);
-  /* flex-wrap: wrap; */
   justify-content: space-between;
 } 
-
-/* .LoginPage {
-  height: 100vh;
-  background-color: #ffffff;
-  width: 100%;
-  color: #3cB650 ;
-  font-family: 'Lato', sans-serif;
-  font-weight: 400;
-  overflow-x: hidden;
-  text-rendering: optimizeLegibility;
-} */
 
 table {
   width: 100%;

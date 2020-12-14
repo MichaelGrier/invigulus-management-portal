@@ -104,7 +104,7 @@ const TestTable = () => {
   //console.log(selectedRow);
 
   // handle edit button click
-  const HandleEditRequest = () => {
+  const handleEditRequest = () => {
     try{
       // get properties to be passed to form and store in variable
       const itemToEdit = selectedRow[0].original;
@@ -124,7 +124,7 @@ const TestTable = () => {
         search: '?' + queryString
       });
     } catch(err) {
-      alert('please select a row to edit')
+      alert('please select a test to edit')
     }
   }
 
@@ -140,8 +140,11 @@ const TestTable = () => {
       
       // make axios call, then reload page
       axios.delete(`/tests/${itemToDelete}`)
-          .then(response => {
-            window.location.reload();
+          .then(res => {
+            console.log(res)
+            if (res.status === 200) {
+              window.location.reload();
+            }
           })
           .catch(error => alert(error));
     }
@@ -209,7 +212,7 @@ const TestTable = () => {
             >Next</button>
           </div>
           <br/>
-          <SmallButton clicked={HandleEditRequest}>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
+          <SmallButton clicked={handleEditRequest}>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
           <SmallButton clicked={handleDeleteRequest}>Delete</SmallButton>
         </div>
       : 

@@ -3,7 +3,6 @@ import axios from '../../../axios';
 import {withRouter} from 'react-router-dom';
 
 import classes from './EditTestForm.module.css';
-import Heading2 from '../../../components/Form Inputs/Heading2/Heading2';
 
 class TestForm extends Component {
   constructor() {

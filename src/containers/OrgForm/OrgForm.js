@@ -669,9 +669,6 @@ class OrgForm extends Component {
   //   else document.getElementById('txtplacename').innerHTML = country;
   // }
   
-
-
-
   handleSubmit(event) {
 
     event.preventDefault();
@@ -720,7 +717,7 @@ class OrgForm extends Component {
       address: this.state.address,
       configuration: this.state.configuration
     }
-    console.log(formData);
+    //console.log(formData);
     //make api call to post data
     axios.post(`/orgs`, formData)
          .then(res => {

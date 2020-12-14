@@ -1,4 +1,4 @@
-.loginLink {
+.logoutButton {
   -webkit-text-decoration: none;
     text-decoration: none;
   font-size: 110%;
@@ -14,8 +14,8 @@
   outline: none;
 }
 
-.loginLink:hover,
-.loginLink:active,
-.loginLink:focus {
+.logoutButton:hover,
+.logoutButton:active,
+.logoutButton:focus {
   outline: none;
 }

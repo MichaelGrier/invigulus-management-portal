@@ -1,9 +1,9 @@
 .main {
-    height: 85vh;
-    background-color: #e5e5e5;
-    overflow: auto;
-  }
+  height: 85vh;
+  background-color: #f2f2f2;
+  overflow: auto;
+}
   
-  .header {
-    margin: 20rem 0 2rem 0;
-  }
+.header {
+  margin: 20rem 0 2rem 0;
+}

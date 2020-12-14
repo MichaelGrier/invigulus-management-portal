@@ -3,14 +3,12 @@ import {withRouter} from 'react-router-dom';
 import axios from '../../axios';
 
 import classes from './EditOrgForm.module.css';
-import RadioButton from '../../components/Form Inputs/RadioButton/RadioButton';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
 import Accordion from '../../components/Accordion/Accordion';
 import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
 import Accordion4 from '../../components/Accordion/Accordion4';
 import Accordion5 from '../../components/Accordion/Accodion5';
-import { faBoxTissue } from '@fortawesome/free-solid-svg-icons';
 
 class EditOrgForm extends Component {
   constructor() {
@@ -429,7 +427,6 @@ class EditOrgForm extends Component {
 
     }
   
-
     stateUpdate() {
       this.handleCChange();
       this.handleAChange();
@@ -678,7 +675,8 @@ class EditOrgForm extends Component {
           // street2: pathToData[addressItem].address[1].street,
           // typea2: pathToData[addressItem].address[1].type,
           // state2: pathToData[addressItem].address[1].state
-          }) }
+          })}
+
           for (const address2Item in pathToData){
           address2Data.push({
           city2: pathToData[address2Item].address[1].city,
@@ -687,7 +685,8 @@ class EditOrgForm extends Component {
           street2: pathToData[address2Item].address[1].street,
           typea2: pathToData[address2Item].address[1].type,
           state2: pathToData[address2Item].address[1].state 
-           }) }
+           })}
+
           // // primary contact data
           for (const contactItem in pathToData) {
           contactData.push({
@@ -701,7 +700,8 @@ class EditOrgForm extends Component {
           // typec2: pathToData[contactItem].contact[1].type,
           // email2: pathToData[contactItem].contact[1].email,
           // phone2: pathToData[contactItem].contact[1].phone
-          }) }
+          })}
+
           for (const contact2Item in pathToData) {
           contact2Data.push({
           firstName2: pathToData[contact2Item].contact[1].firstName,
@@ -709,7 +709,8 @@ class EditOrgForm extends Component {
           typec2: pathToData[contact2Item].contact[1].type,
           email2: pathToData[contact2Item].contact[1].email,
           phone2: pathToData[contact2Item].contact[1].phone
-          }) }
+          })}
+
           for (const configItem in pathToData) {
           configData.push({
           imageCapture: pathToData[configItem].configuration.Registration.imageCapture,
@@ -720,8 +721,9 @@ class EditOrgForm extends Component {
           frameInterval: pathToData[configItem].configuration.postProcess.frameInterval,
           anomalyDuration: pathToData[configItem].configuration.postProcess.anomalyDuration,
           smoothingFrame: pathToData[configItem].configuration.postProcess.smoothingFrame
-          }) }
-          console.log(configData)
+          })}
+          //console.log(configData)
+
         // update state
         this.setState({
             data: basicData[0],
@@ -732,8 +734,10 @@ class EditOrgForm extends Component {
             address2: address2Data[0],
             configuration: configData[0]});
         this.setState({dataLoaded: true});
-        let RadioimgNo = document.getElementById("imgCaptureNo")
-        let RadioimgYes = document.getElementById("imgCaptureYes")
+
+        let RadioimgNo = document.getElementById("imgCaptureNo");
+        let RadioimgYes = document.getElementById("imgCaptureYes");
+
         if (this.state.configuration.imageCapture === "true") {
           RadioimgYes.checked = true
         }
@@ -742,8 +746,8 @@ class EditOrgForm extends Component {
           RadioimgNo.checked = true
         }
 
-        let RadioidNo = document.getElementById("idCaptureNo")
-        let RadioidYes = document.getElementById("idCaptureYes")
+        let RadioidNo = document.getElementById("idCaptureNo");
+        let RadioidYes = document.getElementById("idCaptureYes");
 
         if (this.state.configuration.idCapture === "true") {
             RadioidYes.checked = true
@@ -797,29 +801,29 @@ class EditOrgForm extends Component {
       alert ("One or more required fields are missing")
     }
     else {
-        // store editable data in new object
-        const newData = {
-            description: this.state.data.description,
-            //id: this.state.data.id,
-            contact: this.state.contact,
-            address: this.state.address,
-            configuration: this.state.configuration
-        };
-        // store value of id
-        const itemToEdit = this.state.data.id;
-    
-        // make api call to update data
-        axios.patch(`/orgs/${itemToEdit}`, newData)
-             // if request is successful, redirect to manage tests
-             .then(res => {
-               if (res.status === 200) {
-                this.props.history.push('/manage-orgs')
-               } 
-             })
-             // else, display error
-             .catch(error => alert(error))    
-          }
-        }
+      // store editable data in new object
+      const newData = {
+        description: this.state.data.description,
+        //id: this.state.data.id,
+        contact: this.state.contact,
+        address: this.state.address,
+        configuration: this.state.configuration
+      };
+      // store value of id
+      const itemToEdit = this.state.data.id;
+  
+      // make api call to update data
+      axios.patch(`/orgs/${itemToEdit}`, newData)
+      // if request is successful, redirect to manage tests
+      .then(res => {
+        if (res.status === 200) {
+        this.props.history.push('/manage-orgs')
+        } 
+      })
+      // else, display error
+      .catch(error => alert(error))    
+}
+  }
 
       state = {
       isOpen: true,
@@ -945,7 +949,7 @@ class EditOrgForm extends Component {
     return (
       <div>
         <main className={classes.main}>
-          <Heading2>Add Organizations</Heading2>
+          <h1 className={classes.header}>Add Organizations</h1>
           <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
@@ -1867,7 +1871,7 @@ class EditOrgForm extends Component {
                             <tr>
                               <td 
                                 className={classes.cell7} 
-                                style={{textAlign:"right", paddingRight: "2%", paddingTop:"2%"}}>
+                                style={{textAlign:"center", paddingRight: "2%", paddingTop:"2%"}}>
                                 <input
                                   onClick={this.stateUpdate}
                                   type="submit" value="Submit" 

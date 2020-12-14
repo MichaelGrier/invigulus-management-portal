@@ -1,13 +1,17 @@
-.EditOrgForm {
+.main {
     height: 100vh;
-    background-color: #e5e5e5;
     width: 100%;
     color: #3cB650 ;
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     overflow-x: hidden;
     text-rendering: optimizeLegibility;
-    background-color: #3cB650;
+    background-color: #f2f2f2;
+}
+
+.header {
+    color: #3cB650;
+    padding: 3rem 0 2rem 0;
 }
 
 .wrapper {
@@ -16,17 +20,15 @@
     
 }
 
-
 .wrapper fieldset {
-    margin: 20px 0;
     border-radius: 10px;
-    background-color: #f2f2f2;
+    background-color: #e5e5e5;
     padding: 20px;
     list-style-type: none;
     clear: left;
     /* display: flex; */
     width: 60%;
-    margin: 0px auto;
+    margin: 0 auto 3rem auto;
     border: 3;
     border-style: solid;
     border-width: thin;
