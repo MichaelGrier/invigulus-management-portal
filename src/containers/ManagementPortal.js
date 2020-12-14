@@ -4,7 +4,7 @@ import {Auth} from 'aws-amplify';
 
 import NavBar from '../components/NavBar/NavBar';
 import Footer from '../components/Footer/Footer';
-import LoginPage from '../containers/LoginPage/LoginPage';
+import LoginPage from './LoginPage/LoginPage';
 import LandingPage from './LandingPage/LandingPage';
 import OrgsAndTests from './OrgsAndTests/OrgsAndTests';
 import ManageOrgs from './ManageOrgs/ManageOrgs';
@@ -17,9 +17,10 @@ import TestForm from './TestForms/TestForm/TestForm';
 import AddTestConfirmation from './ConfirmationPages/AddTestConfirmation/AddTestConfirmation';
 import EditTestForm from './TestForms/EditTestForm/EditTestForm';
 import AddOrgConfirmation from './ConfirmationPages/AddOrgConfirmation/AddOrgConfirmation';
-import EditOrgForm from '../containers/EditOrgForm/EditOrgForm';
-import ResetPassword from '../containers/ResetPassword/ResetPassword';
+import EditOrgForm from './EditOrgForm/EditOrgForm';
+import ResetPassword from './ResetPassword/ResetPassword';
 import ResetPasswordVerification from './ResetPasswordVerification/ResetPasswordVerification';
+import ChangePassword from './ChangePassword/ChangePassword';
 import ChangePasswordConfirmation from './ConfirmationPages/ChangePasswordConfirmation/ChangePasswordConfirmation';
 
 class ManagementPortal extends Component {
@@ -84,6 +85,7 @@ class ManagementPortal extends Component {
         <Route path='/edit-org' render={(props) => <EditOrgForm {...props} auth={authProps} />} />
         <Route path='/reset-password' exact render={(props) => <ResetPassword {...props} auth={authProps} />} />
         <Route path='/reset-password-verification' exact render={(props) => <ResetPasswordVerification {...props} auth={authProps} />} />
+        <Route path='/change-password' exact render={(props) => <ChangePassword {...props} auth={authProps} />} />
         <Route path='/change-password-confirmation' exact render={(props) => <ChangePasswordConfirmation  {...props} auth={authProps} />} />
 
         <Footer />

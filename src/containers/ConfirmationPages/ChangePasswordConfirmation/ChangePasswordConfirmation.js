@@ -8,7 +8,7 @@ const addTestConfirmation = () => {
   return(
     <main className={classes.main}>
       <h3 className={classes.header}>You successfully changed your password.</h3>
-      <Link to={{pathname:'/login'}}><SmallButton>Login</SmallButton></Link>
+      <Link to={{pathname:'/'}}><SmallButton>Login</SmallButton></Link>
     </main>
   );
 };

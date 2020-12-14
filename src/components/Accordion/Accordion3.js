@@ -8,7 +8,6 @@ const Accordion3 = ({ children, onChange, isOpen3, label }) => {
     onChange && onChange(!isOpen3);
   };
 
-
   return (
     <div className={styles.wrapper}>
       <span

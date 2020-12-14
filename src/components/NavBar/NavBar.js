@@ -4,8 +4,10 @@ import {withRouter} from 'react-router-dom';
 
 import classes from './NavBar.module.css';
 import Logo from '../UI/Logo/Logo';
-import LoginLink from '../NavBar/LoginLink/LoginLink';
-import LogoutButton from '../NavBar/LogoutButton/LogoutButton';
+import LoginLink from './LoginLink/LoginLink';
+import LogoutButton from './LogoutButton/LogoutButton';
+import ChangePasswordLink from './ChangePasswordLink/ChangePasswordLink'
+import changePasswordLink from './ChangePasswordLink/ChangePasswordLink';
 
 class NavBar extends Component {
   handleLogOut = async (event) => {
@@ -36,9 +38,12 @@ class NavBar extends Component {
             <LoginLink>Log In</LoginLink>
           )}
 
-          {/* if a valid user is logged in, display logout button */}
+          {/* if a valid user is logged in, display logout and change password buttons */}
           {this.props.auth.isAuthenticated && (
-            <LogoutButton clicked={this.handleLogOut}>Log Out</LogoutButton>
+            <div>
+              <ChangePasswordLink>Change Password</ChangePasswordLink>
+              <LogoutButton clicked={this.handleLogOut}>Log Out</LogoutButton>
+            </div>
           )}
         </div>
       </div>
