@@ -66,16 +66,16 @@ class EditOrgForm extends Component {
           frameInterval: ""}
       }
     }
-    
+
+    //Global variables used in multiple methods 
     let RadioVal1 = null
     let RadioVal2 = null
     let imgCapVal = null
     let idCapVal = null
+    let statea = null
+    let statea2 = null
 
     this.handleNameChange = this.handleNameChange.bind(this);
-    //this.handleOrgIDChange = this.handleOrgIDChange.bind(this);
-    // this.handleitemTypeChange = this.handleitemTypeChange.bind(this);
-    // this.handleitemIDChange = this.handleitemIDChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCChange = this.handleCChange.bind(this);
     this.handleAChange = this.handleAChange.bind(this);
@@ -101,9 +101,6 @@ class EditOrgForm extends Component {
     this.anomalydurationVal = this.anomalydurationVal.bind(this);
     this.frameintervalVal = this.frameintervalVal.bind(this);
     this.stateUpdate = this.stateUpdate.bind(this);
-    // this.handleGetid = this.handleGetid.bind(this);
-    // this.handleGetimg = this.handleGetimg.bind(this);
-    // this.handleRadiobtnsGet = this.handleRadiobtnsGet(this);
     this.handletofaChange = this.handletofaChange.bind(this);
     this.handletofcChange = this.handletofcChange.bind(this);
     this.handletofa2Change = this.handletofa2Change.bind(this);
@@ -129,13 +126,14 @@ class EditOrgForm extends Component {
     this.handlesmoothfChange = this.handlesmoothfChange.bind(this);
     this.handleframeiChange = this.handleframeiChange.bind(this);
     this.handleanomdChange = this.handleanomdChange.bind(this);
-    // this.selectState = this.selectState.bind(this);
-    // this.selectState2 = this.selectState2.bind(this);
     this.handlestateVariable = this.handlestateVariable.bind(this);
     this.handlestateVariable2 = this.handlestateVariable2.bind(this);
   }
 
-  // whenever a change is made to an input field, update the corresponding state property
+  //Onchange methods to update state, mainly to ensure that the fields are editable. 
+  //There are separate setState methods to ensure that the data is correctly formatted for the database, otherwise there are errors.  
+  //The onchange methods for the country fields also contain methods to ensure that the correct state input is displayed based on country selection. 
+
   handleNameChange(event) {
     let data = {...this.state.data}
     data.description = event.target.value
@@ -193,6 +191,8 @@ class EditOrgForm extends Component {
       statedropUS.style.display = "none";
       statedropCA.style.display = "none";
       stateinput.style.display = "block";
+      stateinput.value = "";
+      statedropCA.value = "";
     }
   }
 
@@ -253,6 +253,7 @@ class EditOrgForm extends Component {
       statedropUS2.style.display = "none";
       statedropCA2.style.display = "none";
       stateinput2.style.display = "block";
+      stateinput2.value = "";
     }
   }
 
@@ -346,12 +347,11 @@ class EditOrgForm extends Component {
     this.setState({configuration});
   }
 
-//   handleDescriptionChange(event) {
-//     let data = {...this.state.data};
-//     data.description = event.target.value
-//     this.setState({data});
-//   }
 
+//The methods below ensure that variables that are used to set State contain the correct values and then some of the methods set state.
+
+//These two methods set the "statea" and "statea2" variables that correspond to the state/province property.
+//Since the state input is a drop down that populates based on country selection, the state variables have to be set depending upon which state input was displayed (US, CA or other country)
 handlestateVariable() {
   let statedropUS = document.getElementById("stateselectUS")
   let statedropCA = document.getElementById("stateselectCA")
@@ -394,6 +394,7 @@ handlestateVariable2() {
   }
 }
 
+//This function handles the set State for the address array.
   handleAChange() {
     let typea = document.getElementById("addresstype")
     let streeta = document.getElementById("street")
@@ -408,26 +409,39 @@ handlestateVariable2() {
     let zipa2 = document.getElementById("zip2")
     let countrya2 = document.getElementById("country2")
     let address = {...this.state.address};
+
+    if (typea2.value.length !== 0 || streeta2.value.length !== 0 || citya2.value.length !== 0 || zipa2.value.length !== 0 || countrya2.value.length !== 0)
+    {
     address = 
         [{zip: zipa.value,
         country: countrya.value,
-        state: statea.value,
+        state: this.statea,
         type: typea.value,
         city: citya.value,
         street: streeta.value },
         {
         zip: zipa2.value,
         country: countrya2.value,
-        state: statea2.value,
+        state: this.statea2,
         type: typea2.value,
         city: citya2.value,
         street: streeta2.value }]
+    }
+    else {
+      address = 
+        [{zip: zipa.value,
+        country: countrya.value,
+        state: statea.value,
+        type: typea.value,
+        city: citya.value,
+        street: streeta.value }]
+    }
         
     this.setState({address});  
     
     } 
 
-
+//This function handles the set State for the contact array.
   handleCChange() {
     let fnamec = document.getElementById("fname")
     let lnamec = document.getElementById("lname")
@@ -440,6 +454,9 @@ handlestateVariable2() {
     let phonec2 = document.getElementById("phone2")
     let emailc2 = document.getElementById("email2")
     let contact = {...this.state.contact}
+    
+    if (typec2.value.length !== 0 || fnamec2.value.length !== 0 || lnamec2.value.length !== 0 || phonec2.value.length !== 0 || emailc2.value.length !== 0)
+    {
     contact = [{firstName: fnamec.value,
         lastName: lnamec.value, 
         type: typec.value, 
@@ -452,62 +469,19 @@ handlestateVariable2() {
         type: typec2.value, 
         phone: phonec2.value, 
         email: emailc2.value}]
+    } else{
+      contact = [{firstName: fnamec.value,
+        lastName: lnamec.value, 
+        type: typec.value, 
+        phone: phonec.value, 
+        email: emailc.value}]
+    }
     
     this.setState({contact}); 
   }
 
-  // selectState() {
-  //   let countrydrop = document.getElementById("country")
-  //   let statedropUS = document.getElementById("stateselectUS")
-  //   let statedropCA = document.getElementById("stateselectCA")
-  //   let stateinput = document.getElementById("state")
-
-  //   if (countrydrop.value === "US")
-  //   {
-  //     statedropUS.style.display = "block";
-  //     statedropCA.style.display = "none";
-  //     stateinput.style.display = "none";
-  //   }
-  //   else if (countrydrop.value === "CA")
-  //   {
-  //     statedropUS.style.display = "none";
-  //     statedropCA.style.display = "block";
-  //     stateinput.style.display = "none";
-  //   }
-  //   else 
-  //   {
-  //     statedropUS.style.display = "none";
-  //     statedropCA.style.display = "none";
-  //     stateinput.style.display = "block";
-  //   }
-  // }
-
-  // selectState2() {
-  //   let countrydrop2 = document.getElementById("country2")
-  //   let statedropUS2 = document.getElementById("stateselectUS2")
-  //   let statedropCA2 = document.getElementById("stateselectCA2")
-  //   let stateinput2 = document.getElementById("state2")
-
-  //   if (countrydrop2.value === "US")
-  //   {
-  //     statedropUS2.style.display = "block";
-  //     statedropCA2.style.display = "none";
-  //     stateinput2.style.display = "none";
-  //   }
-  //   else if (countrydrop2.value === "CA")
-  //   {
-  //     statedropUS2.style.display = "none";
-  //     statedropCA2.style.display = "block";
-  //     stateinput2.style.display = "none";
-  //   }
-  //   else 
-  //   {
-  //     statedropUS2.style.display = "none";
-  //     statedropCA2.style.display = "none";
-  //     stateinput2.style.display = "block";
-  //   }
-  // }
-
+//The following two methods assign the "RadioVal" variables, which are global variables that are used to set the State for the radio buttons. 
+//The "Yes"/"No" toggles on the radio buttons are translated into "true"/"false" values and assigned to the RadioVal variables, which are later used to set state. 
   handleimgCapture() {
     let RadioimgNo = document.getElementById("imgCaptureNo")
     let RadioimgYes = document.getElementById("imgCaptureYes")
@@ -531,6 +505,8 @@ handlestateVariable2() {
       this.RadioVal2 = true
     }
   }
+
+  //The following two methods translate the "true/false" values into the radio button checkmarks when the data populates in the form.
   handleGetid(){
     let RadioidNo = document.getElementById("idCaptureNo")
     let RadioidYes = document.getElementById("idCaptureYes")
@@ -555,6 +531,7 @@ handlestateVariable2() {
     }
   }
 
+  //This function handles the set State for the configration section.
   handleConfigChange() {
     let smoothingf = document.getElementById("smoothingframe")
     let anomalyd = document.getElementById("anomalyduration")
@@ -574,7 +551,8 @@ handlestateVariable2() {
     this.setState({configuration}); 
 
     }
-  
+
+  //Method that runs all the state update methods before final submit. This method is called in an onchange handler on the submit button (separate from the submit function). 
     stateUpdate() {
       this.handlestateVariable();
       this.handlestateVariable2();
@@ -587,6 +565,9 @@ handlestateVariable2() {
       this.imgcaptureVal();
     }
 
+  //on Blur validation methods. All fields are required except for second addresses and second contacts. 
+  //The postProcess values have to be numeric values. The email value has regex validation to make sure it is the correct format. 
+  //The submit function also contains validation.
   orgnameVal(event) {
     if (event.target.value === ""){
       document.getElementById("orgnameErrMsg").innerHTML="Required"
@@ -775,6 +756,7 @@ handlestateVariable2() {
       }
   }
 
+  //This method creates a get request based on the id received from the org table and populates the form.
   componentDidMount() {
       // parse query from URL string to retrieve orgId
       const query = new URLSearchParams(this.props.location.search);
@@ -782,16 +764,10 @@ handlestateVariable2() {
       for (let param of query.entries()) {
         orgid[param[0]] = param[1];
       }
-      console.log(orgid)
   
       //convert orgId to string.
       const preProcessedItemId = orgid.id
-      console.log(orgid.id)
       const processedItemId = preProcessedItemId.toString();
-      //const processeditemId = stringToSlice.slice(4);
-
-      // console.log(preProcessedItemId)
-      // console.log(processedItemId)
   
       // get org information by orgID
       axios.get(`/orgs/${processedItemId}`).then(res => {
@@ -802,9 +778,6 @@ handlestateVariable2() {
         const address2Data = [];
         const contactData = [];
         const contact2Data = [];
-        //const basic1Data = [];
-        //const regisData = [];
-        //const pprocessData = [];
         const configData = [];
         // push data objects into an array
         for (const dataItem in pathToData) {
@@ -815,41 +788,31 @@ handlestateVariable2() {
           itemType: pathToData[dataItem].itemType,
           }) }
 
-          // for (const data1Item in pathToData) {
-          // basic1Data.push({
-          //   id: pathToData[data1Item].id,
-          //   itemId: pathToData[data1Item].itemId,
-          //   itemType: pathToData[data1Item].itemType,
-          // }) }
 
           for (const addressItem in pathToData) {
           addressData.push({
-          city: pathToData[addressItem].address[0].city,
           country: pathToData[addressItem].address[0].country,
           zip: pathToData[addressItem].address[0].zip,
+          city: pathToData[addressItem].address[0].city,
           street: pathToData[addressItem].address[0].street,
           typea: pathToData[addressItem].address[0].type,
           state: pathToData[addressItem].address[0].state,
-          // city2: pathToData[addressItem].address[1].city,
-          // country2: pathToData[addressItem].address[1].country,
-          // zip2: pathToData[addressItem].address[1].zip,
-          // street2: pathToData[addressItem].address[1].street,
-          // typea2: pathToData[addressItem].address[1].type,
-          // state2: pathToData[addressItem].address[1].state
           }) }
-          for (const address2Item in pathToData){
-          if (pathToData[address2Item].address[1] === !null) {
-          address2Data.push({   
-          city2: pathToData[address2Item].address[1].city,
-          country2: pathToData[address2Item].address[1].country,
-          zip2: pathToData[address2Item].address[1].zip,
-          street2: pathToData[address2Item].address[1].street,
-          typea2: pathToData[address2Item].address[1].type,
-          state2: pathToData[address2Item].address[1].state 
-           })
-           this.setState({contact2: contact2Data[0]})
-           }
-          }
+          //There is an if statement on the second array address items, so that the form won't crash if there is no second array in the data.
+          for (const address2Item in pathToData) {
+          if (typeof(pathToData[address2Item].address[1]) !== "undefined")
+          {
+            address2Data.push({
+            country2: pathToData[address2Item].address[1].country,
+            city2: pathToData[address2Item].address[1].city,
+            zip2: pathToData[address2Item].address[1].zip,
+            street2: pathToData[address2Item].address[1].street,
+            typea2: pathToData[address2Item].address[1].type,
+            state2: pathToData[address2Item].address[1].state 
+              })
+            this.setState({address2: address2Data[0]})
+           } 
+          } //update state for second array as part of if statement
           
           // // primary contact data
           for (const contactItem in pathToData) {
@@ -859,14 +822,11 @@ handlestateVariable2() {
           typec: pathToData[contactItem].contact[0].type,
           email: pathToData[contactItem].contact[0].email,
           phone: pathToData[contactItem].contact[0].phone,
-          // firstName2: pathToData[contactItem].contact[1].firstName,
-          // lastName2: pathToData[contactItem].contact[1].lastName,
-          // typec2: pathToData[contactItem].contact[1].type,
-          // email2: pathToData[contactItem].contact[1].email,
-          // phone2: pathToData[contactItem].contact[1].phone
+
           }) }
+          //There is an if statement on the second array contact items, so that the form won't crash if there is no second array in the data.
           for (const contact2Item in pathToData) {
-          if (pathToData[contact2Item].contact[1] === !null) {
+          if (typeof(pathToData[contact2Item].contact[1]) !== "undefined") {
           contact2Data.push({
           firstName2: pathToData[contact2Item].contact[1].firstName,
           lastName2: pathToData[contact2Item].contact[1].lastName,
@@ -874,14 +834,14 @@ handlestateVariable2() {
           email2: pathToData[contact2Item].contact[1].email,
           phone2: pathToData[contact2Item].contact[1].phone
           })
-          this.setState({contact2: contact2Data[0]}) } }
+          //update state for second array as part of if statement
+          this.setState({contact2: contact2Data[0]}) 
+        } 
+      }
           for (const configItem in pathToData) {
           configData.push({
           imageCapture: pathToData[configItem].configuration.registration.imageCapture,
           idCapture: pathToData[configItem].configuration.registration.idCapture,
-          // }) }
-          // for (const processItem in pathToData) {
-          // pprocessData.push({
           frameInterval: pathToData[configItem].configuration.postProcess.frameInterval,
           anomalyDuration: pathToData[configItem].configuration.postProcess.anomalyDuration,
           smoothingFrame: pathToData[configItem].configuration.postProcess.smoothingFrame
@@ -890,11 +850,8 @@ handlestateVariable2() {
         // update state
         this.setState({
             data: basicData[0],
-            //data1: basic1Data[0],
             contact: contactData[0],
-            //contact2: contact2Data[0],
             address: addressData[0],
-            //address2: address2Data[0],
             configuration: configData[0]});
         this.setState({dataLoaded: true});
 
@@ -941,8 +898,8 @@ handlestateVariable2() {
           statedropUS.style.display = "none"
         }
         else {
-          statedropCA.style.display = "block"
-          stateinput.style.display = "none"
+          statedropCA.style.display = "none"
+          stateinput.style.display = "block"
           statedropUS.style.display = "none"
         }
 
@@ -959,8 +916,8 @@ handlestateVariable2() {
           statedropUS2.style.display = "none"
         }
         else {
-          statedropCA2.style.display = "block"
-          stateinput2.style.display = "none"
+          statedropCA2.style.display = "none"
+          stateinput2.style.display = "block"
           statedropUS2.style.display = "none"
         }
         
@@ -969,12 +926,11 @@ handlestateVariable2() {
     }
 
 
-
+  //Onsubmit function
   handleSubmit(event) {
 
     event.preventDefault();
     let orgNamev = document.getElementById("orgname")
-    //let orgIdv = document.getElementById("orgID")
     let typeav = document.getElementById("addresstype")
     let streetav = document.getElementById("street")
     let cityav = document.getElementById("city")
@@ -989,14 +945,11 @@ handlestateVariable2() {
     let smoothingfv = document.getElementById("smoothingframe")
     let anomalydv = document.getElementById("anomalyduration")
     let frameiv = document.getElementById("frameinterval")
-    // let imageNov = document.getElementById("imgCaptureNo")
-    // let imageYesv = document.getElementById("imgCaptureYes")
-    // let idNov = document.getElementById("idCaptureNo")
-    // let idYesv = document.getElementById("idCaptureYes")
     let emailv = document.getElementById("email")
     let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let emailValid= rg.test(emailv.value)
 
+    //the same validation as the onblur methods is run again on submit and an alert is generated is something is wrong.
     if (!emailValid)
     {
       alert("The email entered is not valid")
@@ -1011,20 +964,34 @@ handlestateVariable2() {
     }
     else if (isNaN(frameiv.value))
     {
-      alert("Anomaly Duration must be a number")
+      alert("Frame Interval must be a number")
     }
     else if (orgNamev.value === "" || typeav.value === "" || streetav.value === "" || cityav.value === "" || 
-    stateav.value === "" || zipav.value === "" || countryav.value === "" || fnamecv.value === "" || lnamecv.value === "" ||
+    this.statea === "" || zipav.value === "" || countryav.value === "" || fnamecv.value === "" || lnamecv.value === "" ||
     typecv.value === "" || phonecv.value === "" || emailcv.value === "" || !this.idCapVal   || !this.imgCapVal || smoothingfv.value === "" ||
     anomalydv.value === "" || frameiv.value === "")
     {
       alert ("One or more required fields are missing")
+      if (!this.idCapVal)
+      {
+        document.getElementById("idCaptureErrMsg").innerHTML="Required"
+      }
+      else {
+        document.getElementById("idCaptureErrMsg").innerHTML=""
+      }
+      if (!this.imgCapVal)
+      {
+        document.getElementById("imgCaptureErrMsg").innerHTML="Required"
+      }
+      else {
+        document.getElementById("imgCaptureErrMsg").innerHTML=""
+      }
     }
+    //If all the validation checks out, we'll proceed to the API and submit to the database based on the org ID.
     else {
         // store editable data in new object
         const newData = {
             description: this.state.data.description,
-            //id: this.state.data.id,
             contact: this.state.contact,
             address: this.state.address,
             configuration: this.state.configuration
@@ -1045,6 +1012,8 @@ handlestateVariable2() {
           }
         }
 
+       
+      //State is set for the accordions on the page to work.
       state = {
       isOpen: true,
       isOpen2: false,
@@ -1084,6 +1053,7 @@ handlestateVariable2() {
       };
 
   render () {
+    //The style for the labels and textboxes are here
     const labelstyle = {
       color: "#3cB650",
 	    fontFamily: "sans-serif",
@@ -1140,26 +1110,6 @@ handlestateVariable2() {
         backgroundColor: "#f2f2f2"
       }
 
-      // const textbxstyle3 = {
-      //   width: "90%",
-      //   padding: "12px 20px",
-      //   margin: "8px 0",
-      //   border: "1px solid #ccc",
-      //   borderRadius: "4px",
-      //   boxSizing: "border-box",
-      //   display: "inline-block"
-      // }; 
-
-      // const textbxstyle4 = {
-      //   width: "40%",
-      //   padding: "12px 20px",
-      //   margin: "8px 0",
-      //   border: "1px solid #ccc",
-      //   borderRadius: "4px",
-      //   boxSizing: "border-box",
-      //   display: "inline-block"
-      // }; 
-
       const { isOpen } = this.state;
       const { isOpen2 } = this.state;
       const { isOpen3 } = this.state;
@@ -1169,7 +1119,7 @@ handlestateVariable2() {
     return (
       <div>
         <main className={classes.main}>
-          <Heading2>Add Organizations</Heading2>
+        <h1 className={classes.header}>Edit Organizations</h1>
           <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
@@ -1222,35 +1172,11 @@ handlestateVariable2() {
                           name="orgID"
                           readOnly
                           value={this.state.data.id}
-                          //onBlur={this.orgidVal}
                           onChange={this.handleOrgIDChange}
                           />
                         <br/>
                     </td>
                   </tr>
-                  {/* <tr>
-                    <td 
-                      className={classes.cell3} 
-                      style={{textAlign:"right"}}>
-                      <label 
-                        htmlFor="itemType" 
-                        style={labelstyle}>
-                        Item Type:
-                      </label>
-                    </td>
-                    <td 
-                      className={classes.cell4} 
-                      style={{textAlign:"left"}}>
-                        <input 
-                          // onChangeText={(text) => {this.setState({ ID: text })}} 
-                          style={textbxstyle2} 
-                          type="text" 
-                          id="itemType" 
-                          name="itemType"
-                          value={this.state.itemType}
-                          onChange={this.handleitemTypeChange}/>
-                    </td>
-                  </tr> */}
                 </table>
                   <hr></hr>
                     </div> 
@@ -1265,21 +1191,24 @@ handlestateVariable2() {
                                 <label 
                                   htmlFor="addresstype" 
                                   style={labelstyle}>
-                                  Type of Address (Primary/Billing/Technical):
+                                  Type of Address:
                                 </label>
                               </td>
                               <td 
                                 className={classes.cell4}
                                 style={{textAlign:"left"}}>
-                                <input 
-                                style={textbxstyle2} 
-                                type="text" 
+                                <select
+                                style={textbxstyle2}  
                                 id="addresstype"
                                 value={this.state.address.typea}
-                                onChange={this.handletofaChange} 
+                                onChange={this.handletofaChange}  
                                 name="addresstype"
                                 onBlur={this.addresstypeVal}
-                                />
+                                >
+                                <option>Primary</option>
+                                <option>Billing</option>
+                                <option>Technical</option>
+                                </select>
                                 <br/>
                                 <span 
                                   id="addresstypeErrMsg"
@@ -1641,8 +1570,8 @@ handlestateVariable2() {
                                       <option value="YE">Yemen</option>
                                       <option value="ZM">Zambia</option>
                                       <option value="ZW">Zimbabwe</option>
-                                  </select>                                
-                                <br/>
+                                  </select>
+                                <br/>                                
                                 <span 
                                   id="countryErrMsg"
                                   style={{color:"red"}}>
@@ -1664,7 +1593,6 @@ handlestateVariable2() {
                                 style={{textAlign:"left"}}>
                                 <input
                                   className={classes.combobox} 
-                                  //style={{display:"none"}} 
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="state" 
@@ -1735,8 +1663,8 @@ handlestateVariable2() {
                                   </select>	
                                   <select
                                   className={classes.combobox} 
-                                  //style={{display:"none"}} 
                                   id="stateselectCA"
+                                  style={textbxstyle2} 
                                   onChange={this.handlestateChange} 
                                   value={this.state.address.state} 
                                   name="stateselectCA"
@@ -1756,7 +1684,6 @@ handlestateVariable2() {
                                       <option value="SK">Saskatchewan</option>
                                       <option value="YT">Yukon</option>
                                     </select>
-                                <br/>
                                 <span 
                                   id="stateErrMsg"
                                   style={{color:"red"}}>
@@ -1776,21 +1703,24 @@ handlestateVariable2() {
                                 <label 
                                   htmlFor="addresstype2" 
                                   style={labelstyle}>
-                                  Type of Address (Primary/Billing/Technical):
+                                  Type of Address:
                                 </label>
                               </td>
                               <td 
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
-                                <input 
-                                  // onChangeText={(text) => {this.setState({ typeofaddress2: text })}} 
+                                <select 
                                   style={textbxstyle2} 
-                                  type="text"
                                   onChange={this.handletofa2Change}
                                   value={this.state.address2.typea2} 
                                   id="addresstype2" 
                                   name="addresstype2"
-                                  />
+                                  >
+                                    <option value="">Select Type</option>
+                                    <option>Primary</option>
+                                    <option>Billing</option>
+                                    <option>Technical</option>
+                                  </select>
                               </td>
                             </tr>
                             <tr>
@@ -1808,7 +1738,6 @@ handlestateVariable2() {
                                 style={{textAlign:"left"}}>
                                 <input 
                                   style={textbxstyle2} 
-                                  // onChangeText={(text) => {this.setState({ street2: text })}}
                                   type="text" 
                                   id="street2"
                                   onChange={this.handlestreet2Change}
@@ -1832,7 +1761,6 @@ handlestateVariable2() {
                                 style={{textAlign:"left"}}>
                                 <input 
                                   style={textbxstyle2} 
-                                  // onChangeText={(text) => {this.setState({ city2: text })}} 
                                   type="text" 
                                   id="city2"
                                   onChange={this.handlecity2Change} 
@@ -1855,7 +1783,7 @@ handlestateVariable2() {
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
                                 <input 
-                                  style={textbxstyle2} 
+                                  style={textbxstyle2}
                                   type="text" 
                                   id="zip2"
                                   onChange={this.handlezip2Change} 
@@ -2134,11 +2062,6 @@ handlestateVariable2() {
                                       <option value="ZM">Zambia</option>
                                       <option value="ZW">Zimbabwe</option>
                                   </select>                                
-                                <br/>
-                                <span 
-                                  id="countryErrMsg"
-                                  style={{color:"red"}}>
-                                </span>
                               </td>
                             </tr>
                             <tr> 
@@ -2225,32 +2148,27 @@ handlestateVariable2() {
                                   </select>	
                                   <select
                                   className={classes.combobox} 
-                                  //style={{display:"none"}} 
                                   id="stateselectCA2" 
                                   name="stateselectCA2"
+                                  style={textbxstyle2}
                                   value={this.state.address2.state2}
                                   onChange={this.handlestate2Change}
                                   >
-                                      <option value="">Select Province</option>
-                                    	<option value="AB">Alberta</option>
-                                      <option value="BC">British Columbia</option>
-                                      <option value="MB">Manitoba</option>
-                                      <option value="NB">New Brunswick</option>
-                                      <option value="NL">Newfoundland and Labrador</option>
-                                      <option value="NS">Nova Scotia</option>
-                                      <option value="NT">Northwest Territories</option>
-                                      <option value="NU">Nunavut</option>
-                                      <option value="ON">Ontario</option>
-                                      <option value="PE">Prince Edward Island</option>
-                                      <option value="QC">Quebec</option>
-                                      <option value="SK">Saskatchewan</option>
-                                      <option value="YT">Yukon</option>
-                                    </select>
-                                <br/>
-                                <span 
-                                  id="stateErrMsg"
-                                  style={{color:"red"}}>
-                                </span>
+                                  <option value="">Select Province</option>
+                                  <option value="AB">Alberta</option>
+                                  <option value="BC">British Columbia</option>
+                                  <option value="MB">Manitoba</option>
+                                  <option value="NB">New Brunswick</option>
+                                  <option value="NL">Newfoundland and Labrador</option>
+                                  <option value="NS">Nova Scotia</option>
+                                  <option value="NT">Northwest Territories</option>
+                                  <option value="NU">Nunavut</option>
+                                  <option value="ON">Ontario</option>
+                                  <option value="PE">Prince Edward Island</option>
+                                  <option value="QC">Quebec</option>
+                                  <option value="SK">Saskatchewan</option>
+                                  <option value="YT">Yukon</option>
+                                </select>
                               </td>
                             </tr>
                           </table>
@@ -2267,22 +2185,25 @@ handlestateVariable2() {
                                   <label 
                                     htmlFor="contacttype" 
                                     style={labelstyle}>
-                                    Type of Contact (Primary/Billing/Technical):
+                                    Type of Contact:
                                   </label>
                                 </td>
                                 <td 
                                   className={classes.cell2} 
                                   style={{textAlign:"left", width:"30%"}}>
-                                  <input 
-                                    // onBlur = {()=> this.ValidatorTofC()} 
+                                  <select 
                                     style={textbxstyle} 
-                                    type="text"
+                                    type="text" 
+                                    id="contacttype"
                                     value={this.state.contact.typec} 
-                                    id="contacttype" 
+                                    onChange={this.handletofcChange} 
                                     name="contacttype"
-                                    onChange={this.handletofcChange}
                                     onBlur={this.contacttypeVal}
-                                    />
+                                    >
+                                    <option>Primary</option>
+                                    <option>Billing</option>
+                                    <option>Technical</option>
+                                  </select>
                                     <br/>
                                     <span 
                                       id="contacttypeErrMsg"
@@ -2391,7 +2312,6 @@ handlestateVariable2() {
                                   className={classes.cell2} 
                                   style={{textAlign:"left"}}>
                                   <input 
-                                    //onBlur = {()=> this.Validatorphone()} 
                                     style={textbxstyle} 
                                     type="text" 
                                     id="phone"
@@ -2420,21 +2340,25 @@ handlestateVariable2() {
                                 <label 
                                   htmlFor="contacttype2" 
                                   style={labelstyle}>
-                                  Type of Contact (Primary/Billing/Technical):
+                                  Type of Contact:
                                 </label>
                               </td>
                               <td 
                                 className={classes.cell2} 
                                 style={{textAlign:"left", width:"30%"}}>
-                                <input 
-                                  // onChangeText={(text) => {this.setState({ typeofcontact2: text })}} 
+                                <select 
                                   style={textbxstyle} 
                                   type="text" 
-                                  id="contacttype2"
+                                  id="contacttype2" 
                                   onChange={this.handletofc2Change}
                                   value={this.state.contact2.typec2}  
                                   name="contacttype2"
-                                  />
+                                  >
+                                  <option value="">Select Type</option>
+                                  <option>Primary</option>
+                                  <option>Billing</option>
+                                  <option>Technical</option>
+                                </select>
                               </td>
                             </tr>
                             <tr>
@@ -2452,7 +2376,6 @@ handlestateVariable2() {
                                 style={{textAlign:"left", width:"30%"}}>
                                 <input 
                                   style={textbxstyle} 
-                                  // onChangeText={(text) => {this.setState({ fname2: text })}} 
                                   type="text" 
                                   id="fname2"
                                   onChange={this.handlefname2Change}
@@ -2476,7 +2399,6 @@ handlestateVariable2() {
                                 style={{textAlign:"left"}}>
                                 <input 
                                   style={textbxstyle} 
-                                  // onChangeText={(text) => {this.setState({ lname2: text })}} 
                                   type="text" 
                                   id="lname2"
                                   onChange={this.handlelname2Change}
@@ -2498,7 +2420,6 @@ handlestateVariable2() {
                                 className={classes.cell2} 
                                 style={{textAlign:"left"}}>
                                 <input 
-                                  // onChangeText={(text) => {this.setState({ email2: text })}} 
                                   style={textbxstyle} 
                                   type="text" 
                                   id="email2"
@@ -2562,10 +2483,6 @@ handlestateVariable2() {
                                   Yes
                                 </label>
                                 <br/>
-                                <span 
-                                    id="imgCaptureErrMsg"
-                                    style={{color:"red"}}>
-                                  </span>
                               </td>
                               <td 
                                 className={classes.cell16} 
@@ -2601,6 +2518,10 @@ handlestateVariable2() {
                                 </div>
                               </td>
                             </tr>
+                            <span 
+                              id="imgCaptureErrMsg"
+                              style={{color:"red"}}>
+                            </span>
                           </table>
                           <table>
                             <tr>
@@ -2628,10 +2549,6 @@ handlestateVariable2() {
                                   Yes
                                 </label>
                                 <br/>
-                                <span 
-                                    id="idCaptureErrMsg"
-                                    style={{color:"red"}}>
-                                </span>
                               </td>
                               <td 
                                 className={classes.cell16} 
@@ -2667,6 +2584,10 @@ handlestateVariable2() {
                                 </div>
                               </td>
                             </tr>
+                            <span 
+                              id="idCaptureErrMsg"
+                              style={{color:"red"}}>
+                          </span>
                           </table>
                           <table>
                           <tr>
@@ -2712,7 +2633,6 @@ handlestateVariable2() {
                               className={classes.cell2} 
                               style={{textAlign:"left"}}>
                               <input 
-                                // onChangeText={(text) => {this.setState({ anomalyduration: text })}} 
                                 style={textbxstyle} 
                                 type="text" 
                                 id="anomalyduration"

@@ -1,37 +1,48 @@
-.EditOrgForm {
+.main {
     height: 100vh;
-    background-color: #e5e5e5;
     width: 100%;
     color: #3cB650 ;
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     overflow-x: hidden;
     text-rendering: optimizeLegibility;
-    background-color: #3cB650;
+    background-color: #f2f2f2;
 }
+
+.header {
+    color: #3cB650;
+    padding: 3rem 0 2rem 0;
+  }
 
 .wrapper {
     padding: 5px 20px;
     display: flex;
-    
+    background-color: #f2f2f2;
+}
+
+.combobox {
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: inline-block;
 }
 
 
 .wrapper fieldset {
-    margin: 20px 0;
     border-radius: 10px;
-    background-color: #f2f2f2;
+    background-color: #e5e5e5;
     padding: 20px;
     list-style-type: none;
     clear: left;
-    /* display: flex; */
     width: 60%;
-    margin: 0px auto;
+    margin: 0 auto 3rem auto;
     border: 3;
     border-style: solid;
     border-width: thin;
     border-color: rgb(221, 218, 218);
-    /* flex-wrap: wrap; */
     justify-content: space-between;
 } 
 
@@ -44,7 +55,7 @@
 	margin-left: 20px;
 	display: flex;
 	justify-content:center;
-	align-items:center;
+    align-items:center;
 }
 
 .RadioButton .checkmark {
@@ -64,51 +75,8 @@
 	opacity: 1;
 }
 
-
-/* .flexChild {
-width: 100%;
-height: 15%;
-/* border: 2px solid yellow; */
-
-/* }
-
-.flexChild:nth-child(2n) {
-    width: 100%;
-    height:75%;
-}
-
-.flexChild:nth-child(3n) {
-    width: 100%;
-    height:75%;
-}
-
-.flexChild:nth-child(3n) {
-    width: 100%;
-    height:75%;
-}
-
-.flexChild:nth-child(5n) {
-    width: 100%;
-    height: 15%;
-  } */ 
-
-
-
-
-/* .flexChild2 {
-    flex: 1.1;
-    border: 2px solid yellow; 
-    padding-top: 30px;
-
-} */
-
-/* .flexChild:first-child {
-    margin-right: 5px;
-} */
-
 table {
   width: 100%;
-  /* border: 1px solid black; */
 }
 
 .cell1 {

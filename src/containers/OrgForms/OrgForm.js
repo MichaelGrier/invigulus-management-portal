@@ -16,7 +16,6 @@ class OrgForm extends Component {
     this.state = {
           description: '',
           id: '',
-          //itemId: '',
           itemType: '',
           contact: null,
           address: null,
@@ -33,8 +32,6 @@ class OrgForm extends Component {
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleOrgIDChange = this.handleOrgIDChange.bind(this);
-    // this.handleitemTypeChange = this.handleitemTypeChange.bind(this);
-    // this.handleitemIDChange = this.handleitemIDChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCChange = this.handleCChange.bind(this);
     this.handleAChange = this.handleAChange.bind(this);
@@ -91,6 +88,8 @@ class OrgForm extends Component {
     this.setState({id: event.target.value});
   }
 
+  //The following two methods set the "statea" and "statea2" variables which correspond to the state/province inputs on the form ( for the first address and second address).
+  //These variables will later be used to set the state properties of the state/province values for the two addresses.
   handlestateVariable() {
     let statedropUS = document.getElementById("stateselectUS")
     let statedropCA = document.getElementById("stateselectCA")
@@ -133,6 +132,7 @@ class OrgForm extends Component {
     }
   }
 
+  //This method sets the state for the address arrays. 
   handleAChange() {
     let typea = document.getElementById("addresstype")
     let streeta = document.getElementById("street")
@@ -145,6 +145,8 @@ class OrgForm extends Component {
     let zipa2 = document.getElementById("zip2")
     let countrya2 = document.getElementById("country2")
 
+    if (typea2.value.length !== 0 || streeta2.value.length !== 0 || citya2.value.length !== 0 || zipa2.value.length !== 0 || countrya2.value.length !== 0)
+    {
     this.setState({
       address: 
       [{zip: zipa.value,
@@ -161,8 +163,20 @@ class OrgForm extends Component {
         city: citya2.value,
         street: streeta2.value }]
       })
+      }else {
+        this.setState({
+          address: 
+          [{zip: zipa.value,
+            country: countrya.value,
+            state: this.statea,
+            type: typea.value,
+            city: citya.value,
+            street: streeta.value }]
+          })
+      }
   }
 
+  //This method sets the state for the contact arrays.
   handleCChange() {
     let fnamec = document.getElementById("fname")
     let lnamec = document.getElementById("lname")
@@ -174,6 +188,9 @@ class OrgForm extends Component {
     let typec2 = document.getElementById("contacttype2")
     let phonec2 = document.getElementById("phone2")
     let emailc2 = document.getElementById("email2")
+
+    if (typec2.value.length !== 0 || fnamec2.value.length !== 0 || lnamec2.value.length !== 0 || phonec2.value.length !== 0 || emailc2.value.length !== 0)
+    {
     this.setState({ 
       contact: 
       [{firstName: fnamec.value,
@@ -189,8 +206,20 @@ class OrgForm extends Component {
         phone: phonec2.value, 
         email: emailc2.value}]
       })
+    }else {
+      this.setState({ 
+        contact: 
+        [{firstName: fnamec.value,
+          lastName: lnamec.value, 
+          type: typec.value, 
+          phone: phonec.value, 
+          email: emailc.value}]
+        })
+    }
   }
 
+  //The following two methods set the "RadioVal" variables with the values from the radio buttons. The radiobutton inputs are translated into "true/false" values and set to the variables.
+  //The RadioVal variables are later used to set the state (in the handleConfigChange() method).
   handleimgCapture() {
     let RadioimgNo = document.getElementById("imgCaptureNo")
     let RadioimgYes = document.getElementById("imgCaptureYes")
@@ -215,6 +244,7 @@ class OrgForm extends Component {
     }
   }
 
+  //This method sets the state for the configuration items. The postProcess values are converted to integers.
   handleConfigChange() {
     let smoothingf = document.getElementById("smoothingframe")
     let anomalyd = document.getElementById("anomalyduration")
@@ -234,6 +264,7 @@ class OrgForm extends Component {
     })
   }
 
+  //The following two methods display the correct form input for "state/province" based upon which country is selected. These methods are called in an onChange handler in the country inputs.
   selectState() {
     let countrydrop = document.getElementById("country")
     let statedropUS = document.getElementById("stateselectUS")
@@ -286,6 +317,7 @@ class OrgForm extends Component {
     }
   }
 
+  //This method is called in an onClick handler at the bottom of the form and performs the final state updates before submission by calling the appropriate methods.
   stateUpdate() {
     this.handlestateVariable();
     this.handlestateVariable2();
@@ -296,6 +328,7 @@ class OrgForm extends Component {
     this.imgcaptureVal();
   }
 
+  //Onblur validation methods. All fields are required except for the second address and second contact fields. The "postProcess" inputs have to be numeric and the email has to be a valid format.
   orgnameVal(event) {
     if (event.target.value === ""){
       document.getElementById("orgnameErrMsg").innerHTML="Required"
@@ -492,7 +525,6 @@ class OrgForm extends Component {
     let typeav = document.getElementById("addresstype")
     let streetav = document.getElementById("street")
     let cityav = document.getElementById("city")
-    //let stateav = document.getElementById("state")
     let zipav = document.getElementById("zip")
     let countryav = document.getElementById("country")
     let fnamecv = document.getElementById("fname")
@@ -503,14 +535,11 @@ class OrgForm extends Component {
     let smoothingfv = document.getElementById("smoothingframe")
     let anomalydv = document.getElementById("anomalyduration")
     let frameiv = document.getElementById("frameinterval")
-    // let imageNov = document.getElementById("imgCaptureNo")
-    // let imageYesv = document.getElementById("imgCaptureYes")
-    // let idNov = document.getElementById("idCaptureNo")
-    // let idYesv = document.getElementById("idCaptureYes")
     let emailv = document.getElementById("email")
     let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let emailValid= rg.test(emailv.value)
 
+    //The same validation as the onBlur validation is run a second time on all the required fields and an alert is generated if something is wrong.
     if (!emailValid)
     {
       alert("The email entered is not valid")
@@ -533,9 +562,22 @@ class OrgForm extends Component {
     anomalydv.value === "" || frameiv.value === "")
     {
       alert ("One or more required fields are missing")
+      if (!this.idCapVal)
+      {
+        document.getElementById("idCaptureErrMsg").innerHTML="Required"
+      }
+      else {
+        document.getElementById("idCaptureErrMsg").innerHTML=""
+      }
+      if (!this.imgCapVal)
+      {
+        document.getElementById("imgCaptureErrMsg").innerHTML="Required"
+      }
+      else {
+        document.getElementById("imgCaptureErrMsg").innerHTML=""
+      }
     }
     else {
-    // prevent default submit action
     // distribute data stored in state into new object
     const formData = {
       description: this.state.description,
@@ -556,6 +598,8 @@ class OrgForm extends Component {
          .catch(error => alert(error))   
     }
   }
+
+  //The following state operations are to ensure that the Accordions on the form function.
       state = {
       isOpen: true,
       isOpen2: false,
@@ -595,6 +639,7 @@ class OrgForm extends Component {
       };
 
   render () {
+    //The following CSS variables are for form labels, inputs and buttons.
     const labelstyle = {
       color: "#3cB650",
 	    fontFamily: "sans-serif",
@@ -639,38 +684,6 @@ class OrgForm extends Component {
         cursor: "pointer",
         borderRadius:"30px",
       };
-
-      const radiolabel = {
-          color: "#3cB650",
-          fontFamily: "Lato, sans-serif",
-          fontWeight: "400",
-          overflowX: "hidden",
-          textRendering: "optimizeLegibility",
-          padding: "20px",
-          position: "relative",
-          display: "inline-block",
-          margin: "auto",
-        }
-
-      // const textbxstyle3 = {
-      //   width: "90%",
-      //   padding: "12px 20px",
-      //   margin: "8px 0",
-      //   border: "1px solid #ccc",
-      //   borderRadius: "4px",
-      //   boxSizing: "border-box",
-      //   display: "inline-block"
-      // }; 
-
-      // const textbxstyle4 = {
-      //   width: "40%",
-      //   padding: "12px 20px",
-      //   margin: "8px 0",
-      //   border: "1px solid #ccc",
-      //   borderRadius: "4px",
-      //   boxSizing: "border-box",
-      //   display: "inline-block"
-      // }; 
 
       const { isOpen } = this.state;
       const { isOpen2 } = this.state;
@@ -727,8 +740,7 @@ class OrgForm extends Component {
                     <td 
                       className={classes.cell4} 
                       style={{textAlign:"left"}}>
-                        <input 
-                          //onChangeText={(text) => {this.setState({ ID: text })}} 
+                        <input  
                           style={textbxstyle2} 
                           type="text" 
                           id="orgID" 
@@ -743,29 +755,6 @@ class OrgForm extends Component {
                       </span>
                     </td>
                   </tr>
-                  {/* <tr>
-                    <td 
-                      className={classes.cell3} 
-                      style={{textAlign:"right"}}>
-                      <label 
-                        htmlFor="itemType" 
-                        style={labelstyle}>
-                        Item Type:
-                      </label>
-                    </td>
-                    <td 
-                      className={classes.cell4} 
-                      style={{textAlign:"left"}}>
-                        <input 
-                          // onChangeText={(text) => {this.setState({ ID: text })}} 
-                          style={textbxstyle2} 
-                          type="text" 
-                          id="itemType" 
-                          name="itemType"
-                          value={this.state.itemType}
-                          onChange={this.handleitemTypeChange}/>
-                    </td>
-                  </tr> */}
                 </table>
                   <hr></hr>
                     </div> 
@@ -788,7 +777,6 @@ class OrgForm extends Component {
                                 style={{textAlign:"left"}}>
                                 <select
                                 style={textbxstyle2} 
-                                type="text" 
                                 id="addresstype" 
                                 name="addresstype"
                                 onBlur={this.addresstypeVal}
@@ -1175,7 +1163,6 @@ class OrgForm extends Component {
                                 style={{textAlign:"left"}}>
                                 <input
                                   className={classes.combobox} 
-                                  //style={{display:"none"}} 
                                   style={textbxstyle2} 
                                   type="text" 
                                   id="state" 
@@ -1239,10 +1226,9 @@ class OrgForm extends Component {
                                     <option value="WV">West Virginia</option>
                                     <option value="WI">Wisconsin</option>
                                     <option value="WY">Wyoming</option>
-                                  </select>	
+                                  </select>
                                   <select
                                   className={classes.combobox} 
-                                  //style={{display:"none"}} 
                                   id="stateselectCA" 
                                   name="stateselectCA"
                                   onBlur={this.stateVal}>
@@ -1261,7 +1247,7 @@ class OrgForm extends Component {
                                       <option value="SK">Saskatchewan</option>
                                       <option value="YT">Yukon</option>
                                     </select>
-                                <br/>
+                                  <br/>
                                 <span 
                                   id="stateErrMsg"
                                   style={{color:"red"}}>
@@ -1289,7 +1275,6 @@ class OrgForm extends Component {
                                 style={{textAlign:"left"}}>
                                 <select 
                                   style={textbxstyle2} 
-                                  type="text" 
                                   id="addresstype2" 
                                   name="addresstype2"
                                   >
@@ -1315,7 +1300,6 @@ class OrgForm extends Component {
                                 style={{textAlign:"left"}}>
                                 <input 
                                   style={textbxstyle2} 
-                                  // onChangeText={(text) => {this.setState({ street2: text })}}
                                   type="text" 
                                   id="street2" 
                                   name="street2"
@@ -1336,8 +1320,7 @@ class OrgForm extends Component {
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
                                 <input 
-                                  style={textbxstyle2} 
-                                  // onChangeText={(text) => {this.setState({ city2: text })}} 
+                                  style={textbxstyle2}  
                                   type="text" 
                                   id="city2" 
                                   name="city2"
@@ -1633,11 +1616,6 @@ class OrgForm extends Component {
                                       <option value="ZM">Zambia</option>
                                       <option value="ZW">Zimbabwe</option>
                                   </select>                                
-                                <br/>
-                                <span 
-                                  id="countryErrMsg"
-                                  style={{color:"red"}}>
-                                </span>
                               </td>
                             </tr>
                             <tr> 
@@ -1720,7 +1698,6 @@ class OrgForm extends Component {
                                   </select>	
                                   <select
                                   className={classes.combobox} 
-                                  //style={{display:"none"}} 
                                   id="stateselectCA2" 
                                   name="stateselectCA2"
                                   >
@@ -1739,11 +1716,6 @@ class OrgForm extends Component {
                                       <option value="SK">Saskatchewan</option>
                                       <option value="YT">Yukon</option>
                                     </select>
-                                <br/>
-                                <span 
-                                  id="stateErrMsg"
-                                  style={{color:"red"}}>
-                                </span>
                               </td>
                             </tr>
                           </table>
@@ -1879,7 +1851,6 @@ class OrgForm extends Component {
                                   className={classes.cell2} 
                                   style={{textAlign:"left"}}>
                                   <input 
-                                    // onBlur = {()=> this.Validatorphone()} 
                                     style={textbxstyle} 
                                     type="text" 
                                     id="phone" 
@@ -1940,7 +1911,6 @@ class OrgForm extends Component {
                                 style={{textAlign:"left", width:"30%"}}>
                                 <input 
                                   style={textbxstyle} 
-                                  // onChangeText={(text) => {this.setState({ fname2: text })}} 
                                   type="text" 
                                   id="fname2" 
                                   name="fname2"
@@ -1962,7 +1932,6 @@ class OrgForm extends Component {
                                 style={{textAlign:"left"}}>
                                 <input 
                                   style={textbxstyle} 
-                                  // onChangeText={(text) => {this.setState({ lname2: text })}} 
                                   type="text" 
                                   id="lname2" 
                                   name="lname2"
@@ -1982,7 +1951,6 @@ class OrgForm extends Component {
                                 className={classes.cell2} 
                                 style={{textAlign:"left"}}>
                                 <input 
-                                  // onChangeText={(text) => {this.setState({ email2: text })}} 
                                   style={textbxstyle} 
                                   type="text" 
                                   id="email2" 
@@ -2041,18 +2009,13 @@ class OrgForm extends Component {
                                   style={{paddingBottom:"0", color: "#3cB650"}}>
                                   Yes
                                 </label>
-                                <br/>
-                                <span 
-                                    id="imgCaptureErrMsg"
-                                    style={{color:"red"}}>
-                                  </span>
+                                <br/>                               
                               </td>
                               <td 
                                 className={classes.cell16} 
                                 style={{textAlign:"center"}}>
                                 <div>
                                   <label
-                                    //style={radiolabel} 
                                     id="labelr" 
                                     className={classes.RadioButton}>
                                     <input type="radio" 
@@ -2066,7 +2029,6 @@ class OrgForm extends Component {
                                     </span>
                                   </label>
                                     <label
-                                      //style={radiolabel} 
                                       id="labelr" 
                                       className={classes.RadioButton}>
                                     <input 
@@ -2083,6 +2045,10 @@ class OrgForm extends Component {
                                 </div>
                               </td>
                             </tr>
+                            <span 
+                              id="imgCaptureErrMsg"
+                              style={{color:"red"}}>
+                            </span>
                           </table>
                           <table>
                             <tr>
@@ -2109,18 +2075,12 @@ class OrgForm extends Component {
                                   style={{paddingBottom:"0", color: "#3cB650"}}>
                                   Yes
                                 </label>
-                                <br/>
-                                <span 
-                                    id="idCaptureErrMsg"
-                                    style={{color:"red"}}>
-                                </span>
                               </td>
                               <td 
                                 className={classes.cell16} 
                                 style={{textAlign:"center"}}>
                                 <div>
                                   <label 
-                                    //style={radiolabel}
                                     id="labelr" 
                                     className={classes.RadioButton}>
                                     <input type="radio" 
@@ -2134,7 +2094,6 @@ class OrgForm extends Component {
                                     </span>
                                   </label>
                                     <label
-                                      //style={radiolabel} 
                                       id="labelr" 
                                       className={classes.RadioButton}>
                                     <input 
@@ -2151,6 +2110,10 @@ class OrgForm extends Component {
                                 </div>
                               </td>
                             </tr>
+                            <span 
+                                id="idCaptureErrMsg"
+                                style={{color:"red"}}>
+                              </span>
                           </table>
                           <table>
                           <tr>
@@ -2194,7 +2157,6 @@ class OrgForm extends Component {
                               className={classes.cell2} 
                               style={{textAlign:"left"}}>
                               <input 
-                                // onChangeText={(text) => {this.setState({ anomalyduration: text })}} 
                                 style={textbxstyle} 
                                 type="text" 
                                 id="anomalyduration" 
