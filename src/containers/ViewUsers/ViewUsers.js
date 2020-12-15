@@ -3,7 +3,7 @@ import React from 'react';
 import classes from './ViewUsers.module.css';
 import UserTable from '../../components/DataTables/Users/UserTable';
 
-function ViewUsers() {
+const ViewUsers = () => {
   return (
     <main className={classes.main}>
       <h1 className={classes.header}>View Users</h1>

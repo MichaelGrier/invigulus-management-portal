@@ -7,7 +7,6 @@ import Logo from '../UI/Logo/Logo';
 import LoginLink from './LoginLink/LoginLink';
 import LogoutButton from './LogoutButton/LogoutButton';
 import ChangePasswordLink from './ChangePasswordLink/ChangePasswordLink'
-import changePasswordLink from './ChangePasswordLink/ChangePasswordLink';
 
 class NavBar extends Component {
   handleLogOut = async (event) => {

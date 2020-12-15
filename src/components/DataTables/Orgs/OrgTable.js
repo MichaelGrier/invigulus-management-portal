@@ -7,7 +7,7 @@ import {
   useRowSelect
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
-import axios from '../../../axios';
+import axios from 'axios';
 import {Link, withRouter, useHistory} from 'react-router-dom';
 
 import {COLUMNS} from './columns';

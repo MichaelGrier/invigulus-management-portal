@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Route} from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
 import {Auth} from 'aws-amplify';
+import axios from 'axios';
 
 import NavBar from '../components/NavBar/NavBar';
 import Footer from '../components/Footer/Footer';
@@ -44,14 +45,16 @@ class ManagementPortal extends Component {
     try {
       const session = await Auth.currentSession();
       this.setAuthStatus(true);
-      console.log(session);
+
+      // set axios defaults
+      axios.defaults.baseURL = 'https://jiyfwa9bs1.execute-api.us-west-2.amazonaws.com/dev';
+      axios.defaults.headers.common['Authorization'] = `Bearer ${session.accessToken.jwtToken}`;
 
       const user = await Auth.currentAuthenticatedUser();
       this.setUser(user);
     } catch(error) {
       console.log(error);
     }
-    // update state
     this.setState({isAuthenticating: false});
   }
 
@@ -64,29 +67,42 @@ class ManagementPortal extends Component {
       setUser: this.setUser
     }
 
+    // create private route component, which will render component w/ props if user is logged in,
+    // and if not, will redirect to login page
+    const PrivateRoute = ({component: Component, ...rest}) => (
+      <Route {...rest} render={(props) => (
+        this.state.isAuthenticated === true
+          ? <Component {...props} auth={authProps} />
+          : <Redirect to='/login' />
+      )} />
+    )
+
     return (
       !this.state.isAuthenticating &&
       <>
         <NavBar auth={authProps} />
 
-        <Route path='/' exact render={(props) => <LandingPage {...props} auth={authProps} />} />
+        {/* public routes */}
         <Route path='/login' exact render={(props) => <LoginPage {...props} auth={authProps} />} />
-        <Route path='/manage-orgs-and-tests' exact render={(props) => <OrgsAndTests {...props} auth={authProps} />} />
-        <Route path='/manage-orgs' exact render={(props) => <ManageOrgs {...props} auth={authProps} />} />
-        <Route path='/manage-tests' exact render={(props) => <ManageTests {...props} auth={authProps} />} />
-        <Route path='/view-users' exact render={(props) => <ViewUsers {...props} auth={authProps} />} />
-        <Route path='/view-sessions' exact render={(props) => <ViewSessions {...props} auth={authProps} />} />
-        <Route path='/view-selected-session' render={(props) => <ViewSession {...props} auth={authProps} />} />
-        <Route path='/add-org' exact render={(props) => <OrgForm {...props} auth={authProps} />} />
-        <Route path='/add-test' render={(props) => <TestForm {...props} auth={authProps} />} />
-        <Route path='/add-test-confirmation' exact render={(props) => <AddTestConfirmation {...props} auth={authProps} />} />
-        <Route path='/edit-test' render={(props) => <EditTestForm {...props} auth={authProps} />} />
-        <Route path='/add-org-confirmation' exact render={(props) => <AddOrgConfirmation {...props} auth={authProps} />} />
-        <Route path='/edit-org' render={(props) => <EditOrgForm {...props} auth={authProps} />} />
         <Route path='/reset-password' exact render={(props) => <ResetPassword {...props} auth={authProps} />} />
         <Route path='/reset-password-verification' exact render={(props) => <ResetPasswordVerification {...props} auth={authProps} />} />
-        <Route path='/change-password' exact render={(props) => <ChangePassword {...props} auth={authProps} />} />
-        <Route path='/change-password-confirmation' exact render={(props) => <ChangePasswordConfirmation  {...props} auth={authProps} />} />
+
+        {/* private routes */}
+        <PrivateRoute path='/' exact component={LandingPage} />
+        <PrivateRoute path='/manage-orgs-and-tests' exact component={OrgsAndTests} />
+        <PrivateRoute path='/manage-orgs' exact component={ManageOrgs} />
+        <PrivateRoute path='/manage-tests' exact component={ManageTests} />
+        <PrivateRoute path='/view-users' exact component={ViewUsers} />
+        <PrivateRoute path='/view-sessions' exact component={ViewSessions} />
+        <PrivateRoute path='/view-selected-session' component={ViewSession} />
+        <PrivateRoute path='/add-test' exact component={TestForm} />
+        <PrivateRoute path='/add-test-confirmation' exact component={AddTestConfirmation} />
+        <PrivateRoute path='/edit-test' component={EditTestForm} />
+        <PrivateRoute path='/add-org' exact component={OrgForm} />
+        <PrivateRoute path='/add-org-confirmation' exact component={AddOrgConfirmation} />
+        <PrivateRoute path='/edit-org' component={EditOrgForm} />
+        <PrivateRoute path='/change-password' exact component={ChangePassword} />
+        <PrivateRoute path='/change-password-confirmation' exact component={ChangePasswordConfirmation} />
 
         <Footer />
       </>
