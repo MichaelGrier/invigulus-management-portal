@@ -3,7 +3,6 @@ import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 
 import classes from './EditOrgForm.module.css';
-import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
 import Accordion from '../../components/Accordion/Accordion';
 import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
@@ -18,14 +17,14 @@ class EditOrgForm extends Component {
           description: "",
           id: ""},
           contact:
-          [{
+          {
             firstName: "" ,
             lastName: "" , 
             typea: "", 
             phone: "", 
             email: "",
             type: "",
-          }],
+          },
           contact2:
           {
             firstName2: "" ,
@@ -35,7 +34,7 @@ class EditOrgForm extends Component {
             email2: "",
           },
         address:
-        [{
+        {
           zip: "",
           country: "",
           state: "",
@@ -43,7 +42,7 @@ class EditOrgForm extends Component {
           city: "",
           street: "",
           type:"",
-        }],
+        },
         address2:
         {
           zip2: "",
@@ -54,7 +53,7 @@ class EditOrgForm extends Component {
           street2: "",
         },
       configuration: {
-        Registration: {
+        registration: {
           imageCapture: "",
           idCapture: "",
         },
@@ -64,16 +63,16 @@ class EditOrgForm extends Component {
           frameInterval: ""}
       }
     }
-    
+
+    //Global variables used in multiple methods. 
     let RadioVal1 = null
     let RadioVal2 = null
     let imgCapVal = null
     let idCapVal = null
+    let statea = null
+    let statea2 = null
 
     this.handleNameChange = this.handleNameChange.bind(this);
-    //this.handleOrgIDChange = this.handleOrgIDChange.bind(this);
-    // this.handleitemTypeChange = this.handleitemTypeChange.bind(this);
-    // this.handleitemIDChange = this.handleitemIDChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCChange = this.handleCChange.bind(this);
     this.handleAChange = this.handleAChange.bind(this);
@@ -99,9 +98,6 @@ class EditOrgForm extends Component {
     this.anomalydurationVal = this.anomalydurationVal.bind(this);
     this.frameintervalVal = this.frameintervalVal.bind(this);
     this.stateUpdate = this.stateUpdate.bind(this);
-    // this.handleGetid = this.handleGetid.bind(this);
-    // this.handleGetimg = this.handleGetimg.bind(this);
-    // this.handleRadiobtnsGet = this.handleRadiobtnsGet(this);
     this.handletofaChange = this.handletofaChange.bind(this);
     this.handletofcChange = this.handletofcChange.bind(this);
     this.handletofa2Change = this.handletofa2Change.bind(this);
@@ -127,9 +123,14 @@ class EditOrgForm extends Component {
     this.handlesmoothfChange = this.handlesmoothfChange.bind(this);
     this.handleframeiChange = this.handleframeiChange.bind(this);
     this.handleanomdChange = this.handleanomdChange.bind(this);
+    this.handlestateVariable = this.handlestateVariable.bind(this);
+    this.handlestateVariable2 = this.handlestateVariable2.bind(this);
   }
 
-  // whenever a change is made to an input field, update the corresponding state property
+  //Onchange methods to update state, mainly to ensure that the fields are editable. 
+  //There are separate setState methods to ensure that the data is correctly formatted for the database, otherwise there are errors.  
+  //The onchange methods for the country fields also contain functions to ensure that the correct "state/province" input is displayed based on country selection. 
+
   handleNameChange(event) {
     let data = {...this.state.data}
     data.description = event.target.value
@@ -164,6 +165,32 @@ class EditOrgForm extends Component {
     let address = {...this.state.address}
     address.country = event.target.value
     this.setState({address});
+
+    let countrydrop = document.getElementById("country")
+    let statedropUS = document.getElementById("stateselectUS")
+    let statedropCA = document.getElementById("stateselectCA")
+    let stateinput = document.getElementById("state")
+
+    if (countrydrop.value === "US")
+    {
+      statedropUS.style.display = "block";
+      statedropCA.style.display = "none";
+      stateinput.style.display = "none";
+    }
+    else if (countrydrop.value === "CA")
+    {
+      statedropUS.style.display = "none";
+      statedropCA.style.display = "block";
+      stateinput.style.display = "none";
+    }
+    else 
+    {
+      statedropUS.style.display = "none";
+      statedropCA.style.display = "none";
+      stateinput.style.display = "block";
+      stateinput.value = "";
+      statedropCA.value = "";
+    }
   }
 
   handlestateChange(event) {
@@ -200,6 +227,31 @@ class EditOrgForm extends Component {
     let address2 = {...this.state.address2}
     address2.country2 = event.target.value
     this.setState({address2});
+
+    let countrydrop2 = document.getElementById("country2")
+    let statedropUS2 = document.getElementById("stateselectUS2")
+    let statedropCA2 = document.getElementById("stateselectCA2")
+    let stateinput2 = document.getElementById("state2")
+
+    if (countrydrop2.value === "US")
+    {
+      statedropUS2.style.display = "block";
+      statedropCA2.style.display = "none";
+      stateinput2.style.display = "none";
+    }
+    else if (countrydrop2.value === "CA")
+    {
+      statedropUS2.style.display = "none";
+      statedropCA2.style.display = "block";
+      stateinput2.style.display = "none";
+    }
+    else 
+    {
+      statedropUS2.style.display = "none";
+      statedropCA2.style.display = "none";
+      stateinput2.style.display = "block";
+      stateinput2.value = "";
+    }
   }
 
   handlestate2Change(event) {
@@ -292,12 +344,54 @@ class EditOrgForm extends Component {
     this.setState({configuration});
   }
 
-//   handleDescriptionChange(event) {
-//     let data = {...this.state.data};
-//     data.description = event.target.value
-//     this.setState({data});
-//   }
 
+//The methods below ensure that variables that are used to set state contain the correct values and then some of the methods set state.
+//The next two methods set the "statea" and "statea2" variables that correspond to the "state/province" input.
+//Since the state/province input is a drop-down that populates based on country selection, the state/province
+//variables have to be set depending upon which state input was displayed (US, CA or other country)
+handlestateVariable() {
+  let statedropUS = document.getElementById("stateselectUS")
+  let statedropCA = document.getElementById("stateselectCA")
+  let stateinput = document.getElementById("state")
+  let countrya = document.getElementById("country")
+
+  if (countrya.value === "US")
+  {
+      this.statea = statedropUS.value
+  }
+  else if (countrya.value === "CA")
+  {
+      this.statea = statedropCA.value
+  }
+  else
+  {
+      this.statea = stateinput.value
+  }
+
+}
+
+handlestateVariable2() {
+
+  let statedropUS2 = document.getElementById("stateselectUS2")
+  let statedropCA2 = document.getElementById("stateselectCA2")
+  let stateinput2 = document.getElementById("state2")
+  let countrya2 = document.getElementById("country2")
+
+  if (countrya2.value ==="US") 
+  {
+    this.statea2 = statedropUS2.value
+  }
+  else if (countrya2.value === "CA")
+  {
+    this.statea2 = statedropCA2.value
+  }
+  else 
+  {
+    this.statea2 = stateinput2.value
+  }
+}
+
+//This function handles the set state for the address array conditionally based on whether there are one or two sets of addresses.
   handleAChange() {
     let typea = document.getElementById("addresstype")
     let streeta = document.getElementById("street")
@@ -308,30 +402,42 @@ class EditOrgForm extends Component {
     let typea2 = document.getElementById("addresstype2")
     let streeta2 = document.getElementById("street2")
     let citya2 = document.getElementById("city2")
-    let statea2 = document.getElementById("state2")
     let zipa2 = document.getElementById("zip2")
     let countrya2 = document.getElementById("country2")
     let address = {...this.state.address};
+
+    if (typea2.value.length !== 0 || streeta2.value.length !== 0 || citya2.value.length !== 0 || zipa2.value.length !== 0 || countrya2.value.length !== 0)
+    {
     address = 
         [{zip: zipa.value,
         country: countrya.value,
-        state: statea.value,
+        state: this.statea,
         type: typea.value,
         city: citya.value,
         street: streeta.value },
         {
         zip: zipa2.value,
         country: countrya2.value,
-        state: statea2.value,
+        state: this.statea2,
         type: typea2.value,
         city: citya2.value,
         street: streeta2.value }]
+    }
+    else {
+      address = 
+        [{zip: zipa.value,
+        country: countrya.value,
+        state: statea.value,
+        type: typea.value,
+        city: citya.value,
+        street: streeta.value }]
+    }
         
     this.setState({address});  
     
     } 
 
-
+//This function handles the set state for the contact array conditionally based on whether there are one or two sets of contacts.
   handleCChange() {
     let fnamec = document.getElementById("fname")
     let lnamec = document.getElementById("lname")
@@ -344,6 +450,9 @@ class EditOrgForm extends Component {
     let phonec2 = document.getElementById("phone2")
     let emailc2 = document.getElementById("email2")
     let contact = {...this.state.contact}
+    
+    if (typec2.value.length !== 0 || fnamec2.value.length !== 0 || lnamec2.value.length !== 0 || phonec2.value.length !== 0 || emailc2.value.length !== 0)
+    {
     contact = [{firstName: fnamec.value,
         lastName: lnamec.value, 
         type: typec.value, 
@@ -356,19 +465,28 @@ class EditOrgForm extends Component {
         type: typec2.value, 
         phone: phonec2.value, 
         email: emailc2.value}]
+    } else{
+      contact = [{firstName: fnamec.value,
+        lastName: lnamec.value, 
+        type: typec.value, 
+        phone: phonec.value, 
+        email: emailc.value}]
+    }
     
     this.setState({contact}); 
   }
 
+//The following two methods assign the "RadioVal" variables, which are global variables that are used to set the State for the radio buttons. 
+//The "Yes"/"No" toggles on the radio buttons are translated into "true"/"false" values and assigned to the RadioVal variables, which are later used to set state. 
   handleimgCapture() {
     let RadioimgNo = document.getElementById("imgCaptureNo")
     let RadioimgYes = document.getElementById("imgCaptureYes")
 
     if (RadioimgNo.checked) {
-      this.RadioVal1 = "false"
+      this.RadioVal1 = false
     }
     if (RadioimgYes.checked) {
-      this.RadioVal1 = "true"
+      this.RadioVal1 = true
     }
   }
 
@@ -377,12 +495,14 @@ class EditOrgForm extends Component {
     let RadioidYes = document.getElementById("idCaptureYes")
 
     if (RadioidNo.checked) {
-      this.RadioVal2 = "false"
+      this.RadioVal2 = false
     }
     if (RadioidYes.checked) {
-      this.RadioVal2 = "true"
+      this.RadioVal2 = true
     }
   }
+
+  //The following two methods translate the "true/false" values into the radio button checkmarks when the data populates in the form.
   handleGetid(){
     let RadioidNo = document.getElementById("idCaptureNo")
     let RadioidYes = document.getElementById("idCaptureYes")
@@ -398,15 +518,16 @@ class EditOrgForm extends Component {
   handleGetimg() {
     let RadioimgNo = document.getElementById("imgCaptureNo")
     let RadioimgYes = document.getElementById("imgCaptureYes")
-    if (this.state.imageCapture === "true") {
+    if (this.state.imageCapture === true) {
       RadioimgYes.checked = true
     }
 
-    if (this.state.imageCapture === "false") {
+    if (this.state.imageCapture === true) {
       RadioimgNo.checked = true
     }
   }
 
+  //This function handles the set state for the configration section.
   handleConfigChange() {
     let smoothingf = document.getElementById("smoothingframe")
     let anomalyd = document.getElementById("anomalyduration")
@@ -414,20 +535,23 @@ class EditOrgForm extends Component {
     let configuration = {...this.state.configuration}
  
     configuration = {
-        Registration: {
+        registration: {
           imageCapture: this.RadioVal1,
           idCapture: this.RadioVal2
         },
         postProcess: {
-          anomalyDuration: anomalyd.value,
-          smoothingFrame: smoothingf.value,
-          frameInterval: framei.value,}
+          anomalyDuration: parseInt(anomalyd.value, 10),
+          smoothingFrame: parseInt(smoothingf.value, 10),
+          frameInterval: parseInt(framei.value, 10)}
       }
     this.setState({configuration}); 
 
     }
-  
+
+  //This method runs all the state update methods before the final submit. This method is called in an onchange handler on the submit button (separate from the submit function). 
     stateUpdate() {
+      this.handlestateVariable();
+      this.handlestateVariable2();
       this.handleCChange();
       this.handleAChange();
       this.handleidCapture();
@@ -437,6 +561,9 @@ class EditOrgForm extends Component {
       this.imgcaptureVal();
     }
 
+  //The following are onblur validation methods. All fields are required except for second the address and second contact. 
+  //The postProcess values have to be numeric values. The email value has regex validation to make sure it is the correct format. 
+  //The submit function also contains validation.
   orgnameVal(event) {
     if (event.target.value === ""){
       document.getElementById("orgnameErrMsg").innerHTML="Required"
@@ -561,15 +688,15 @@ class EditOrgForm extends Component {
       }
   }
 
+  //The following two methods are not onblur validation methods. They are called before final submit to set variables that are used in the onsubmit validation in order to determine
+  //whether the radio buttons have been checked. 
   idcaptureVal() {
     let RadioidNo = document.getElementById("idCaptureNo")
     let RadioidYes = document.getElementById("idCaptureYes")
     if (!RadioidNo.checked && !RadioidYes.checked){
-      //document.getElementById("imgcaptureErrMsg").innerHTML="Required"
       this.idCapVal = false
       }
       else{
-      //document.getElementById("imgcaptureErrMsg").innerHTML=""
       this.idCapVal = true
       }
   }
@@ -578,20 +705,22 @@ class EditOrgForm extends Component {
     let RadioimgNo = document.getElementById("imgCaptureNo")
     let RadioimgYes = document.getElementById("imgCaptureYes")
     if (!RadioimgNo.checked && !RadioimgYes.checked){
-      //document.getElementById("imgcaptureErrMsg").innerHTML="Required"
       this.imgCapVal = false
       }
       else{
-      //document.getElementById("imgcaptureErrMsg").innerHTML=""
       this.imgCapVal = true
       }
   }
 
   frameintervalVal(event) {
+
     if (event.target.value === ""){
       document.getElementById("frameintervalErrMsg").innerHTML="Required"
       }
-      else{
+      else if (isNaN(event.target.value)){
+      document.getElementById("frameintervalErrMsg").innerHTML="Frame Interval must be a number"
+      }
+      else {
       document.getElementById("frameintervalErrMsg").innerHTML=""
       }
   }
@@ -600,20 +729,28 @@ class EditOrgForm extends Component {
     if (event.target.value === ""){
       document.getElementById("anomalydurationErrMsg").innerHTML="Required"
       }
-      else{
+      else if (isNaN(event.target.value)){
+      document.getElementById("anomalydurationErrMsg").innerHTML="Anomaly Duration must be a number"
+      }
+      else {
       document.getElementById("anomalydurationErrMsg").innerHTML=""
       }
+
   }
 
   smoothingframeVal(event) {
     if (event.target.value === ""){
       document.getElementById("smoothingframeErrMsg").innerHTML="Required"
       }
-      else{
+      else if (isNaN(event.target.value)){
+      document.getElementById("smoothingframeErrMsg").innerHTML="Smoothing Frame must be a number"
+      }
+      else {
       document.getElementById("smoothingframeErrMsg").innerHTML=""
       }
   }
 
+  //This method creates a get request based on the id received from the org table and populates the form.
   componentDidMount() {
       // parse query from URL string to retrieve orgId
       const query = new URLSearchParams(this.props.location.search);
@@ -621,16 +758,10 @@ class EditOrgForm extends Component {
       for (let param of query.entries()) {
         orgid[param[0]] = param[1];
       }
-      console.log(orgid)
   
       //convert orgId to string.
       const preProcessedItemId = orgid.id
-      console.log(orgid.id)
       const processedItemId = preProcessedItemId.toString();
-      //const processeditemId = stringToSlice.slice(4);
-
-      console.log(preProcessedItemId)
-      console.log(processedItemId)
   
       // get org information by orgID
       axios.get(`/orgs/${processedItemId}`).then(res => {
@@ -641,9 +772,6 @@ class EditOrgForm extends Component {
         const address2Data = [];
         const contactData = [];
         const contact2Data = [];
-        //const basic1Data = [];
-        //const regisData = [];
-        //const pprocessData = [];
         const configData = [];
         // push data objects into an array
         for (const dataItem in pathToData) {
@@ -653,41 +781,34 @@ class EditOrgForm extends Component {
           itemId: pathToData[dataItem].itemId,
           itemType: pathToData[dataItem].itemType,
           }) }
-
-          // for (const data1Item in pathToData) {
-          // basic1Data.push({
-          //   id: pathToData[data1Item].id,
-          //   itemId: pathToData[data1Item].itemId,
-          //   itemType: pathToData[data1Item].itemType,
-          // }) }
-
+          //Primary address data
           for (const addressItem in pathToData) {
           addressData.push({
-          city: pathToData[addressItem].address[0].city,
           country: pathToData[addressItem].address[0].country,
           zip: pathToData[addressItem].address[0].zip,
+          city: pathToData[addressItem].address[0].city,
           street: pathToData[addressItem].address[0].street,
           typea: pathToData[addressItem].address[0].type,
           state: pathToData[addressItem].address[0].state,
-          // city2: pathToData[addressItem].address[1].city,
-          // country2: pathToData[addressItem].address[1].country,
-          // zip2: pathToData[addressItem].address[1].zip,
-          // street2: pathToData[addressItem].address[1].street,
-          // typea2: pathToData[addressItem].address[1].type,
-          // state2: pathToData[addressItem].address[1].state
-          })}
-
-          for (const address2Item in pathToData){
-          address2Data.push({
-          city2: pathToData[address2Item].address[1].city,
-          country2: pathToData[address2Item].address[1].country,
-          zip2: pathToData[address2Item].address[1].zip,
-          street2: pathToData[address2Item].address[1].street,
-          typea2: pathToData[address2Item].address[1].type,
-          state2: pathToData[address2Item].address[1].state 
-           })}
-
-          // // primary contact data
+          }) }
+          //There is an if statement on the second array address items, so that the form won't crash if there is no second array in the data.
+          for (const address2Item in pathToData) {
+          if (typeof(pathToData[address2Item].address[1]) !== "undefined")
+          {
+            address2Data.push({
+            country2: pathToData[address2Item].address[1].country,
+            city2: pathToData[address2Item].address[1].city,
+            zip2: pathToData[address2Item].address[1].zip,
+            street2: pathToData[address2Item].address[1].street,
+            typea2: pathToData[address2Item].address[1].type,
+            state2: pathToData[address2Item].address[1].state 
+              })
+              //update state for second array as part of if statement
+            this.setState({address2: address2Data[0]})
+           } 
+          } 
+          
+          //Primary contact data
           for (const contactItem in pathToData) {
           contactData.push({
           firstName: pathToData[contactItem].contact[0].firstName,
@@ -695,29 +816,27 @@ class EditOrgForm extends Component {
           typec: pathToData[contactItem].contact[0].type,
           email: pathToData[contactItem].contact[0].email,
           phone: pathToData[contactItem].contact[0].phone,
-          // firstName2: pathToData[contactItem].contact[1].firstName,
-          // lastName2: pathToData[contactItem].contact[1].lastName,
-          // typec2: pathToData[contactItem].contact[1].type,
-          // email2: pathToData[contactItem].contact[1].email,
-          // phone2: pathToData[contactItem].contact[1].phone
-          })}
 
+          }) }
+          //There is an if statement on the second array contact items, so that the form won't crash if there is no second array in the data.
           for (const contact2Item in pathToData) {
+          if (typeof(pathToData[contact2Item].contact[1]) !== "undefined") {
           contact2Data.push({
           firstName2: pathToData[contact2Item].contact[1].firstName,
           lastName2: pathToData[contact2Item].contact[1].lastName,
           typec2: pathToData[contact2Item].contact[1].type,
           email2: pathToData[contact2Item].contact[1].email,
           phone2: pathToData[contact2Item].contact[1].phone
-          })}
-
+          })
+          //update state for second array as part of the if statement.
+          this.setState({contact2: contact2Data[0]}) 
+        } 
+      }
+          //configuration data
           for (const configItem in pathToData) {
           configData.push({
-          imageCapture: pathToData[configItem].configuration.Registration.imageCapture,
-          idCapture: pathToData[configItem].configuration.Registration.idCapture,
-          // }) }
-          // for (const processItem in pathToData) {
-          // pprocessData.push({
+          imageCapture: pathToData[configItem].configuration.registration.imageCapture,
+          idCapture: pathToData[configItem].configuration.registration.idCapture,
           frameInterval: pathToData[configItem].configuration.postProcess.frameInterval,
           anomalyDuration: pathToData[configItem].configuration.postProcess.anomalyDuration,
           smoothingFrame: pathToData[configItem].configuration.postProcess.smoothingFrame
@@ -727,46 +846,85 @@ class EditOrgForm extends Component {
         // update state
         this.setState({
             data: basicData[0],
-            //data1: basic1Data[0],
             contact: contactData[0],
-            contact2: contact2Data[0],
             address: addressData[0],
-            address2: address2Data[0],
             configuration: configData[0]});
         this.setState({dataLoaded: true});
 
-        let RadioimgNo = document.getElementById("imgCaptureNo");
-        let RadioimgYes = document.getElementById("imgCaptureYes");
-
-        if (this.state.configuration.imageCapture === "true") {
+        //These methods set the radio buttons based on the incoming data.
+        let RadioimgNo = document.getElementById("imgCaptureNo")
+        let RadioimgYes = document.getElementById("imgCaptureYes")
+        if (this.state.configuration.imageCapture === true) {
           RadioimgYes.checked = true
         }
 
-        if (this.state.configuration.imageCapture === "false") {
+        if (this.state.configuration.imageCapture === false) {
           RadioimgNo.checked = true
         }
 
         let RadioidNo = document.getElementById("idCaptureNo");
         let RadioidYes = document.getElementById("idCaptureYes");
 
-        if (this.state.configuration.idCapture === "true") {
+        if (this.state.configuration.idCapture === true) {
             RadioidYes.checked = true
         }
-        if (this.state.configuration.idCapture === "false") {
+        if (this.state.configuration.idCapture === false) {
           RadioidNo.checked = true
         }
 
+        //These methods make sure the correct country and state dropdown displays based on the incoming data.
+        let statedropUS = document.getElementById("stateselectUS")
+        let statedropCA = document.getElementById("stateselectCA")
+        let stateinput = document.getElementById("state")
+
+        let statedropUS2 = document.getElementById("stateselectUS2")
+        let statedropCA2 = document.getElementById("stateselectCA2")
+        let stateinput2 = document.getElementById("state2")
+
+        if (this.state.address.country === "US")
+        {
+          statedropCA.style.display = "none"
+          stateinput.style.display = "none"
+          statedropUS.style.display = "block"
+        }
+        else if (this.state.address.country === "CA")
+        {
+          statedropCA.style.display = "block"
+          stateinput.style.display = "none"
+          statedropUS.style.display = "none"
+        }
+        else {
+          statedropCA.style.display = "none"
+          stateinput.style.display = "block"
+          statedropUS.style.display = "none"
+        }
+
+        if (this.state.address2.country2 === "US")
+        {
+          statedropCA2.style.display = "none"
+          stateinput2.style.display = "none"
+          statedropUS2.style.display = "block"
+        }
+        else if (this.state.address2.country2 === "CA")
+        {
+          statedropCA2.style.display = "block"
+          stateinput2.style.display = "none"
+          statedropUS2.style.display = "none"
+        }
+        else {
+          statedropCA2.style.display = "none"
+          stateinput2.style.display = "block"
+          statedropUS2.style.display = "none"
+        }       
         console.log(this.state);
       }).catch(error => alert(error));
     }
 
-
-
+  //Onsubmit function which runs the final validation in addition to the API.
   handleSubmit(event) {
 
     event.preventDefault();
     let orgNamev = document.getElementById("orgname")
-    //let orgIdv = document.getElementById("orgID")
     let typeav = document.getElementById("addresstype")
     let streetav = document.getElementById("street")
     let cityav = document.getElementById("city")
@@ -781,50 +939,75 @@ class EditOrgForm extends Component {
     let smoothingfv = document.getElementById("smoothingframe")
     let anomalydv = document.getElementById("anomalyduration")
     let frameiv = document.getElementById("frameinterval")
-    // let imageNov = document.getElementById("imgCaptureNo")
-    // let imageYesv = document.getElementById("imgCaptureYes")
-    // let idNov = document.getElementById("idCaptureNo")
-    // let idYesv = document.getElementById("idCaptureYes")
     let emailv = document.getElementById("email")
     let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let emailValid= rg.test(emailv.value)
 
+    //The same validation as the onblur methods is run again on submit and an alert is generated if something is wrong.
     if (!emailValid)
     {
       alert("The email entered is not valid")
     }
+    else if (isNaN(smoothingfv.value))
+    {
+      alert("Smoothing Frame must be a number")
+    }
+    else if (isNaN(anomalydv.value))
+    {
+      alert("Anomaly Duration must be a number")
+    }
+    else if (isNaN(frameiv.value))
+    {
+      alert("Frame Interval must be a number")
+    }
     else if (orgNamev.value === "" || typeav.value === "" || streetav.value === "" || cityav.value === "" || 
-    stateav.value === "" || zipav.value === "" || countryav.value === "" || fnamecv.value === "" || lnamecv.value === "" ||
+    this.statea === "" || zipav.value === "" || countryav.value === "" || fnamecv.value === "" || lnamecv.value === "" ||
     typecv.value === "" || phonecv.value === "" || emailcv.value === "" || !this.idCapVal   || !this.imgCapVal || smoothingfv.value === "" ||
     anomalydv.value === "" || frameiv.value === "")
     {
       alert ("One or more required fields are missing")
+      if (!this.idCapVal)
+      {
+        document.getElementById("idCaptureErrMsg").innerHTML="Required"
+      }
+      else {
+        document.getElementById("idCaptureErrMsg").innerHTML=""
+      }
+      if (!this.imgCapVal)
+      {
+        document.getElementById("imgCaptureErrMsg").innerHTML="Required"
+      }
+      else {
+        document.getElementById("imgCaptureErrMsg").innerHTML=""
+      }
     }
+    //If all the validation checks out, we'll proceed to the API and submit to the database based on the org ID.
     else {
-      // store editable data in new object
-      const newData = {
-        description: this.state.data.description,
-        //id: this.state.data.id,
-        contact: this.state.contact,
-        address: this.state.address,
-        configuration: this.state.configuration
-      };
-      // store value of id
-      const itemToEdit = this.state.data.id;
-  
-      // make api call to update data
-      axios.patch(`/orgs/${itemToEdit}`, newData)
-      // if request is successful, redirect to manage tests
-      .then(res => {
-        if (res.status === 200) {
-        this.props.history.push('/manage-orgs')
-        } 
-      })
-      // else, display error
-      .catch(error => alert(error))    
-}
-  }
+        //Store the editable data in a new object.
+        const newData = {
+            description: this.state.data.description,
+            contact: this.state.contact,
+            address: this.state.address,
+            configuration: this.state.configuration
+        };
+        //Store the value of the id.
+        const itemToEdit = this.state.data.id;
+    
+        //Make the API call to update the data.
+        axios.patch(`/orgs/${itemToEdit}`, newData)
+             // if the request is successful, redirect to manage tests.
+             .then(res => {
+               if (res.status === 200) {
+                this.props.history.push('/manage-orgs')
+               } 
+             })
+             //Otherwise, display the error.
+             .catch(error => alert(error))    
+          }
+        }
 
+       
+      //State is set for the five accordions on the page to work.
       state = {
       isOpen: true,
       isOpen2: false,
@@ -864,6 +1047,7 @@ class EditOrgForm extends Component {
       };
 
   render () {
+    //Style variables are set for the labels, textboxes and buttons here.
     const labelstyle = {
       color: "#3cB650",
 	    fontFamily: "sans-serif",
@@ -920,26 +1104,7 @@ class EditOrgForm extends Component {
         backgroundColor: "#f2f2f2"
       }
 
-      // const textbxstyle3 = {
-      //   width: "90%",
-      //   padding: "12px 20px",
-      //   margin: "8px 0",
-      //   border: "1px solid #ccc",
-      //   borderRadius: "4px",
-      //   boxSizing: "border-box",
-      //   display: "inline-block"
-      // }; 
-
-      // const textbxstyle4 = {
-      //   width: "40%",
-      //   padding: "12px 20px",
-      //   margin: "8px 0",
-      //   border: "1px solid #ccc",
-      //   borderRadius: "4px",
-      //   boxSizing: "border-box",
-      //   display: "inline-block"
-      // }; 
-
+      //Variables for the five accordions.
       const { isOpen } = this.state;
       const { isOpen2 } = this.state;
       const { isOpen3 } = this.state;
@@ -949,11 +1114,11 @@ class EditOrgForm extends Component {
     return (
       <div>
         <main className={classes.main}>
-          <h1 className={classes.header}>Add Organizations</h1>
+        <h1 className={classes.header}>Edit Organizations</h1>
           <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
-              <div className={classes.flexChild}>
+              <div>
                 <table>
                   <tr>
                     <td className={classes.cell3} 
@@ -1002,35 +1167,11 @@ class EditOrgForm extends Component {
                           name="orgID"
                           readOnly
                           value={this.state.data.id}
-                          //onBlur={this.orgidVal}
                           onChange={this.handleOrgIDChange}
                           />
                         <br/>
                     </td>
                   </tr>
-                  {/* <tr>
-                    <td 
-                      className={classes.cell3} 
-                      style={{textAlign:"right"}}>
-                      <label 
-                        htmlFor="itemType" 
-                        style={labelstyle}>
-                        Item Type:
-                      </label>
-                    </td>
-                    <td 
-                      className={classes.cell4} 
-                      style={{textAlign:"left"}}>
-                        <input 
-                          // onChangeText={(text) => {this.setState({ ID: text })}} 
-                          style={textbxstyle2} 
-                          type="text" 
-                          id="itemType" 
-                          name="itemType"
-                          value={this.state.itemType}
-                          onChange={this.handleitemTypeChange}/>
-                    </td>
-                  </tr> */}
                 </table>
                   <hr></hr>
                     </div> 
@@ -1045,21 +1186,24 @@ class EditOrgForm extends Component {
                                 <label 
                                   htmlFor="addresstype" 
                                   style={labelstyle}>
-                                  Type of Address (Primary/Billing/Technical):
+                                  Type of Address:
                                 </label>
                               </td>
                               <td 
                                 className={classes.cell4}
                                 style={{textAlign:"left"}}>
-                                <input 
-                                style={textbxstyle2} 
-                                type="text" 
+                                <select
+                                style={textbxstyle2}  
                                 id="addresstype"
                                 value={this.state.address.typea}
-                                onChange={this.handletofaChange} 
+                                onChange={this.handletofaChange}  
                                 name="addresstype"
                                 onBlur={this.addresstypeVal}
-                                />
+                                >
+                                <option>Primary</option>
+                                <option>Billing</option>
+                                <option>Technical</option>
+                                </select>
                                 <br/>
                                 <span 
                                   id="addresstypeErrMsg"
@@ -1125,35 +1269,6 @@ class EditOrgForm extends Component {
                                 </span>
                               </td>
                             </tr>
-                            <tr> 
-                              <td 
-                                className={classes.cell3} 
-                                style={{textAlign:"right"}}>
-                                <label 
-                                  htmlFor="state" 
-                                  style={labelstyle}>
-                                  State/Province:
-                                </label>
-                              </td>
-                              <td 
-                                className={classes.cell4} 
-                                style={{textAlign:"left"}}>
-                                <input 
-                                  style={textbxstyle2} 
-                                  type="text" 
-                                  id="state"
-                                  onChange={this.handlestateChange} 
-                                  value={this.state.address.state}
-                                  name="state"
-                                  onBlur={this.stateVal}
-                                  />
-                                <br/>
-                                <span 
-                                  id="stateErrMsg"
-                                  style={{color:"red"}}>
-                                </span>
-                              </td>
-                            </tr>
                             <tr>
                               <td 
                                 className={classes.cell3} 
@@ -1196,18 +1311,382 @@ class EditOrgForm extends Component {
                               <td 
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
-                                <input 
-                                style={textbxstyle2} 
-                                type="text" 
-                                id="country"
-                                onChange={this.handlecountryChange}
+                                <select 
+                                id="country" 
+                                name="country" 
                                 value={this.state.address.country} 
-                                name="country"
-                                onBlur={this.countryVal}
-                                />
-                                <br/>
+                                onChange={this.handlecountryChange} 
+                                style={textbxstyle2} 
+                                onBlur={this.countryVal}>
+                                      <option value="">Select Country</option>
+                                      <option value="AF">Afghanistan</option>
+                                      <option value="AX">Aland Islands</option>
+                                      <option value="AL">Albania</option>
+                                      <option value="DZ">Algeria</option>
+                                      <option value="AS">American Samoa</option>
+                                      <option value="AD">Andorra</option>
+                                      <option value="AO">Angola</option>
+                                      <option value="AI">Anguilla</option>
+                                      <option value="AQ">Antarctica</option>
+                                      <option value="AG">Antigua and Barbuda</option>
+                                      <option value="AR">Argentina</option>
+                                      <option value="AM">Armenia</option>
+                                      <option value="AW">Aruba</option>
+                                      <option value="AU">Australia</option>
+                                      <option value="AT">Austria</option>
+                                      <option value="AZ">Azerbaijan</option>
+                                      <option value="BS">Bahamas</option>
+                                      <option value="BH">Bahrain</option>
+                                      <option value="BD">Bangladesh</option>
+                                      <option value="BB">Barbados</option>
+                                      <option value="BY">Belarus</option>
+                                      <option value="BE">Belgium</option>
+                                      <option value="BZ">Belize</option>
+                                      <option value="BJ">Benin</option>
+                                      <option value="BM">Bermuda</option>
+                                      <option value="BT">Bhutan</option>
+                                      <option value="BO">Bolivia</option>
+                                      <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
+                                      <option value="BA">Bosnia and Herzegovina</option>
+                                      <option value="BW">Botswana</option>
+                                      <option value="BV">Bouvet Island</option>
+                                      <option value="BR">Brazil</option>
+                                      <option value="IO">British Indian Ocean Territory</option>
+                                      <option value="BN">Brunei Darussalam</option>
+                                      <option value="BG">Bulgaria</option>
+                                      <option value="BF">Burkina Faso</option>
+                                      <option value="BI">Burundi</option>
+                                      <option value="KH">Cambodia</option>
+                                      <option value="CM">Cameroon</option>
+                                      <option value="CA">Canada</option>
+                                      <option value="CV">Cape Verde</option>
+                                      <option value="KY">Cayman Islands</option>
+                                      <option value="CF">Central African Republic</option>
+                                      <option value="TD">Chad</option>
+                                      <option value="CL">Chile</option>
+                                      <option value="CN">China</option>
+                                      <option value="CX">Christmas Island</option>
+                                      <option value="CC">Cocos (Keeling) Islands</option>
+                                      <option value="CO">Colombia</option>
+                                      <option value="KM">Comoros</option>
+                                      <option value="CG">Congo</option>
+                                      <option value="CD">Congo, the Democratic Republic of the</option>
+                                      <option value="CK">Cook Islands</option>
+                                      <option value="CR">Costa Rica</option>
+                                      <option value="CI">Cote D'Ivoire</option>
+                                      <option value="HR">Croatia</option>
+                                      <option value="CU">Cuba</option>
+                                      <option value="CW">Curacao</option>
+                                      <option value="CY">Cyprus</option>
+                                      <option value="CZ">Czech Republic</option>
+                                      <option value="DK">Denmark</option>
+                                      <option value="DJ">Djibouti</option>
+                                      <option value="DM">Dominica</option>
+                                      <option value="DO">Dominican Republic</option>
+                                      <option value="EC">Ecuador</option>
+                                      <option value="EG">Egypt</option>
+                                      <option value="SV">El Salvador</option>
+                                      <option value="GQ">Equatorial Guinea</option>
+                                      <option value="ER">Eritrea</option>
+                                      <option value="EE">Estonia</option>
+                                      <option value="ET">Ethiopia</option>
+                                      <option value="FK">Falkland Islands (Malvinas)</option>
+                                      <option value="FO">Faroe Islands</option>
+                                      <option value="FJ">Fiji</option>
+                                      <option value="FI">Finland</option>
+                                      <option value="FR">France</option>
+                                      <option value="GF">French Guiana</option>
+                                      <option value="PF">French Polynesia</option>
+                                      <option value="TF">French Southern Territories</option>
+                                      <option value="GA">Gabon</option>
+                                      <option value="GM">Gambia</option>
+                                      <option value="GE">Georgia</option>
+                                      <option value="DE">Germany</option>
+                                      <option value="GH">Ghana</option>
+                                      <option value="GI">Gibraltar</option>
+                                      <option value="GR">Greece</option>
+                                      <option value="GL">Greenland</option>
+                                      <option value="GD">Grenada</option>
+                                      <option value="GP">Guadeloupe</option>
+                                      <option value="GU">Guam</option>
+                                      <option value="GT">Guatemala</option>
+                                      <option value="GG">Guernsey</option>
+                                      <option value="GN">Guinea</option>
+                                      <option value="GW">Guinea-Bissau</option>
+                                      <option value="GY">Guyana</option>
+                                      <option value="HT">Haiti</option>
+                                      <option value="HM">Heard Island and Mcdonald Islands</option>
+                                      <option value="VA">Holy See (Vatican City State)</option>
+                                      <option value="HN">Honduras</option>
+                                      <option value="HK">Hong Kong</option>
+                                      <option value="HU">Hungary</option>
+                                      <option value="IS">Iceland</option>
+                                      <option value="IN">India</option>
+                                      <option value="ID">Indonesia</option>
+                                      <option value="IR">Iran, Islamic Republic of</option>
+                                      <option value="IQ">Iraq</option>
+                                      <option value="IE">Ireland</option>
+                                      <option value="IM">Isle of Man</option>
+                                      <option value="IL">Israel</option>
+                                      <option value="IT">Italy</option>
+                                      <option value="JM">Jamaica</option>
+                                      <option value="JP">Japan</option>
+                                      <option value="JE">Jersey</option>
+                                      <option value="JO">Jordan</option>
+                                      <option value="KZ">Kazakhstan</option>
+                                      <option value="KE">Kenya</option>
+                                      <option value="KI">Kiribati</option>
+                                      <option value="KP">Korea, Democratic People"s Republic of</option>
+                                      <option value="KR">Korea, Republic of</option>
+                                      <option value="XK">Kosovo</option>
+                                      <option value="KW">Kuwait</option>
+                                      <option value="KG">Kyrgyzstan</option>
+                                      <option value="LA">Lao People's Democratic Republic</option>
+                                      <option value="LV">Latvia</option>
+                                      <option value="LB">Lebanon</option>
+                                      <option value="LS">Lesotho</option>
+                                      <option value="LR">Liberia</option>
+                                      <option value="LY">Libyan Arab Jamahiriya</option>
+                                      <option value="LI">Liechtenstein</option>
+                                      <option value="LT">Lithuania</option>
+                                      <option value="LU">Luxembourg</option>
+                                      <option value="MO">Macao</option>
+                                      <option value="MK">Macedonia, the Former Yugoslav Republic of</option>
+                                      <option value="MG">Madagascar</option>
+                                      <option value="MW">Malawi</option>
+                                      <option value="MY">Malaysia</option>
+                                      <option value="MV">Maldives</option>
+                                      <option value="ML">Mali</option>
+                                      <option value="MT">Malta</option>
+                                      <option value="MH">Marshall Islands</option>
+                                      <option value="MQ">Martinique</option>
+                                      <option value="MR">Mauritania</option>
+                                      <option value="MU">Mauritius</option>
+                                      <option value="YT">Mayotte</option>
+                                      <option value="MX">Mexico</option>
+                                      <option value="FM">Micronesia, Federated States of</option>
+                                      <option value="MD">Moldova, Republic of</option>
+                                      <option value="MC">Monaco</option>
+                                      <option value="MN">Mongolia</option>
+                                      <option value="ME">Montenegro</option>
+                                      <option value="MS">Montserrat</option>
+                                      <option value="MA">Morocco</option>
+                                      <option value="MZ">Mozambique</option>
+                                      <option value="MM">Myanmar</option>
+                                      <option value="NA">Namibia</option>
+                                      <option value="NR">Nauru</option>
+                                      <option value="NP">Nepal</option>
+                                      <option value="NL">Netherlands</option>
+                                      <option value="AN">Netherlands Antilles</option>
+                                      <option value="NC">New Caledonia</option>
+                                      <option value="NZ">New Zealand</option>
+                                      <option value="NI">Nicaragua</option>
+                                      <option value="NE">Niger</option>
+                                      <option value="NG">Nigeria</option>
+                                      <option value="NU">Niue</option>
+                                      <option value="NF">Norfolk Island</option>
+                                      <option value="MP">Northern Mariana Islands</option>
+                                      <option value="NO">Norway</option>
+                                      <option value="OM">Oman</option>
+                                      <option value="PK">Pakistan</option>
+                                      <option value="PW">Palau</option>
+                                      <option value="PS">Palestinian Territory, Occupied</option>
+                                      <option value="PA">Panama</option>
+                                      <option value="PG">Papua New Guinea</option>
+                                      <option value="PY">Paraguay</option>
+                                      <option value="PE">Peru</option>
+                                      <option value="PH">Philippines</option>
+                                      <option value="PN">Pitcairn</option>
+                                      <option value="PL">Poland</option>
+                                      <option value="PT">Portugal</option>
+                                      <option value="PR">Puerto Rico</option>
+                                      <option value="QA">Qatar</option>
+                                      <option value="RE">Reunion</option>
+                                      <option value="RO">Romania</option>
+                                      <option value="RU">Russian Federation</option>
+                                      <option value="RW">Rwanda</option>
+                                      <option value="BL">Saint Barthelemy</option>
+                                      <option value="SH">Saint Helena</option>
+                                      <option value="KN">Saint Kitts and Nevis</option>
+                                      <option value="LC">Saint Lucia</option>
+                                      <option value="MF">Saint Martin</option>
+                                      <option value="PM">Saint Pierre and Miquelon</option>
+                                      <option value="VC">Saint Vincent and the Grenadines</option>
+                                      <option value="WS">Samoa</option>
+                                      <option value="SM">San Marino</option>
+                                      <option value="ST">Sao Tome and Principe</option>
+                                      <option value="SA">Saudi Arabia</option>
+                                      <option value="SN">Senegal</option>
+                                      <option value="RS">Serbia</option>
+                                      <option value="CS">Serbia and Montenegro</option>
+                                      <option value="SC">Seychelles</option>
+                                      <option value="SL">Sierra Leone</option>
+                                      <option value="SG">Singapore</option>
+                                      <option value="SX">Sint Maarten</option>
+                                      <option value="SK">Slovakia</option>
+                                      <option value="SI">Slovenia</option>
+                                      <option value="SB">Solomon Islands</option>
+                                      <option value="SO">Somalia</option>
+                                      <option value="ZA">South Africa</option>
+                                      <option value="GS">South Georgia and the South Sandwich Islands</option>
+                                      <option value="SS">South Sudan</option>
+                                      <option value="ES">Spain</option>
+                                      <option value="LK">Sri Lanka</option>
+                                      <option value="SD">Sudan</option>
+                                      <option value="SR">Suriname</option>
+                                      <option value="SJ">Svalbard and Jan Mayen</option>
+                                      <option value="SZ">Swaziland</option>
+                                      <option value="SE">Sweden</option>
+                                      <option value="CH">Switzerland</option>
+                                      <option value="SY">Syrian Arab Republic</option>
+                                      <option value="TW">Taiwan, Province of China</option>
+                                      <option value="TJ">Tajikistan</option>
+                                      <option value="TZ">Tanzania, United Republic of</option>
+                                      <option value="TH">Thailand</option>
+                                      <option value="TL">Timor-Leste</option>
+                                      <option value="TG">Togo</option>
+                                      <option value="TK">Tokelau</option>
+                                      <option value="TO">Tonga</option>
+                                      <option value="TT">Trinidad and Tobago</option>
+                                      <option value="TN">Tunisia</option>
+                                      <option value="TR">Turkey</option>
+                                      <option value="TM">Turkmenistan</option>
+                                      <option value="TC">Turks and Caicos Islands</option>
+                                      <option value="TV">Tuvalu</option>
+                                      <option value="UG">Uganda</option>
+                                      <option value="UA">Ukraine</option>
+                                      <option value="AE">United Arab Emirates</option>
+                                      <option value="GB">United Kingdom</option>
+                                      <option value="US">United States</option>
+                                      <option value="UM">United States Minor Outlying Islands</option>
+                                      <option value="UY">Uruguay</option>
+                                      <option value="UZ">Uzbekistan</option>
+                                      <option value="VU">Vanuatu</option>
+                                      <option value="VE">Venezuela</option>
+                                      <option value="VN">Viet Nam</option>
+                                      <option value="VG">Virgin Islands, British</option>
+                                      <option value="VI">Virgin Islands, U.s.</option>
+                                      <option value="WF">Wallis and Futuna</option>
+                                      <option value="EH">Western Sahara</option>
+                                      <option value="YE">Yemen</option>
+                                      <option value="ZM">Zambia</option>
+                                      <option value="ZW">Zimbabwe</option>
+                                  </select>
+                                <br/>                                
                                 <span 
                                   id="countryErrMsg"
+                                  style={{color:"red"}}>
+                                </span>
+                              </td>
+                            </tr>
+                            <tr> 
+                              <td 
+                                className={classes.cell3} 
+                                style={{textAlign:"right"}}>
+                                <label 
+                                  htmlFor="state" 
+                                  style={labelstyle}>
+                                  State/Province:
+                                </label>
+                              </td>
+                              <td 
+                                className={classes.cell4} 
+                                style={{textAlign:"left"}}>
+                                <input
+                                  className={classes.combobox} 
+                                  style={textbxstyle2} 
+                                  type="text" 
+                                  id="state" 
+                                  name="state"
+                                  onBlur={this.stateVal}
+                                  onChange={this.handlestateChange} 
+                                  value={this.state.address.state}
+                                  />
+                                  <select
+                                  style={textbxstyle2}  
+                                  id="stateselectUS"
+                                  onChange={this.handlestateChange} 
+                                  value={this.state.address.state} 
+                                  name="stateselectUS"
+                                  onBlur={this.stateVal}>
+                                    <option value="">Select State</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="DC">District Of Columbia</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                  </select>	
+                                  <select
+                                  className={classes.combobox} 
+                                  id="stateselectCA"
+                                  style={textbxstyle2} 
+                                  onChange={this.handlestateChange} 
+                                  value={this.state.address.state} 
+                                  name="stateselectCA"
+                                  onBlur={this.stateVal}>
+                                      <option value="">Select Province</option>
+                                    	<option value="AB">Alberta</option>
+                                      <option value="BC">British Columbia</option>
+                                      <option value="MB">Manitoba</option>
+                                      <option value="NB">New Brunswick</option>
+                                      <option value="NL">Newfoundland and Labrador</option>
+                                      <option value="NS">Nova Scotia</option>
+                                      <option value="NT">Northwest Territories</option>
+                                      <option value="NU">Nunavut</option>
+                                      <option value="ON">Ontario</option>
+                                      <option value="PE">Prince Edward Island</option>
+                                      <option value="QC">Quebec</option>
+                                      <option value="SK">Saskatchewan</option>
+                                      <option value="YT">Yukon</option>
+                                    </select>
+                                <span 
+                                  id="stateErrMsg"
                                   style={{color:"red"}}>
                                 </span>
                               </td>
@@ -1225,21 +1704,24 @@ class EditOrgForm extends Component {
                                 <label 
                                   htmlFor="addresstype2" 
                                   style={labelstyle}>
-                                  Type of Address (Primary/Billing/Technical):
+                                  Type of Address:
                                 </label>
                               </td>
                               <td 
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
-                                <input 
-                                  // onChangeText={(text) => {this.setState({ typeofaddress2: text })}} 
+                                <select 
                                   style={textbxstyle2} 
-                                  type="text"
                                   onChange={this.handletofa2Change}
                                   value={this.state.address2.typea2} 
                                   id="addresstype2" 
                                   name="addresstype2"
-                                  />
+                                  >
+                                    <option value="">Select Type</option>
+                                    <option>Primary</option>
+                                    <option>Billing</option>
+                                    <option>Technical</option>
+                                  </select>
                               </td>
                             </tr>
                             <tr>
@@ -1257,7 +1739,6 @@ class EditOrgForm extends Component {
                                 style={{textAlign:"left"}}>
                                 <input 
                                   style={textbxstyle2} 
-                                  // onChangeText={(text) => {this.setState({ street2: text })}}
                                   type="text" 
                                   id="street2"
                                   onChange={this.handlestreet2Change}
@@ -1281,36 +1762,12 @@ class EditOrgForm extends Component {
                                 style={{textAlign:"left"}}>
                                 <input 
                                   style={textbxstyle2} 
-                                  // onChangeText={(text) => {this.setState({ city2: text })}} 
                                   type="text" 
                                   id="city2"
                                   onChange={this.handlecity2Change} 
                                   value={this.state.address2.city2}
                                   name="city2"
                                   />
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className={classes.cell3} 
-                                style={{textAlign:"right"}}>
-                                <label 
-                                  htmlFor="state2" 
-                                  style={labelstyle}>
-                                  State/Province:
-                                </label>
-                              </td>
-                              <td 
-                              className={classes.cell4} 
-                              style={{textAlign:"left"}}>
-                              <input 
-                                style={textbxstyle2} 
-                                //onChangeText={(text) => {this.setState({ statea2: text })}} 
-                                type="text" 
-                                value={this.state.address2.state2}
-                                onChange={this.handlestate2Change}
-                                id="state2" 
-                                name="state2"
-                                />
                               </td>
                             </tr>                            
                             <tr>
@@ -1327,7 +1784,7 @@ class EditOrgForm extends Component {
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
                                 <input 
-                                  style={textbxstyle2} 
+                                  style={textbxstyle2}
                                   type="text" 
                                   id="zip2"
                                   onChange={this.handlezip2Change} 
@@ -1341,22 +1798,378 @@ class EditOrgForm extends Component {
                                 className={classes.cell3} 
                                 style={{textAlign:"right"}}>
                                 <label 
-                                  htmlFor="country2" 
-                                  style={labelstyle}>
+                                htmlFor="country" 
+                                style={labelstyle}>
                                   Country:
                                 </label>
                               </td>
                               <td 
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
-                                <input 
+                                <select id="country2" onChange={this.handlecountry2Change} 
+                                  value={this.state.address2.country2} 
+                                  name="country2" style={textbxstyle2}>
+                                      <option value="">Select Country</option>
+                                      <option value="AF">Afghanistan</option>
+                                      <option value="AX">Aland Islands</option>
+                                      <option value="AL">Albania</option>
+                                      <option value="DZ">Algeria</option>
+                                      <option value="AS">American Samoa</option>
+                                      <option value="AD">Andorra</option>
+                                      <option value="AO">Angola</option>
+                                      <option value="AI">Anguilla</option>
+                                      <option value="AQ">Antarctica</option>
+                                      <option value="AG">Antigua and Barbuda</option>
+                                      <option value="AR">Argentina</option>
+                                      <option value="AM">Armenia</option>
+                                      <option value="AW">Aruba</option>
+                                      <option value="AU">Australia</option>
+                                      <option value="AT">Austria</option>
+                                      <option value="AZ">Azerbaijan</option>
+                                      <option value="BS">Bahamas</option>
+                                      <option value="BH">Bahrain</option>
+                                      <option value="BD">Bangladesh</option>
+                                      <option value="BB">Barbados</option>
+                                      <option value="BY">Belarus</option>
+                                      <option value="BE">Belgium</option>
+                                      <option value="BZ">Belize</option>
+                                      <option value="BJ">Benin</option>
+                                      <option value="BM">Bermuda</option>
+                                      <option value="BT">Bhutan</option>
+                                      <option value="BO">Bolivia</option>
+                                      <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
+                                      <option value="BA">Bosnia and Herzegovina</option>
+                                      <option value="BW">Botswana</option>
+                                      <option value="BV">Bouvet Island</option>
+                                      <option value="BR">Brazil</option>
+                                      <option value="IO">British Indian Ocean Territory</option>
+                                      <option value="BN">Brunei Darussalam</option>
+                                      <option value="BG">Bulgaria</option>
+                                      <option value="BF">Burkina Faso</option>
+                                      <option value="BI">Burundi</option>
+                                      <option value="KH">Cambodia</option>
+                                      <option value="CM">Cameroon</option>
+                                      <option value="CA">Canada</option>
+                                      <option value="CV">Cape Verde</option>
+                                      <option value="KY">Cayman Islands</option>
+                                      <option value="CF">Central African Republic</option>
+                                      <option value="TD">Chad</option>
+                                      <option value="CL">Chile</option>
+                                      <option value="CN">China</option>
+                                      <option value="CX">Christmas Island</option>
+                                      <option value="CC">Cocos (Keeling) Islands</option>
+                                      <option value="CO">Colombia</option>
+                                      <option value="KM">Comoros</option>
+                                      <option value="CG">Congo</option>
+                                      <option value="CD">Congo, the Democratic Republic of the</option>
+                                      <option value="CK">Cook Islands</option>
+                                      <option value="CR">Costa Rica</option>
+                                      <option value="CI">Cote D'Ivoire</option>
+                                      <option value="HR">Croatia</option>
+                                      <option value="CU">Cuba</option>
+                                      <option value="CW">Curacao</option>
+                                      <option value="CY">Cyprus</option>
+                                      <option value="CZ">Czech Republic</option>
+                                      <option value="DK">Denmark</option>
+                                      <option value="DJ">Djibouti</option>
+                                      <option value="DM">Dominica</option>
+                                      <option value="DO">Dominican Republic</option>
+                                      <option value="EC">Ecuador</option>
+                                      <option value="EG">Egypt</option>
+                                      <option value="SV">El Salvador</option>
+                                      <option value="GQ">Equatorial Guinea</option>
+                                      <option value="ER">Eritrea</option>
+                                      <option value="EE">Estonia</option>
+                                      <option value="ET">Ethiopia</option>
+                                      <option value="FK">Falkland Islands (Malvinas)</option>
+                                      <option value="FO">Faroe Islands</option>
+                                      <option value="FJ">Fiji</option>
+                                      <option value="FI">Finland</option>
+                                      <option value="FR">France</option>
+                                      <option value="GF">French Guiana</option>
+                                      <option value="PF">French Polynesia</option>
+                                      <option value="TF">French Southern Territories</option>
+                                      <option value="GA">Gabon</option>
+                                      <option value="GM">Gambia</option>
+                                      <option value="GE">Georgia</option>
+                                      <option value="DE">Germany</option>
+                                      <option value="GH">Ghana</option>
+                                      <option value="GI">Gibraltar</option>
+                                      <option value="GR">Greece</option>
+                                      <option value="GL">Greenland</option>
+                                      <option value="GD">Grenada</option>
+                                      <option value="GP">Guadeloupe</option>
+                                      <option value="GU">Guam</option>
+                                      <option value="GT">Guatemala</option>
+                                      <option value="GG">Guernsey</option>
+                                      <option value="GN">Guinea</option>
+                                      <option value="GW">Guinea-Bissau</option>
+                                      <option value="GY">Guyana</option>
+                                      <option value="HT">Haiti</option>
+                                      <option value="HM">Heard Island and Mcdonald Islands</option>
+                                      <option value="VA">Holy See (Vatican City State)</option>
+                                      <option value="HN">Honduras</option>
+                                      <option value="HK">Hong Kong</option>
+                                      <option value="HU">Hungary</option>
+                                      <option value="IS">Iceland</option>
+                                      <option value="IN">India</option>
+                                      <option value="ID">Indonesia</option>
+                                      <option value="IR">Iran, Islamic Republic of</option>
+                                      <option value="IQ">Iraq</option>
+                                      <option value="IE">Ireland</option>
+                                      <option value="IM">Isle of Man</option>
+                                      <option value="IL">Israel</option>
+                                      <option value="IT">Italy</option>
+                                      <option value="JM">Jamaica</option>
+                                      <option value="JP">Japan</option>
+                                      <option value="JE">Jersey</option>
+                                      <option value="JO">Jordan</option>
+                                      <option value="KZ">Kazakhstan</option>
+                                      <option value="KE">Kenya</option>
+                                      <option value="KI">Kiribati</option>
+                                      <option value="KP">Korea, Democratic People"s Republic of</option>
+                                      <option value="KR">Korea, Republic of</option>
+                                      <option value="XK">Kosovo</option>
+                                      <option value="KW">Kuwait</option>
+                                      <option value="KG">Kyrgyzstan</option>
+                                      <option value="LA">Lao People's Democratic Republic</option>
+                                      <option value="LV">Latvia</option>
+                                      <option value="LB">Lebanon</option>
+                                      <option value="LS">Lesotho</option>
+                                      <option value="LR">Liberia</option>
+                                      <option value="LY">Libyan Arab Jamahiriya</option>
+                                      <option value="LI">Liechtenstein</option>
+                                      <option value="LT">Lithuania</option>
+                                      <option value="LU">Luxembourg</option>
+                                      <option value="MO">Macao</option>
+                                      <option value="MK">Macedonia, the Former Yugoslav Republic of</option>
+                                      <option value="MG">Madagascar</option>
+                                      <option value="MW">Malawi</option>
+                                      <option value="MY">Malaysia</option>
+                                      <option value="MV">Maldives</option>
+                                      <option value="ML">Mali</option>
+                                      <option value="MT">Malta</option>
+                                      <option value="MH">Marshall Islands</option>
+                                      <option value="MQ">Martinique</option>
+                                      <option value="MR">Mauritania</option>
+                                      <option value="MU">Mauritius</option>
+                                      <option value="YT">Mayotte</option>
+                                      <option value="MX">Mexico</option>
+                                      <option value="FM">Micronesia, Federated States of</option>
+                                      <option value="MD">Moldova, Republic of</option>
+                                      <option value="MC">Monaco</option>
+                                      <option value="MN">Mongolia</option>
+                                      <option value="ME">Montenegro</option>
+                                      <option value="MS">Montserrat</option>
+                                      <option value="MA">Morocco</option>
+                                      <option value="MZ">Mozambique</option>
+                                      <option value="MM">Myanmar</option>
+                                      <option value="NA">Namibia</option>
+                                      <option value="NR">Nauru</option>
+                                      <option value="NP">Nepal</option>
+                                      <option value="NL">Netherlands</option>
+                                      <option value="AN">Netherlands Antilles</option>
+                                      <option value="NC">New Caledonia</option>
+                                      <option value="NZ">New Zealand</option>
+                                      <option value="NI">Nicaragua</option>
+                                      <option value="NE">Niger</option>
+                                      <option value="NG">Nigeria</option>
+                                      <option value="NU">Niue</option>
+                                      <option value="NF">Norfolk Island</option>
+                                      <option value="MP">Northern Mariana Islands</option>
+                                      <option value="NO">Norway</option>
+                                      <option value="OM">Oman</option>
+                                      <option value="PK">Pakistan</option>
+                                      <option value="PW">Palau</option>
+                                      <option value="PS">Palestinian Territory, Occupied</option>
+                                      <option value="PA">Panama</option>
+                                      <option value="PG">Papua New Guinea</option>
+                                      <option value="PY">Paraguay</option>
+                                      <option value="PE">Peru</option>
+                                      <option value="PH">Philippines</option>
+                                      <option value="PN">Pitcairn</option>
+                                      <option value="PL">Poland</option>
+                                      <option value="PT">Portugal</option>
+                                      <option value="PR">Puerto Rico</option>
+                                      <option value="QA">Qatar</option>
+                                      <option value="RE">Reunion</option>
+                                      <option value="RO">Romania</option>
+                                      <option value="RU">Russian Federation</option>
+                                      <option value="RW">Rwanda</option>
+                                      <option value="BL">Saint Barthelemy</option>
+                                      <option value="SH">Saint Helena</option>
+                                      <option value="KN">Saint Kitts and Nevis</option>
+                                      <option value="LC">Saint Lucia</option>
+                                      <option value="MF">Saint Martin</option>
+                                      <option value="PM">Saint Pierre and Miquelon</option>
+                                      <option value="VC">Saint Vincent and the Grenadines</option>
+                                      <option value="WS">Samoa</option>
+                                      <option value="SM">San Marino</option>
+                                      <option value="ST">Sao Tome and Principe</option>
+                                      <option value="SA">Saudi Arabia</option>
+                                      <option value="SN">Senegal</option>
+                                      <option value="RS">Serbia</option>
+                                      <option value="CS">Serbia and Montenegro</option>
+                                      <option value="SC">Seychelles</option>
+                                      <option value="SL">Sierra Leone</option>
+                                      <option value="SG">Singapore</option>
+                                      <option value="SX">Sint Maarten</option>
+                                      <option value="SK">Slovakia</option>
+                                      <option value="SI">Slovenia</option>
+                                      <option value="SB">Solomon Islands</option>
+                                      <option value="SO">Somalia</option>
+                                      <option value="ZA">South Africa</option>
+                                      <option value="GS">South Georgia and the South Sandwich Islands</option>
+                                      <option value="SS">South Sudan</option>
+                                      <option value="ES">Spain</option>
+                                      <option value="LK">Sri Lanka</option>
+                                      <option value="SD">Sudan</option>
+                                      <option value="SR">Suriname</option>
+                                      <option value="SJ">Svalbard and Jan Mayen</option>
+                                      <option value="SZ">Swaziland</option>
+                                      <option value="SE">Sweden</option>
+                                      <option value="CH">Switzerland</option>
+                                      <option value="SY">Syrian Arab Republic</option>
+                                      <option value="TW">Taiwan, Province of China</option>
+                                      <option value="TJ">Tajikistan</option>
+                                      <option value="TZ">Tanzania, United Republic of</option>
+                                      <option value="TH">Thailand</option>
+                                      <option value="TL">Timor-Leste</option>
+                                      <option value="TG">Togo</option>
+                                      <option value="TK">Tokelau</option>
+                                      <option value="TO">Tonga</option>
+                                      <option value="TT">Trinidad and Tobago</option>
+                                      <option value="TN">Tunisia</option>
+                                      <option value="TR">Turkey</option>
+                                      <option value="TM">Turkmenistan</option>
+                                      <option value="TC">Turks and Caicos Islands</option>
+                                      <option value="TV">Tuvalu</option>
+                                      <option value="UG">Uganda</option>
+                                      <option value="UA">Ukraine</option>
+                                      <option value="AE">United Arab Emirates</option>
+                                      <option value="GB">United Kingdom</option>
+                                      <option value="US">United States</option>
+                                      <option value="UM">United States Minor Outlying Islands</option>
+                                      <option value="UY">Uruguay</option>
+                                      <option value="UZ">Uzbekistan</option>
+                                      <option value="VU">Vanuatu</option>
+                                      <option value="VE">Venezuela</option>
+                                      <option value="VN">Viet Nam</option>
+                                      <option value="VG">Virgin Islands, British</option>
+                                      <option value="VI">Virgin Islands, U.s.</option>
+                                      <option value="WF">Wallis and Futuna</option>
+                                      <option value="EH">Western Sahara</option>
+                                      <option value="YE">Yemen</option>
+                                      <option value="ZM">Zambia</option>
+                                      <option value="ZW">Zimbabwe</option>
+                                  </select>                                
+                              </td>
+                            </tr>
+                            <tr> 
+                              <td 
+                                className={classes.cell3} 
+                                style={{textAlign:"right"}}>
+                                <label 
+                                  htmlFor="state2" 
+                                  style={labelstyle}>
+                                  State/Province:
+                                </label>
+                              </td>
+                              <td 
+                                className={classes.cell4} 
+                                style={{textAlign:"left"}}>
+                                <input
+                                  className={classes.combobox} 
                                   style={textbxstyle2} 
                                   type="text" 
-                                  id="country2"
-                                  onChange={this.handlecountry2Change} 
-                                  value={this.state.address2.country2}
-                                  name="country2"
+                                  id="state2" 
+                                  name="state2"
+                                  value={this.state.address2.state2}
+                                  onChange={this.handlestate2Change}
                                   />
+                                  <select
+                                  style={textbxstyle2}  
+                                  id="stateselectUS2" 
+                                  name="stateselectUS2"
+                                  value={this.state.address2.state2}
+                                  onChange={this.handlestate2Change}
+                                  >
+                                    <option value="">Select State</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="DC">District Of Columbia</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                  </select>	
+                                  <select
+                                  className={classes.combobox} 
+                                  id="stateselectCA2" 
+                                  name="stateselectCA2"
+                                  style={textbxstyle2}
+                                  value={this.state.address2.state2}
+                                  onChange={this.handlestate2Change}
+                                  >
+                                  <option value="">Select Province</option>
+                                  <option value="AB">Alberta</option>
+                                  <option value="BC">British Columbia</option>
+                                  <option value="MB">Manitoba</option>
+                                  <option value="NB">New Brunswick</option>
+                                  <option value="NL">Newfoundland and Labrador</option>
+                                  <option value="NS">Nova Scotia</option>
+                                  <option value="NT">Northwest Territories</option>
+                                  <option value="NU">Nunavut</option>
+                                  <option value="ON">Ontario</option>
+                                  <option value="PE">Prince Edward Island</option>
+                                  <option value="QC">Quebec</option>
+                                  <option value="SK">Saskatchewan</option>
+                                  <option value="YT">Yukon</option>
+                                </select>
                               </td>
                             </tr>
                           </table>
@@ -1373,22 +2186,25 @@ class EditOrgForm extends Component {
                                   <label 
                                     htmlFor="contacttype" 
                                     style={labelstyle}>
-                                    Type of Contact (Primary/Billing/Technical):
+                                    Type of Contact:
                                   </label>
                                 </td>
                                 <td 
                                   className={classes.cell2} 
                                   style={{textAlign:"left", width:"30%"}}>
-                                  <input 
-                                    // onBlur = {()=> this.ValidatorTofC()} 
+                                  <select 
                                     style={textbxstyle} 
-                                    type="text"
+                                    type="text" 
+                                    id="contacttype"
                                     value={this.state.contact.typec} 
-                                    id="contacttype" 
+                                    onChange={this.handletofcChange} 
                                     name="contacttype"
-                                    onChange={this.handletofcChange}
                                     onBlur={this.contacttypeVal}
-                                    />
+                                    >
+                                    <option>Primary</option>
+                                    <option>Billing</option>
+                                    <option>Technical</option>
+                                  </select>
                                     <br/>
                                     <span 
                                       id="contacttypeErrMsg"
@@ -1497,7 +2313,6 @@ class EditOrgForm extends Component {
                                   className={classes.cell2} 
                                   style={{textAlign:"left"}}>
                                   <input 
-                                    //onBlur = {()=> this.Validatorphone()} 
                                     style={textbxstyle} 
                                     type="text" 
                                     id="phone"
@@ -1526,21 +2341,25 @@ class EditOrgForm extends Component {
                                 <label 
                                   htmlFor="contacttype2" 
                                   style={labelstyle}>
-                                  Type of Contact (Primary/Billing/Technical):
+                                  Type of Contact:
                                 </label>
                               </td>
                               <td 
                                 className={classes.cell2} 
                                 style={{textAlign:"left", width:"30%"}}>
-                                <input 
-                                  // onChangeText={(text) => {this.setState({ typeofcontact2: text })}} 
+                                <select 
                                   style={textbxstyle} 
                                   type="text" 
-                                  id="contacttype2"
+                                  id="contacttype2" 
                                   onChange={this.handletofc2Change}
                                   value={this.state.contact2.typec2}  
                                   name="contacttype2"
-                                  />
+                                  >
+                                  <option value="">Select Type</option>
+                                  <option>Primary</option>
+                                  <option>Billing</option>
+                                  <option>Technical</option>
+                                </select>
                               </td>
                             </tr>
                             <tr>
@@ -1558,7 +2377,6 @@ class EditOrgForm extends Component {
                                 style={{textAlign:"left", width:"30%"}}>
                                 <input 
                                   style={textbxstyle} 
-                                  // onChangeText={(text) => {this.setState({ fname2: text })}} 
                                   type="text" 
                                   id="fname2"
                                   onChange={this.handlefname2Change}
@@ -1582,7 +2400,6 @@ class EditOrgForm extends Component {
                                 style={{textAlign:"left"}}>
                                 <input 
                                   style={textbxstyle} 
-                                  // onChangeText={(text) => {this.setState({ lname2: text })}} 
                                   type="text" 
                                   id="lname2"
                                   onChange={this.handlelname2Change}
@@ -1604,7 +2421,6 @@ class EditOrgForm extends Component {
                                 className={classes.cell2} 
                                 style={{textAlign:"left"}}>
                                 <input 
-                                  // onChangeText={(text) => {this.setState({ email2: text })}} 
                                   style={textbxstyle} 
                                   type="text" 
                                   id="email2"
@@ -1668,10 +2484,6 @@ class EditOrgForm extends Component {
                                   Yes
                                 </label>
                                 <br/>
-                                <span 
-                                    id="imgCaptureErrMsg"
-                                    style={{color:"red"}}>
-                                  </span>
                               </td>
                               <td 
                                 className={classes.cell16} 
@@ -1681,7 +2493,7 @@ class EditOrgForm extends Component {
                                     id="labelr" 
                                     className={classes.RadioButton}>
                                     <input type="radio" 
-                                      name="imgCaptureNo" 
+                                      name="imgCapture" 
                                       id="imgCaptureNo"
                                       value="false"
                                       onChange={this.handleimgCapture} 
@@ -1695,7 +2507,7 @@ class EditOrgForm extends Component {
                                       className={classes.RadioButton}>
                                     <input 
                                       type="radio" 
-                                      name="imgCaptureYes" 
+                                      name="imgCapture" 
                                       id="imgCaptureYes" 
                                       value="true"
                                       onChange={this.handleimgCapture}
@@ -1707,6 +2519,10 @@ class EditOrgForm extends Component {
                                 </div>
                               </td>
                             </tr>
+                            <span 
+                              id="imgCaptureErrMsg"
+                              style={{color:"red"}}>
+                            </span>
                           </table>
                           <table>
                             <tr>
@@ -1734,10 +2550,6 @@ class EditOrgForm extends Component {
                                   Yes
                                 </label>
                                 <br/>
-                                <span 
-                                    id="idCaptureErrMsg"
-                                    style={{color:"red"}}>
-                                </span>
                               </td>
                               <td 
                                 className={classes.cell16} 
@@ -1747,7 +2559,7 @@ class EditOrgForm extends Component {
                                     id="labelr" 
                                     className={classes.RadioButton}>
                                     <input type="radio" 
-                                      name="idCaptureNo" 
+                                      name="idCapture" 
                                       id="idCaptureNo"
                                       value="false"
                                       onChange={this.handleidCapture}  
@@ -1761,7 +2573,7 @@ class EditOrgForm extends Component {
                                       className={classes.RadioButton}>
                                     <input 
                                       type="radio" 
-                                      name="idCaptureYes" 
+                                      name="idCapture" 
                                       id="idCaptureYes" 
                                       value="true"
                                       onChange={this.handleidCapture}
@@ -1773,6 +2585,10 @@ class EditOrgForm extends Component {
                                 </div>
                               </td>
                             </tr>
+                            <span 
+                              id="idCaptureErrMsg"
+                              style={{color:"red"}}>
+                          </span>
                           </table>
                           <table>
                           <tr>
@@ -1818,7 +2634,6 @@ class EditOrgForm extends Component {
                               className={classes.cell2} 
                               style={{textAlign:"left"}}>
                               <input 
-                                // onChangeText={(text) => {this.setState({ anomalyduration: text })}} 
                                 style={textbxstyle} 
                                 type="text" 
                                 id="anomalyduration"
@@ -1859,6 +2674,121 @@ class EditOrgForm extends Component {
                               <br/>
                               <span 
                                 id="smoothingframeErrMsg"
+                                style={{color:"red"}}>
+                              </span>
+                            </td>
+                          </tr>
+                          </table>
+                          <table>
+                          <tr>
+                            <td 
+                              className={classes.cell14} 
+                              style={{textAlign:"right"}}>
+                              <label 
+                                htmlFor="geolocation" 
+                                style={labelstyle}>
+                                Geo-location(on/off):
+                              </label>
+                            </td>
+                            <td className={classes.cell15}>
+                            </td>
+                            <td 
+                              className={classes.cell16} 
+                              style={{textAlign:"left"}}>
+                              <label className={classes.switch}>
+                                <input type="checkbox" id="geolocation" name="geolocation"/>
+                                <span className={classes.slider}></span>
+                              </label>
+                              <br/>
+                              <span 
+                                id="geolocationErrMsg"
+                                style={{color:"red"}}>
+                              </span>
+                            </td>
+                          </tr>
+                          </table>
+                          <table>
+                            <tr>
+                              <td 
+                                className={classes.cell14} 
+                                style={{textAlign:"right"}}>
+                                <label 
+                                  htmlFor="geolocationreq" 
+                                  style={labelstyle}>
+                                  Geo-Location Required:
+                                </label>
+                              </td>
+                              <td 
+                                className={classes.cell15} 
+                                style={{textAlign: "right"}}>
+                                <label 
+                                  style={labelstyle} 
+                                  style={{paddingBottom: "0", color: "#3cB650"}}>
+                                  No
+                                </label>
+                                  <br/>
+                                <label 
+                                  style={labelstyle} 
+                                  style={{paddingBottom:"0", color: "#3cB650"}}>
+                                  Yes
+                                </label>
+                              </td>
+                              <td 
+                                className={classes.cell16} 
+                                style={{textAlign:"center"}}>
+                                <div>
+                                  <label 
+                                    id="labelr" 
+                                    className={classes.RadioButton}>
+                                    <input type="radio" 
+                                      name="geolocationreq" 
+                                      id="geolocationNo"
+                                      value="false"
+                                       />
+                                    <span 
+                                      className={classes.checkmark}>
+                                    </span>
+                                  </label>
+                                    <label
+                                      id="labelr" 
+                                      className={classes.RadioButton}>
+                                    <input 
+                                      type="radio" 
+                                      name="geolocationreq" 
+                                      id="geolocationYes" 
+                                      value="true"
+                                      />                                  
+                                    <span 
+                                      className={classes.checkmark}>  
+                                    </span>
+                                  </label>
+                                </div>
+                              </td>
+                            </tr>
+                            </table>
+                            <table>
+                            <tr>
+                            <td 
+                              className={classes.cell14} 
+                              style={{textAlign:"right"}}>
+                              <label 
+                                htmlFor="testtakerscreen" 
+                                style={labelstyle}>
+                                Test-Taker Screen(on/off):
+                              </label>
+                            </td>
+                            <td className={classes.cell15}>
+                            </td>
+                            <td 
+                              className={classes.cell16} 
+                              style={{textAlign:"left"}}>
+                              <label className={classes.switch}>
+                                <input type="checkbox" id="testtakerscreen" name="testtakerscreen"/>
+                                <span className={classes.slider}></span>
+                              </label>
+                              <br/>
+                              <span 
+                                id="testtakerscreenErrMsg"
                                 style={{color:"red"}}>
                               </span>
                             </td>
