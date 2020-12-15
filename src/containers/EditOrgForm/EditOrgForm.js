@@ -3,14 +3,11 @@ import {withRouter} from 'react-router-dom';
 import axios from '../../axios';
 
 import classes from './EditOrgForm.module.css';
-import RadioButton from '../../components/Form Inputs/RadioButton/RadioButton';
-import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
 import Accordion from '../../components/Accordion/Accordion';
 import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
 import Accordion4 from '../../components/Accordion/Accordion4';
 import Accordion5 from '../../components/Accordion/Accodion5';
-import { faBoxTissue } from '@fortawesome/free-solid-svg-icons';
 
 class EditOrgForm extends Component {
   constructor() {
@@ -67,7 +64,7 @@ class EditOrgForm extends Component {
       }
     }
 
-    //Global variables used in multiple methods 
+    //Global variables used in multiple methods. 
     let RadioVal1 = null
     let RadioVal2 = null
     let imgCapVal = null
@@ -132,7 +129,7 @@ class EditOrgForm extends Component {
 
   //Onchange methods to update state, mainly to ensure that the fields are editable. 
   //There are separate setState methods to ensure that the data is correctly formatted for the database, otherwise there are errors.  
-  //The onchange methods for the country fields also contain methods to ensure that the correct state input is displayed based on country selection. 
+  //The onchange methods for the country fields also contain functions to ensure that the correct "state/province" input is displayed based on country selection. 
 
   handleNameChange(event) {
     let data = {...this.state.data}
@@ -348,10 +345,10 @@ class EditOrgForm extends Component {
   }
 
 
-//The methods below ensure that variables that are used to set State contain the correct values and then some of the methods set state.
-
-//These two methods set the "statea" and "statea2" variables that correspond to the state/province property.
-//Since the state input is a drop down that populates based on country selection, the state variables have to be set depending upon which state input was displayed (US, CA or other country)
+//The methods below ensure that variables that are used to set state contain the correct values and then some of the methods set state.
+//The next two methods set the "statea" and "statea2" variables that correspond to the "state/province" input.
+//Since the state/province input is a drop-down that populates based on country selection, the state/province
+//variables have to be set depending upon which state input was displayed (US, CA or other country)
 handlestateVariable() {
   let statedropUS = document.getElementById("stateselectUS")
   let statedropCA = document.getElementById("stateselectCA")
@@ -394,7 +391,7 @@ handlestateVariable2() {
   }
 }
 
-//This function handles the set State for the address array.
+//This function handles the set state for the address array conditionally based on whether there are one or two sets of addresses.
   handleAChange() {
     let typea = document.getElementById("addresstype")
     let streeta = document.getElementById("street")
@@ -405,7 +402,6 @@ handlestateVariable2() {
     let typea2 = document.getElementById("addresstype2")
     let streeta2 = document.getElementById("street2")
     let citya2 = document.getElementById("city2")
-    let statea2 = document.getElementById("state2")
     let zipa2 = document.getElementById("zip2")
     let countrya2 = document.getElementById("country2")
     let address = {...this.state.address};
@@ -441,7 +437,7 @@ handlestateVariable2() {
     
     } 
 
-//This function handles the set State for the contact array.
+//This function handles the set state for the contact array conditionally based on whether there are one or two sets of contacts.
   handleCChange() {
     let fnamec = document.getElementById("fname")
     let lnamec = document.getElementById("lname")
@@ -531,7 +527,7 @@ handlestateVariable2() {
     }
   }
 
-  //This function handles the set State for the configration section.
+  //This function handles the set state for the configration section.
   handleConfigChange() {
     let smoothingf = document.getElementById("smoothingframe")
     let anomalyd = document.getElementById("anomalyduration")
@@ -552,7 +548,7 @@ handlestateVariable2() {
 
     }
 
-  //Method that runs all the state update methods before final submit. This method is called in an onchange handler on the submit button (separate from the submit function). 
+  //This method runs all the state update methods before the final submit. This method is called in an onchange handler on the submit button (separate from the submit function). 
     stateUpdate() {
       this.handlestateVariable();
       this.handlestateVariable2();
@@ -565,7 +561,7 @@ handlestateVariable2() {
       this.imgcaptureVal();
     }
 
-  //on Blur validation methods. All fields are required except for second addresses and second contacts. 
+  //The following are onblur validation methods. All fields are required except for second the address and second contact. 
   //The postProcess values have to be numeric values. The email value has regex validation to make sure it is the correct format. 
   //The submit function also contains validation.
   orgnameVal(event) {
@@ -692,15 +688,15 @@ handlestateVariable2() {
       }
   }
 
+  //The following two methods are not onblur validation methods. They are called before final submit to set variables that are used in the onsubmit validation in order to determine
+  //whether the radio buttons have been checked. 
   idcaptureVal() {
     let RadioidNo = document.getElementById("idCaptureNo")
     let RadioidYes = document.getElementById("idCaptureYes")
     if (!RadioidNo.checked && !RadioidYes.checked){
-      //document.getElementById("imgcaptureErrMsg").innerHTML="Required"
       this.idCapVal = false
       }
       else{
-      //document.getElementById("imgcaptureErrMsg").innerHTML=""
       this.idCapVal = true
       }
   }
@@ -709,11 +705,9 @@ handlestateVariable2() {
     let RadioimgNo = document.getElementById("imgCaptureNo")
     let RadioimgYes = document.getElementById("imgCaptureYes")
     if (!RadioimgNo.checked && !RadioimgYes.checked){
-      //document.getElementById("imgcaptureErrMsg").innerHTML="Required"
       this.imgCapVal = false
       }
       else{
-      //document.getElementById("imgcaptureErrMsg").innerHTML=""
       this.imgCapVal = true
       }
   }
@@ -787,8 +781,7 @@ handlestateVariable2() {
           itemId: pathToData[dataItem].itemId,
           itemType: pathToData[dataItem].itemType,
           }) }
-
-
+          //Primary address data
           for (const addressItem in pathToData) {
           addressData.push({
           country: pathToData[addressItem].address[0].country,
@@ -810,11 +803,12 @@ handlestateVariable2() {
             typea2: pathToData[address2Item].address[1].type,
             state2: pathToData[address2Item].address[1].state 
               })
+              //update state for second array as part of if statement
             this.setState({address2: address2Data[0]})
            } 
-          } //update state for second array as part of if statement
+          } 
           
-          // // primary contact data
+          //Primary contact data
           for (const contactItem in pathToData) {
           contactData.push({
           firstName: pathToData[contactItem].contact[0].firstName,
@@ -834,10 +828,11 @@ handlestateVariable2() {
           email2: pathToData[contact2Item].contact[1].email,
           phone2: pathToData[contact2Item].contact[1].phone
           })
-          //update state for second array as part of if statement
+          //update state for second array as part of the if statement.
           this.setState({contact2: contact2Data[0]}) 
         } 
       }
+          //configuration data
           for (const configItem in pathToData) {
           configData.push({
           imageCapture: pathToData[configItem].configuration.registration.imageCapture,
@@ -855,7 +850,7 @@ handlestateVariable2() {
             configuration: configData[0]});
         this.setState({dataLoaded: true});
 
-        //set radio buttons based on incoming data
+        //These methods set the radio buttons based on the incoming data.
         let RadioimgNo = document.getElementById("imgCaptureNo")
         let RadioimgYes = document.getElementById("imgCaptureYes")
         if (this.state.configuration.imageCapture === true) {
@@ -876,7 +871,7 @@ handlestateVariable2() {
           RadioidNo.checked = true
         }
 
-        //make sure correct country and state dropdown displays based on incoming data.
+        //These methods make sure the correct country and state dropdown displays based on the incoming data.
         let statedropUS = document.getElementById("stateselectUS")
         let statedropCA = document.getElementById("stateselectCA")
         let stateinput = document.getElementById("state")
@@ -919,14 +914,12 @@ handlestateVariable2() {
           statedropCA2.style.display = "none"
           stateinput2.style.display = "block"
           statedropUS2.style.display = "none"
-        }
-        
+        }       
         console.log(this.state);
       }).catch(error => alert(error));
     }
 
-
-  //Onsubmit function
+  //Onsubmit function which runs the final validation in addition to the API.
   handleSubmit(event) {
 
     event.preventDefault();
@@ -949,7 +942,7 @@ handlestateVariable2() {
     let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let emailValid= rg.test(emailv.value)
 
-    //the same validation as the onblur methods is run again on submit and an alert is generated is something is wrong.
+    //The same validation as the onblur methods is run again on submit and an alert is generated if something is wrong.
     if (!emailValid)
     {
       alert("The email entered is not valid")
@@ -989,31 +982,31 @@ handlestateVariable2() {
     }
     //If all the validation checks out, we'll proceed to the API and submit to the database based on the org ID.
     else {
-        // store editable data in new object
+        //Store the editable data in a new object.
         const newData = {
             description: this.state.data.description,
             contact: this.state.contact,
             address: this.state.address,
             configuration: this.state.configuration
         };
-        // store value of id
+        //Store the value of the id.
         const itemToEdit = this.state.data.id;
     
-        // make api call to update data
+        //Make the API call to update the data.
         axios.patch(`/orgs/${itemToEdit}`, newData)
-             // if request is successful, redirect to manage tests
+             // if the request is successful, redirect to manage tests.
              .then(res => {
                if (res.status === 200) {
                 this.props.history.push('/manage-orgs')
                } 
              })
-             // else, display error
+             //Otherwise, display the error.
              .catch(error => alert(error))    
           }
         }
 
        
-      //State is set for the accordions on the page to work.
+      //State is set for the five accordions on the page to work.
       state = {
       isOpen: true,
       isOpen2: false,
@@ -1053,7 +1046,7 @@ handlestateVariable2() {
       };
 
   render () {
-    //The style for the labels and textboxes are here
+    //Style variables are set for the labels, textboxes and buttons here.
     const labelstyle = {
       color: "#3cB650",
 	    fontFamily: "sans-serif",
@@ -1110,6 +1103,7 @@ handlestateVariable2() {
         backgroundColor: "#f2f2f2"
       }
 
+      //Variables for the five accordions.
       const { isOpen } = this.state;
       const { isOpen2 } = this.state;
       const { isOpen3 } = this.state;
@@ -1123,7 +1117,7 @@ handlestateVariable2() {
           <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
-              <div className={classes.flexChild}>
+              <div>
                 <table>
                   <tr>
                     <td className={classes.cell3} 
@@ -1316,7 +1310,13 @@ handlestateVariable2() {
                               <td 
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
-                                <select id="country" name="country" value={this.state.address.country} onChange={this.handlecountryChange} style={textbxstyle2} onBlur={this.countryVal}>
+                                <select 
+                                id="country" 
+                                name="country" 
+                                value={this.state.address.country} 
+                                onChange={this.handlecountryChange} 
+                                style={textbxstyle2} 
+                                onBlur={this.countryVal}>
                                       <option value="">Select Country</option>
                                       <option value="AF">Afghanistan</option>
                                       <option value="AX">Aland Islands</option>

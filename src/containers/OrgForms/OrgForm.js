@@ -3,7 +3,6 @@ import {withRouter} from 'react-router-dom';
 import axios from '../../axios';
 
 import classes from './OrgForm.module.css';
-import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
 import Accordion from '../../components/Accordion/Accordion';
 import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
@@ -64,7 +63,8 @@ class OrgForm extends Component {
   }
 
   componentDidMount() {
-    //hide the state textbox and state dropdown and display US states by default when the form first loads. The others are displayed conditionally based on country selection.
+    //Hide the state/province textbox and state/province dropdown and display US states by default when the form first loads. 
+    //The others (CA dropdown or other country dropdown) are displayed conditionally based on country selection.
     let statedropUS = document.getElementById("stateselectUS")
     let statedropCA = document.getElementById("stateselectCA")
     let stateinput = document.getElementById("state")
@@ -79,7 +79,7 @@ class OrgForm extends Component {
     statedropCA2.style.display = "none"
   }
 
-  // whenever a change is made to an input field, update the corresponding state property
+  //Whenever a change is made to an input field, the corresponding state property is updated.
   handleNameChange(event) {
     this.setState({description: event.target.value});
   }
@@ -88,7 +88,7 @@ class OrgForm extends Component {
     this.setState({id: event.target.value});
   }
 
-  //The following two methods set the "statea" and "statea2" variables which correspond to the state/province inputs on the form ( for the first address and second address).
+  //The following two methods set the "statea" and "statea2" variables which correspond to the state/province inputs on the form (for the first address and second address).
   //These variables will later be used to set the state properties of the state/province values for the two addresses.
   handlestateVariable() {
     let statedropUS = document.getElementById("stateselectUS")
@@ -132,7 +132,7 @@ class OrgForm extends Component {
     }
   }
 
-  //This method sets the state for the address arrays. 
+  //This method sets the state for the address arrays conditionally based on whether one or two addresses are selected.
   handleAChange() {
     let typea = document.getElementById("addresstype")
     let streeta = document.getElementById("street")
@@ -176,7 +176,7 @@ class OrgForm extends Component {
       }
   }
 
-  //This method sets the state for the contact arrays.
+  //This method sets the state for the contact arrays, conditionally based on whether one or two contact sets are entered.
   handleCChange() {
     let fnamec = document.getElementById("fname")
     let lnamec = document.getElementById("lname")
@@ -218,7 +218,8 @@ class OrgForm extends Component {
     }
   }
 
-  //The following two methods set the "RadioVal" variables with the values from the radio buttons. The radiobutton inputs are translated into "true/false" values and set to the variables.
+  //The following two methods set the "RadioVal" variables with the values from the radio buttons.
+  //The radiobutton inputs are translated into "true/false" values and set to the variables.
   //The RadioVal variables are later used to set the state (in the handleConfigChange() method).
   handleimgCapture() {
     let RadioimgNo = document.getElementById("imgCaptureNo")
@@ -264,7 +265,8 @@ class OrgForm extends Component {
     })
   }
 
-  //The following two methods display the correct form input for "state/province" based upon which country is selected. These methods are called in an onChange handler in the country inputs.
+  //The following two methods display the correct form input for "state/province" based upon which country is selected ( The US state dropdown, the CA province dropdown, or textbox for any other country). 
+  //These methods are called in an onChange handler in the "country" html inputs.
   selectState() {
     let countrydrop = document.getElementById("country")
     let statedropUS = document.getElementById("stateselectUS")
@@ -328,7 +330,8 @@ class OrgForm extends Component {
     this.imgcaptureVal();
   }
 
-  //Onblur validation methods. All fields are required except for the second address and second contact fields. The "postProcess" inputs have to be numeric and the email has to be a valid format.
+  //The following are Onblur validation methods. All fields are required except for the second address and second contact fields. 
+  //The "postProcess" inputs have to be numeric and the email has to be a valid format.
   orgnameVal(event) {
     if (event.target.value === ""){
       document.getElementById("orgnameErrMsg").innerHTML="Required"
@@ -453,15 +456,15 @@ class OrgForm extends Component {
       }
   }
 
+  //The following two methods are used in the on-submit validation. 
+  //They set variables which correspond to the radio button values based on whether the radio buttons have been checked.
   idcaptureVal() {
     let RadioidNo = document.getElementById("idCaptureNo")
     let RadioidYes = document.getElementById("idCaptureYes")
     if (!RadioidNo.checked && !RadioidYes.checked){
-      //document.getElementById("imgcaptureErrMsg").innerHTML="Required"
       this.idCapVal = false
       }
       else{
-      //document.getElementById("imgcaptureErrMsg").innerHTML=""
       this.idCapVal = true
       }
   }
@@ -470,11 +473,9 @@ class OrgForm extends Component {
     let RadioimgNo = document.getElementById("imgCaptureNo")
     let RadioimgYes = document.getElementById("imgCaptureYes")
     if (!RadioimgNo.checked && !RadioimgYes.checked){
-      //document.getElementById("imgcaptureErrMsg").innerHTML="Required"
       this.imgCapVal = false
       }
       else{
-      //document.getElementById("imgcaptureErrMsg").innerHTML=""
       this.imgCapVal = true
       }
   }
@@ -517,6 +518,7 @@ class OrgForm extends Component {
       }
   }
 
+  //This method is called on submit and handles final validation as well as the API call.
   handleSubmit(event) {
 
     event.preventDefault();
@@ -578,7 +580,7 @@ class OrgForm extends Component {
       }
     }
     else {
-    // distribute data stored in state into new object
+    //Distribute the data stored in state into new object.
     const formData = {
       description: this.state.description,
       id: this.state.id,
@@ -587,14 +589,14 @@ class OrgForm extends Component {
       configuration: this.state.configuration
     }
     console.log(formData);
-    //make api call to post data
+    //Make an API call to post the data.
     axios.post(`/orgs`, formData)
          .then(res => {
           if (res.status === 200) {
             this.props.history.push('/add-org-confirmation')
            } 
          })
-         // else, display error
+         //Display error
          .catch(error => alert(error))   
     }
   }
@@ -685,6 +687,7 @@ class OrgForm extends Component {
         borderRadius:"30px",
       };
 
+      //These variables are for the five Accordions on the form.
       const { isOpen } = this.state;
       const { isOpen2 } = this.state;
       const { isOpen3 } = this.state;
@@ -698,7 +701,7 @@ class OrgForm extends Component {
           <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
-              <div className={classes.flexChild}>
+              <div>
                 <table>
                   <tr>
                     <td className={classes.cell3} 
@@ -886,7 +889,12 @@ class OrgForm extends Component {
                               <td 
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
-                                <select id="country" name="country" onChange={this.selectState} style={textbxstyle2} onBlur={this.countryVal}>
+                                <select 
+                                id="country" 
+                                name="country" 
+                                onChange={this.selectState} 
+                                style={textbxstyle2} 
+                                onBlur={this.countryVal}>
                                       <option value="">Select Country</option>
                                       <option value="AF">Afghanistan</option>
                                       <option value="AX">Aland Islands</option>
@@ -1361,7 +1369,10 @@ class OrgForm extends Component {
                               <td 
                                 className={classes.cell4} 
                                 style={{textAlign:"left"}}>
-                                <select id="country2" name="country2" onChange={this.selectState2} style={textbxstyle2}>
+                                <select id="country2" 
+                                name="country2" 
+                                onChange={this.selectState2} 
+                                style={textbxstyle2}>
                                       <option value="">Select Country</option>
                                       <option value="AF">Afghanistan</option>
                                       <option value="AX">Aland Islands</option>
