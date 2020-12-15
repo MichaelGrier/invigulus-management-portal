@@ -2678,6 +2678,121 @@ handlestateVariable2() {
                             </td>
                           </tr>
                           </table>
+                          <table>
+                          <tr>
+                            <td 
+                              className={classes.cell14} 
+                              style={{textAlign:"right"}}>
+                              <label 
+                                htmlFor="geolocation" 
+                                style={labelstyle}>
+                                Geo-location(on/off):
+                              </label>
+                            </td>
+                            <td className={classes.cell15}>
+                            </td>
+                            <td 
+                              className={classes.cell16} 
+                              style={{textAlign:"left"}}>
+                              <label className={classes.switch}>
+                                <input type="checkbox" id="geolocation" name="geolocation"/>
+                                <span className={classes.slider}></span>
+                              </label>
+                              <br/>
+                              <span 
+                                id="geolocationErrMsg"
+                                style={{color:"red"}}>
+                              </span>
+                            </td>
+                          </tr>
+                          </table>
+                          <table>
+                            <tr>
+                              <td 
+                                className={classes.cell14} 
+                                style={{textAlign:"right"}}>
+                                <label 
+                                  htmlFor="geolocationreq" 
+                                  style={labelstyle}>
+                                  Geo-Location Required:
+                                </label>
+                              </td>
+                              <td 
+                                className={classes.cell15} 
+                                style={{textAlign: "right"}}>
+                                <label 
+                                  style={labelstyle} 
+                                  style={{paddingBottom: "0", color: "#3cB650"}}>
+                                  No
+                                </label>
+                                  <br/>
+                                <label 
+                                  style={labelstyle} 
+                                  style={{paddingBottom:"0", color: "#3cB650"}}>
+                                  Yes
+                                </label>
+                              </td>
+                              <td 
+                                className={classes.cell16} 
+                                style={{textAlign:"center"}}>
+                                <div>
+                                  <label 
+                                    id="labelr" 
+                                    className={classes.RadioButton}>
+                                    <input type="radio" 
+                                      name="geolocationreq" 
+                                      id="geolocationNo"
+                                      value="false"
+                                       />
+                                    <span 
+                                      className={classes.checkmark}>
+                                    </span>
+                                  </label>
+                                    <label
+                                      id="labelr" 
+                                      className={classes.RadioButton}>
+                                    <input 
+                                      type="radio" 
+                                      name="geolocationreq" 
+                                      id="geolocationYes" 
+                                      value="true"
+                                      />                                  
+                                    <span 
+                                      className={classes.checkmark}>  
+                                    </span>
+                                  </label>
+                                </div>
+                              </td>
+                            </tr>
+                            </table>
+                            <table>
+                            <tr>
+                            <td 
+                              className={classes.cell14} 
+                              style={{textAlign:"right"}}>
+                              <label 
+                                htmlFor="testtakerscreen" 
+                                style={labelstyle}>
+                                Test-Taker Screen(on/off):
+                              </label>
+                            </td>
+                            <td className={classes.cell15}>
+                            </td>
+                            <td 
+                              className={classes.cell16} 
+                              style={{textAlign:"left"}}>
+                              <label className={classes.switch}>
+                                <input type="checkbox" id="testtakerscreen" name="testtakerscreen"/>
+                                <span className={classes.slider}></span>
+                              </label>
+                              <br/>
+                              <span 
+                                id="testtakerscreenErrMsg"
+                                style={{color:"red"}}>
+                              </span>
+                            </td>
+                          </tr>
+                          </table>
                         </div>
                       </Accordion3>
                         <div className={classes.flexChild}>
