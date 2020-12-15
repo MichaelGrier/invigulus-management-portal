@@ -20,6 +20,7 @@ import {faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import SmallButton from '../../UI/SmallButton/SmallButton';
+import Spinner from '../../UI/Spinner/Spinner';
 //import {Link} from 'react-router-dom';
 
 const OrgTable = () => {
@@ -153,6 +154,10 @@ const OrgTable = () => {
   }
 
   return (
+    <div className={classes.tableWrap}>
+    {/* if data is loaded, render table and associated components. if not, render loading spinner */}
+    {loaded ? 
+      <div>
     <>
       {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
       <div className={classes.toolBarWrap}>
@@ -215,6 +220,14 @@ const OrgTable = () => {
       <SmallButton clicked={HandleEditRequest}>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
       <SmallButton clicked={handleDeleteRequest}>Delete</SmallButton>
     </> 
+    </div>
+      : 
+        <div className={classes.spinnerWrap}>
+          <Spinner />
+        </div>
+      }
+
+    </div>
   );
 }
 export default withRouter(OrgTable);

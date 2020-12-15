@@ -69,8 +69,6 @@ class LoginPage extends Component {
     
   }
 
-
-
   render () {
     const labelstyle = {
       color: "#3cB650",
@@ -112,7 +110,7 @@ class LoginPage extends Component {
         <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
-            <Heading2>Log In</Heading2>
+            <h1 className={classes.header}>Log In</h1>
             <table>
               <tr>
                 <td 

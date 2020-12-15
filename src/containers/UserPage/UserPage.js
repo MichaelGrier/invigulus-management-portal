@@ -4,9 +4,6 @@ import classes from './UserPage.module.css';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
 
 class UserPage extends Component {
-  buttonClickedHandler = () => {
-    alert('You clicked a button');
-  }
 
   render () {
     const labelstyle = {
