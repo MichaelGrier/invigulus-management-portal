@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-import axios from '../../axios';
+import axios from 'axios';
 
 import classes from './OrgForm.module.css';
 import Accordion from '../../components/Accordion/Accordion';
