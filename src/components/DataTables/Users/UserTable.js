@@ -7,7 +7,7 @@ import {
   useRowSelect
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
-import axios from '../../../axios';
+import axios from 'axios';
 
 import {COLUMNS} from './columns';
 
@@ -26,7 +26,6 @@ const UserTable = () => {
   // get data from api
   useEffect(() => {
     axios.get('/users').then(res => {
-      console.log(res);
       const pathToData = res.data.result.Items
       const loadedData = [];
       

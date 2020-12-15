@@ -7,7 +7,7 @@ import {
   useRowSelect
 } from 'react-table';
 import Table from 'react-bootstrap/Table';
-import axios from '../../../axios';
+import axios from 'axios';
 import {Link, withRouter, useHistory} from 'react-router-dom';
 
 import {COLUMNS} from './columns';
@@ -21,7 +21,10 @@ import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import SmallButton from '../../UI/SmallButton/SmallButton';
 import Spinner from '../../UI/Spinner/Spinner';
+<<<<<<< HEAD
 //import {Link} from 'react-router-dom';
+=======
+>>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
 
 const OrgTable = () => {
   const [orgs, setOrgs] = useState([])
@@ -62,6 +65,7 @@ const OrgTable = () => {
       }
       //console.log(loadedData);
       setOrgs(loadedData);
+      setLoaded(true);
     });
   
   }, []);
@@ -118,21 +122,25 @@ const OrgTable = () => {
 
   // handle edit button click
   const HandleEditRequest = () => {
-    // get properties to be passed to form and store in variable
-    const itemToEdit = selectedRow[0].original.id
-    // initialize query parameters array
-    const queryParams = [];
+    try {
+      // get properties to be passed to form and store in variable
+      const itemToEdit = selectedRow[0].original.id
+      // initialize query parameters array
+      const queryParams = [];
 
-    // loop through itemToEdit, encode data, and push into queryParams as strings
-      queryParams.push(encodeURIComponent("id") + '=' + encodeURIComponent(itemToEdit));
-    // join queryParams strings and store in variable
-    const queryString = queryParams.join('&');
+      // loop through itemToEdit, encode data, and push into queryParams as strings
+        queryParams.push(encodeURIComponent("id") + '=' + encodeURIComponent(itemToEdit));
+      // join queryParams strings and store in variable
+      const queryString = queryParams.join('&');
 
-    // pass queryString data to EditTestForm via router
-    history.push({
-      pathname: '/edit-org',
-      search: '?' + queryString
-    });
+      // pass queryString data to EditTestForm via router
+      history.push({
+        pathname: '/edit-org',
+        search: '?' + queryString
+      });
+    } catch {
+      alert('please select an organization to edit')
+    }
   }
 
   const handleDeleteRequest = () => {
@@ -155,6 +163,7 @@ const OrgTable = () => {
 
   return (
     <div className={classes.tableWrap}>
+<<<<<<< HEAD
     {/* if data is loaded, render table and associated components. if not, render loading spinner */}
     {loaded ? 
       <div>
@@ -221,13 +230,82 @@ const OrgTable = () => {
       <SmallButton clicked={handleDeleteRequest}>Delete</SmallButton>
     </> 
     </div>
+=======
+      {loaded ? 
+        <div>
+          {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
+          <div className={classes.toolBarWrap}>
+          {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
+          <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
+          <Link to={{pathname: '/add-org'}}><SmallButton>Add New</SmallButton></Link>
+          </div>
+
+          {/* render table */}
+          <Table {...getTableProps()} striped bordered hover>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column) => (
+                      // render headers w/ sort functionality
+                      <th {...column.getHeaderProps(column.getSortByToggleProps())}>  
+                        {column.render('Header')}
+                        <span>
+                          {column.isSorted ? (column.isSortedDesc ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} />) : ''}
+                        </span>
+                      </th>
+                    ))} 
+                  </tr>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map(row => {
+                prepareRow(row)
+                return (
+                  // render table rows
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </Table>
+          <div>
+            {/* render pagination buttons */}
+            <button
+              className={classes.pageButton} 
+              onClick={() => previousPage()}
+              disabled={!canPreviousPage}
+            >Previous</button>
+            <span className={classes.pageNum}>
+              Page{' '}
+              <strong>
+                {pageIndex + 1} of {pageOptions.length}
+              </strong>
+            </span>
+            <button
+              className={classes.pageButton} 
+              onClick={() => nextPage()}
+              disabled={!canNextPage}
+            >Next</button>
+          </div>
+          <br/>
+          <SmallButton clicked={HandleEditRequest}>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
+          <SmallButton clicked={handleDeleteRequest}>Delete</SmallButton>
+        </div>
+>>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
       : 
         <div className={classes.spinnerWrap}>
           <Spinner />
         </div>
       }
+<<<<<<< HEAD
 
     </div>
+=======
+    </div> 
+>>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
   );
 }
 export default withRouter(OrgTable);

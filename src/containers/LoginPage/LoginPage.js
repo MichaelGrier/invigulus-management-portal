@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {Auth} from 'aws-amplify';
+import {withRouter, Link} from 'react-router-dom';
 
 import classes from './LoginPage.module.css';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
@@ -7,66 +9,66 @@ class LoginPage extends Component {
   constructor() {
     super();
     this.state={
-        email: "",
-        password: "",
+      email: "",
+      password: ""
     }
 
-    this.emailVal = this.emailVal.bind(this);
-    this.passwordVal = this.passwordVal.bind(this);
-    this.handleemailChange = this.handleemailChange.bind(this);
-    this.handlepasswordChange = this.handlepasswordChange.bind(this);
+    this.emailValidation = this.emailValidation.bind(this);
+    this.passwordValidation = this.passwordValidation.bind(this);
+    this.handleemailChange = this.handleEmailChange.bind(this);
+    this.handlepasswordChange = this.handlePasswordChange.bind(this);
   }
 
-  handleemailChange(event) {
+  handleEmailChange(event) {
     this.setState({email: event.target.value});
   }
 
-  handlepasswordChange(event) {
+  handlePasswordChange(event) {
     this.setState({password: event.target.value});
   }
 
-  emailVal() {
-    let emailv = document.getElementById("eml")
-    let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    let isValid= rg.test(emailv.value)
-    
-    if (emailv.value === ""){
-      document.getElementById("emailErrMsg").innerHTML="Required"
-      }
-    else if (!isValid) {
-        document.getElementById("emailErrMsg").innerHTML="The email has an incorrect format"
-      }
-    else {
-        document.getElementById("emailErrMsg").innerHTML=""
-      }
+  emailValidation() {
+    let emailField = document.getElementById("eml")
+
+    if (emailField.value === "") {
+      document.getElementById("passwordErrMsg").innerHTML="Required"
+    } else {
+      document.getElementById("passwordErrMsg").innerHTML=""
+    }
   }
 
-  passwordVal() {
-    let passwdv = document.getElementById("pssword")
-    if (passwdv.value === ""){
+  passwordValidation() {
+    let passwordField = document.getElementById("pssword");
+
+    if (passwordField.value === "") {
       document.getElementById("passwordErrMsg").innerHTML="Required"
-      }
-      else{
+    } else {
       document.getElementById("passwordErrMsg").innerHTML=""
-      }
     }
+  }
 
-  handleSubmit(event) {
+  handleSubmit = async (event) => {
     event.preventDefault();
-    let emailv = document.getElementById("eml")
-    let passwdv = document.getElementById("pssword")
-    let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    let emailValid= rg.test(emailv.value)
+    let emailField = document.getElementById("eml")
+    let passwordField = document.getElementById("pssword")
 
-    if (!emailValid)
-    {
-      alert("The email entered does not have the correct format.")
-    }
-    else if (emailv.value === "" || passwdv.value === "")
-    {
+    if (emailField.value === "" || passwordField.value === "") {
       alert("A required field is missing.")
+    } 
+
+    // cognito integration
+    try {
+      // send login request, assign response to a variable
+      const user = await Auth.signIn(this.state.email, this.state.password);
+      console.log(user);
+      // set global state
+      this.props.auth.setAuthStatus(true);
+      this.props.auth.setUser(user)
+      // redirect to home
+      this.props.history.push('/');
+    } catch(error) {
+      alert('something went wrong, try logging in again');
     }
-    
   }
 
   render () {
@@ -107,10 +109,19 @@ class LoginPage extends Component {
 
     return (
       <main className={classes.main}>
+<<<<<<< HEAD
         <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
             <h1 className={classes.header}>Log In</h1>
+=======
+        <form 
+          className={classes.wrapper} 
+          onSubmit={this.handleSubmit}
+        >
+          <fieldset>
+            <Heading2>Log In</Heading2>
+>>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
             <table>
               <tr>
                 <td 
@@ -119,7 +130,7 @@ class LoginPage extends Component {
                   <label 
                     htmlFor="email" 
                     style={labelstyle} >
-                    Email:
+                    Email/User Name:
                   </label>
                 </td>
                 <td 
@@ -163,22 +174,30 @@ class LoginPage extends Component {
                     <span 
                       id="passwordErrMsg"
                       style={{color:"red"}}>
-                  </span>
+                    </span>
               </td>
             </tr>
             </table> 
             <br/>
+
             <input 
               type="submit"
               value= "Submit"
               style={buttonstyle}>
-              </input> 
+            </input> 
             <br/>
-        </fieldset>
+
+            <Link 
+              to={{pathname:'/reset-password'}}
+              className={classes.resetPasswordLink}
+            >
+              Forgot Your Password?
+            </Link>
+          </fieldset>
         </form>
       </main>
     );
   }
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-import axios from '../../axios';
+import axios from 'axios';
 
 import classes from './OrgForm.module.css';
 import Accordion from '../../components/Accordion/Accordion';
@@ -518,7 +518,62 @@ class OrgForm extends Component {
       }
   }
 
+<<<<<<< HEAD:src/containers/OrgForms/OrgForm.js
   //This method is called on submit and handles final validation as well as the API call.
+=======
+  // setRegions()
+  // {
+  //   for (region in countries)
+  //     document.write('<option value="' + region + '">' + region + '</option>');
+  // }
+  
+  // set_country(oRegionSel, oCountrySel, oCity_StateSel)
+  // {
+  //   var countryArr;
+  //   oCountrySel.length = 0;
+  //   oCity_StateSel.length = 0;
+  //   var region = oRegionSel.options[oRegionSel.selectedIndex].text;
+  //   if (countries[region])
+  //   {
+  //     oCountrySel.disabled = false;
+  //     oCity_StateSel.disabled = true;
+  //     oCountrySel.options[0] = new Option('SELECT COUNTRY','');
+  //     countryArr = countries[region].split('|');
+  //     for (var i = 0; i < countryArr.length; i++)
+  //       oCountrySel.options[i + 1] = new Option(countryArr[i], countryArr[i]);
+  //     document.getElementById('txtregion').innerHTML = region;
+  //     document.getElementById('txtplacename').innerHTML = '';
+  //   }
+  //   else oCountrySel.disabled = true;
+  // }
+  
+  // set_city_state(oCountrySel, oCity_StateSel)
+  // {
+  //   var city_stateArr;
+  //   oCity_StateSel.length = 0;
+  //   var country = oCountrySel.options[oCountrySel.selectedIndex].text;
+  //   if (city_states[country])
+  //   {
+  //     oCity_StateSel.disabled = false;
+  //     oCity_StateSel.options[0] = new Option('SELECT NEAREST DIVISION','');
+  //     city_stateArr = city_states[country].split('|');
+  //     for (var i = 0; i < city_stateArr.length; i++)
+  //       oCity_StateSel.options[i+1] = new Option(city_stateArr[i],city_stateArr[i]);
+  //     document.getElementById('txtplacename').innerHTML = country;
+  //   }
+  //   else oCity_StateSel.disabled = true;
+  // }
+  
+  // print_city_state(oCountrySel, oCity_StateSel)
+  // {
+  //   var country = oCountrySel.options[oCountrySel.selectedIndex].text;
+  //   var city_state = oCity_StateSel.options[oCity_StateSel.selectedIndex].text;
+  //   if (city_state && city_states[country].indexOf(city_state) != -1)
+  //     document.getElementById('txtplacename').innerHTML = city_state + ', ' + country;
+  //   else document.getElementById('txtplacename').innerHTML = country;
+  // }
+  
+>>>>>>> 7567ad7042775442162a85e87de2cdc05567f619:src/containers/OrgForm/OrgForm.js
   handleSubmit(event) {
 
     event.preventDefault();
@@ -588,8 +643,13 @@ class OrgForm extends Component {
       address: this.state.address,
       configuration: this.state.configuration
     }
+<<<<<<< HEAD:src/containers/OrgForms/OrgForm.js
     console.log(formData);
     //Make an API call to post the data.
+=======
+    //console.log(formData);
+    //make api call to post data
+>>>>>>> 7567ad7042775442162a85e87de2cdc05567f619:src/containers/OrgForm/OrgForm.js
     axios.post(`/orgs`, formData)
          .then(res => {
           if (res.status === 200) {

@@ -12,7 +12,7 @@
 .header {
     color: #3cB650;
     padding: 3rem 0 2rem 0;
-  }
+}
 
 .wrapper {
     padding: 5px 20px;
@@ -20,6 +20,7 @@
     background-color: #f2f2f2;
 }
 
+<<<<<<< HEAD:src/containers/OrgForms/OrgForm.module.css
 .combobox {
     width: 70%;
     padding: 12px 20px;
@@ -31,6 +32,8 @@
 }
 
 
+=======
+>>>>>>> 7567ad7042775442162a85e87de2cdc05567f619:src/containers/OrgForm/OrgForm.module.css
 .wrapper fieldset {
     border-radius: 10px;
     background-color: #e5e5e5;
