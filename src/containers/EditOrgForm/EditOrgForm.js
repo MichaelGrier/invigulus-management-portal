@@ -3,10 +3,6 @@ import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 
 import classes from './EditOrgForm.module.css';
-<<<<<<< HEAD
-=======
-import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
->>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
 import Accordion from '../../components/Accordion/Accordion';
 import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
@@ -75,6 +71,7 @@ class EditOrgForm extends Component {
     let idCapVal = null
     let statea = null
     let statea2 = null
+    let Alert = this.CustomAlert();
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -551,12 +548,8 @@ handlestateVariable2() {
     this.setState({configuration}); 
 
     }
-<<<<<<< HEAD
 
   //This method runs all the state update methods before the final submit. This method is called in an onchange handler on the submit button (separate from the submit function). 
-=======
-  
->>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
     stateUpdate() {
       this.handlestateVariable();
       this.handlestateVariable2();
@@ -798,7 +791,6 @@ handlestateVariable2() {
           street: pathToData[addressItem].address[0].street,
           typea: pathToData[addressItem].address[0].type,
           state: pathToData[addressItem].address[0].state,
-<<<<<<< HEAD
           }) }
           //There is an if statement on the second array address items, so that the form won't crash if there is no second array in the data.
           for (const address2Item in pathToData) {
@@ -818,27 +810,6 @@ handlestateVariable2() {
           } 
           
           //Primary contact data
-=======
-          // city2: pathToData[addressItem].address[1].city,
-          // country2: pathToData[addressItem].address[1].country,
-          // zip2: pathToData[addressItem].address[1].zip,
-          // street2: pathToData[addressItem].address[1].street,
-          // typea2: pathToData[addressItem].address[1].type,
-          // state2: pathToData[addressItem].address[1].state
-          })}
-
-          for (const address2Item in pathToData){
-          address2Data.push({
-          city2: pathToData[address2Item].address[1].city,
-          country2: pathToData[address2Item].address[1].country,
-          zip2: pathToData[address2Item].address[1].zip,
-          street2: pathToData[address2Item].address[1].street,
-          typea2: pathToData[address2Item].address[1].type,
-          state2: pathToData[address2Item].address[1].state 
-           })}
-
-          // // primary contact data
->>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
           for (const contactItem in pathToData) {
           contactData.push({
           firstName: pathToData[contactItem].contact[0].firstName,
@@ -846,19 +817,9 @@ handlestateVariable2() {
           typec: pathToData[contactItem].contact[0].type,
           email: pathToData[contactItem].contact[0].email,
           phone: pathToData[contactItem].contact[0].phone,
-<<<<<<< HEAD
 
           }) }
           //There is an if statement on the second array contact items, so that the form won't crash if there is no second array in the data.
-=======
-          // firstName2: pathToData[contactItem].contact[1].firstName,
-          // lastName2: pathToData[contactItem].contact[1].lastName,
-          // typec2: pathToData[contactItem].contact[1].type,
-          // email2: pathToData[contactItem].contact[1].email,
-          // phone2: pathToData[contactItem].contact[1].phone
-          })}
-
->>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
           for (const contact2Item in pathToData) {
           if (typeof(pathToData[contact2Item].contact[1]) !== "undefined") {
           contact2Data.push({
@@ -867,17 +828,12 @@ handlestateVariable2() {
           typec2: pathToData[contact2Item].contact[1].type,
           email2: pathToData[contact2Item].contact[1].email,
           phone2: pathToData[contact2Item].contact[1].phone
-<<<<<<< HEAD
           })
           //update state for second array as part of the if statement.
           this.setState({contact2: contact2Data[0]}) 
         } 
       }
           //configuration data
-=======
-          })}
-
->>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
           for (const configItem in pathToData) {
           configData.push({
           imageCapture: pathToData[configItem].configuration.registration.imageCapture,
@@ -896,17 +852,10 @@ handlestateVariable2() {
             configuration: configData[0]});
         this.setState({dataLoaded: true});
 
-<<<<<<< HEAD
         //These methods set the radio buttons based on the incoming data.
         let RadioimgNo = document.getElementById("imgCaptureNo")
         let RadioimgYes = document.getElementById("imgCaptureYes")
         if (this.state.configuration.imageCapture === true) {
-=======
-        let RadioimgNo = document.getElementById("imgCaptureNo");
-        let RadioimgYes = document.getElementById("imgCaptureYes");
-
-        if (this.state.configuration.imageCapture === "true") {
->>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
           RadioimgYes.checked = true
         }
 
@@ -1035,7 +984,6 @@ handlestateVariable2() {
     }
     //If all the validation checks out, we'll proceed to the API and submit to the database based on the org ID.
     else {
-<<<<<<< HEAD
         //Store the editable data in a new object.
         const newData = {
             description: this.state.data.description,
@@ -1058,31 +1006,6 @@ handlestateVariable2() {
              .catch(error => alert(error))    
           }
         }
-=======
-      // store editable data in new object
-      const newData = {
-        description: this.state.data.description,
-        //id: this.state.data.id,
-        contact: this.state.contact,
-        address: this.state.address,
-        configuration: this.state.configuration
-      };
-      // store value of id
-      const itemToEdit = this.state.data.id;
-  
-      // make api call to update data
-      axios.patch(`/orgs/${itemToEdit}`, newData)
-      // if request is successful, redirect to manage tests
-      .then(res => {
-        if (res.status === 200) {
-        this.props.history.push('/manage-orgs')
-        } 
-      })
-      // else, display error
-      .catch(error => alert(error))    
-}
-  }
->>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
 
        
       //State is set for the five accordions on the page to work.
@@ -1192,11 +1115,7 @@ handlestateVariable2() {
     return (
       <div>
         <main className={classes.main}>
-<<<<<<< HEAD
         <h1 className={classes.header}>Edit Organizations</h1>
-=======
-          <h1 className={classes.header}>Add Organizations</h1>
->>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
           <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>

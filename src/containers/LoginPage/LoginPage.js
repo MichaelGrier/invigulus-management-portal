@@ -109,19 +109,10 @@ class LoginPage extends Component {
 
     return (
       <main className={classes.main}>
-<<<<<<< HEAD
         <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
             <h1 className={classes.header}>Log In</h1>
-=======
-        <form 
-          className={classes.wrapper} 
-          onSubmit={this.handleSubmit}
-        >
-          <fieldset>
-            <Heading2>Log In</Heading2>
->>>>>>> 7567ad7042775442162a85e87de2cdc05567f619
             <table>
               <tr>
                 <td 

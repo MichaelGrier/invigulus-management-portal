@@ -3,6 +3,7 @@ import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 
 import classes from './TestForm.module.css';
+import { Alert } from 'bootstrap';
 
 class TestForm extends Component {
   constructor() {
@@ -29,6 +30,27 @@ class TestForm extends Component {
     this.descriptionVal = this.descriptionVal.bind(this);
     this.tdsVal = this.tdsVal.bind(this);
   }
+
+  CustomAlert() {
+    function render(dialog) {
+        let winW = window.innerWidth;
+        let winH = window.innerHeight;
+        let dialogoverlay = document.getElementById('dialogoverlay');
+        let dialogbox = document.getElementById('dialogbox');
+        dialogoverlay.style.display = "block";
+        dialogoverlay.style.height = winH+"px";
+        dialogbox.style.left = (winW/2) - (550 * .5) + "px";
+        dialogbox.style.top = "100px";
+        dialogbox.style.display = "block";
+        document.getElementById('dialoghead').innerHTML = "Acknowledge";
+        document.getElementById('dialogbody').innerHTML = dialog;
+        document.getElementById('dialogboxfoot').innerHTML = '<button onClick="Alert1.ok()">OK</button>'
+    }
+    function ok() {
+        document.getElementById('dialogbox').style.display = "none";
+        document.getElementById('dialogoverlay').style.display = "none";
+    }
+}
 
   // whenever a change is made to an input field, update the corresponding state property
   handleItemTypeChange(event) {
@@ -114,7 +136,7 @@ class TestForm extends Component {
 
     if (this.state.data.itemType === "" || this.state.data.testOrgId === "" || this.state.data.id === "" || this.state.data.description === "" || this.state.data.tds === "")
     {
-      alert("One or more required fields are missing.")
+      //this.CustomAlert().render("One or more required fields are missing.")
     }
     else {
     // distribute data stored in state into new object
@@ -173,6 +195,14 @@ class TestForm extends Component {
 
     return (
       <div>
+      <div className={classes.dialogoverlay} id ="dialogoverlay"></div>
+      <div className= {classes.dialogbox} id="dialogbox">
+      <div>
+          <div className={classes.dialoghead} id="dialogboxhead"></div>
+          <div className={classes.dialogbody} id="dialogboxbody"></div>
+          <div className={classes.dialogfoot} id="dialogboxfoot"></div>
+      </div>
+      </div>
         <main className={classes.main}>
           <h1 className={classes.header}>Add Test</h1>
           <form className={classes.wrapper} onSubmit={this.handleSubmit}>
