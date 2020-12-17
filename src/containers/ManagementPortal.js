@@ -86,6 +86,8 @@ class ManagementPortal extends Component {
         <Route path='/login' exact render={(props) => <LoginPage {...props} auth={authProps} />} />
         <Route path='/reset-password' exact render={(props) => <ResetPassword {...props} auth={authProps} />} />
         <Route path='/reset-password-verification' exact render={(props) => <ResetPasswordVerification {...props} auth={authProps} />} />
+        <Route path='/change-password' exact render={(props) => <ChangePassword {...props} auth={authProps} />} />
+        <Route path='/change-password-confirmation' exact render={(props) => <ChangePasswordConfirmation {...props} auth={authProps} />} />
 
         {/* private routes */}
         <PrivateRoute path='/' exact component={LandingPage} />
@@ -101,8 +103,6 @@ class ManagementPortal extends Component {
         <PrivateRoute path='/add-org' exact component={OrgForm} />
         <PrivateRoute path='/add-org-confirmation' exact component={AddOrgConfirmation} />
         <PrivateRoute path='/edit-org' component={EditOrgForm} />
-        <PrivateRoute path='/change-password' exact component={ChangePassword} />
-        <PrivateRoute path='/change-password-confirmation' exact component={ChangePasswordConfirmation} />
 
         <Footer />
       </>
