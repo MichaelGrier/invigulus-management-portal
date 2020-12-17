@@ -18,13 +18,7 @@ class LoginPage extends Component {
     this.passwordValidation = this.passwordValidation.bind(this);
     this.handleemailChange = this.handleEmailChange.bind(this);
     this.handlepasswordChange = this.handlePasswordChange.bind(this);
-    //this.ok = this.ok.bind(this);
   }
-
-  // ok(){
-  //   document.getElementById('dialogbox').style.display = "none";
-  //   document.getElementById('dialogoverlay').style.display = "none";
-  // }
 
   handleEmailChange(event) {
     this.setState({email: event.target.value});
@@ -60,9 +54,9 @@ class LoginPage extends Component {
     let passwordField = document.getElementById("pssword")
 
     if (emailField.value === "" || passwordField.value === "") {
-      Alert("A required field is missing.")
+      Alert("A required field is missing.") 
     } 
-
+    else {
     // cognito integration
     try {
       // send login request, assign response to a variable
@@ -74,7 +68,9 @@ class LoginPage extends Component {
       // redirect to home
       this.props.history.push('/');
     } catch(error) {
-      Alert('something went wrong, try logging in again');
+      Alert('Something went wrong. Try logging in again.');
+    }
+
     }
   }
 
@@ -115,17 +111,21 @@ class LoginPage extends Component {
       };
 
     return (
-      <main className={classes.main}>
-      {/* <div className={classes.dialogoverlay} id ="dialogoverlay"></div>
+      <div>
+      <div className={classes.dialogoverlay} id ="dialogoverlay"></div>
       <div className= {classes.dialogbox} id="dialogbox">
       <div>
           <div className={classes.dialoghead} id="dialogboxhead"></div>
           <div className={classes.dialogbody} id="dialogboxbody"></div>
           <div className={classes.dialogfoot} id="dialogboxfoot">
-          <button id="yes1" className={classes.alertbutton} onClick={this.ok()}>OK</button>
+          <button id="yes1" className={classes.alertbutton} onClick={
+            () => {document.getElementById('dialogbox').style.display = "none";
+              document.getElementById('dialogoverlay').style.display = "none";}
+          }>OK</button>
           </div>
       </div>
-      </div> */}
+      </div>
+      <main className={classes.main}>
         <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
@@ -204,6 +204,7 @@ class LoginPage extends Component {
           </fieldset>
         </form>
       </main>
+      </div>
     );
   }
 }

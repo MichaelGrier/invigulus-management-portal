@@ -10,7 +10,6 @@ class TestForm extends Component {
     super();
     this.state = {
       data: {
-        itemType: "",
         testOrgId: "",
         id: "",
         description: "",
@@ -18,13 +17,11 @@ class TestForm extends Component {
       },
     }
     
-    this.handleItemTypeChange = this.handleItemTypeChange.bind(this);
     this.handleTestOrgIdChange = this.handleTestOrgIdChange.bind(this);
     this.handleIdChange = this.handleIdChange.bind(this);
     this.handleTdsChange = this.handleTdsChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.itemTypeVal = this.itemTypeVal.bind(this);
     this.testOrgIdVal = this.testOrgIdVal.bind(this);
     this.idVal = this.idVal.bind(this);
     this.descriptionVal = this.descriptionVal.bind(this);
@@ -38,11 +35,6 @@ class TestForm extends Component {
   }
 
   //whenever a change is made to an input field, update the corresponding state property
-  handleItemTypeChange(event) {
-    let data = {...this.state.data};
-    data.itemType = event.target.value;
-    this.setState({data});
-  }
 
   handleTestOrgIdChange(event) {
     let data = {...this.state.data};
@@ -66,16 +58,6 @@ class TestForm extends Component {
     let data = {...this.state.data};
     data.tds = event.target.value
     this.setState({data});
-  }
-
-  itemTypeVal(event) {
-    if (event.target.value === "")
-      {
-      document.getElementById("itemTypeErrMsg").innerHTML="Required"
-      }
-      else{
-        document.getElementById("itemTypeErrMsg").innerHTML=""
-      }
   }
     
   testOrgIdVal(event) {
@@ -119,7 +101,7 @@ class TestForm extends Component {
     // prevent default submit action
     event.preventDefault();
 
-    if (this.state.data.itemType === "" || this.state.data.testOrgId === "" || this.state.data.id === "" || this.state.data.description === "" || this.state.data.tds === "")
+    if (this.state.data.testOrgId === "" || this.state.data.id === "" || this.state.data.description === "" || this.state.data.tds === "")
     {
       Alert("One or more required fields are missing.")
     }
@@ -133,7 +115,7 @@ class TestForm extends Component {
         .then(res => {
           if (res.status === 200) {
             this.props.history.push('/add-test-confirmation')
-          } 
+          }
         })
         // else, display error
         .catch(error => Alert(error))    
@@ -213,37 +195,6 @@ class TestForm extends Component {
                 <br/>
                 <table>
                   <tbody>
-                    <tr>
-                      <td 
-                        className={classes.cell1}  
-                        style={{textAlign:"right"}}
-                        >
-                        <label 
-                          htmlFor="itemType" 
-                          style={labelstyle}
-                        >Item Type(TST):
-                        </label>
-                      </td>
-                      <td 
-                        className={classes.cell2} 
-                        style={{textAlign:"left", width:"30%"}}
-                      >
-                        <input
-                          style={textbxstyle}                        
-                          type="text" 
-                          id="itemType"
-                          name="itemType" 
-                          value={this.state.itemType} 
-                          onChange={this.handleItemTypeChange}
-                          onBlur={this.itemTypeVal} 
-                        />
-                        <br/>
-                        <span 
-                          id="itemTypeErrMsg"
-                          style={{color:"red"}}>
-                        </span>
-                      </td>
-                    </tr>               
                     <tr>
                       <td 
                         className={classes.cell1} 

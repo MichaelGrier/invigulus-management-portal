@@ -689,8 +689,8 @@ handlestateVariable2() {
     if (event.target.value === ""){
       document.getElementById("emailErrMsg").innerHTML="Required"
       }
-    else if (!isValid) {
-        document.getElementById("emailErrMsg").innerHTML="The email is not valid"
+    else if (emailv.value !== "" && !isValid) {
+        document.getElementById("emailErrMsg").innerHTML="This email is not valid"
       }
     else {
         document.getElementById("emailErrMsg").innerHTML=""
@@ -703,7 +703,7 @@ handlestateVariable2() {
     let isValid= rg.test(emailv.value)
     
     if (emailv.value !== "" && !isValid) {
-        document.getElementById("emailErrMsg2").innerHTML="The email is not valid"
+        document.getElementById("emailErrMsg2").innerHTML="This email is not valid"
       }
     else {
         document.getElementById("emailErrMsg2").innerHTML=""
@@ -968,7 +968,7 @@ handlestateVariable2() {
     let emailValid2= rg.test(emailv2.value)
 
     //The same validation as the onblur methods is run again on submit and an alert is generated if something is wrong.
-    if (!emailValid)
+    if (emailv.value !== "" && !emailValid)
     {
       Alert("The primary email is not valid.")
     }
