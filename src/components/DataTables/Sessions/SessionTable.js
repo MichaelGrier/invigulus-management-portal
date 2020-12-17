@@ -200,7 +200,7 @@ const SessionTable = () => {
       ExamineeEmail: selectedData[session].original.email,
       ExamineeState: selectedData[session].original.state,
       LaunchCode: selectedData[session].original.code,
-      FrameInterval: selectedData[session].original.analytics.postProcess.parameters.interval,
+      Fps: selectedData[session].original.analytics.postProcess.videoAttributes.fps,
       GreaterThanOneFaceAnomalies: countAnomaliesWithMoreThanOneFace(selectedData[session].original.analytics.postProcess.anomalies),
       ZeroFaceAnomalies: countAnomaliesWithZeroFaces(selectedData[session].original.analytics.postProcess.anomalies),
       TotalAnomalies: selectedData[session].original.analytics.postProcess.anomalies.length, // length of anomalies array
@@ -222,7 +222,7 @@ const SessionTable = () => {
     {label: 'Examinee Email', key: 'ExamineeEmail'},
     {label: 'Examinee State', key: 'ExamineeState'},
     {label: 'Launch Code', key: 'LaunchCode'},
-    {label: 'Frame Interval', key: 'FrameInterval'},
+    {label: 'Fps', key: 'Fps'},
     {label: '>1 Face Anomalies', key: 'GreaterThanOneFaceAnomalies'},
     {label: '0 Face Anomalies', key: 'ZeroFaceAnomalies'},
     {label: 'Total Anomalies', key: 'TotalAnomalies'},
