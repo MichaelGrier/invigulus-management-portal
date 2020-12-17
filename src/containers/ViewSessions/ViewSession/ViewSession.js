@@ -161,8 +161,7 @@ class ViewSession extends Component {
     return(
       <>
         {/* if data has been loaded from api, render tables, if not, display loading message */}
-        {this.state.dataLoaded 
-          ? 
+        {this.state.dataLoaded ? 
           <main className={classes.main}>
             <h1 className={classes.header}>View Session</h1>
 
@@ -416,9 +415,9 @@ class ViewSession extends Component {
                       </thead>
                       <tbody>
                         <tr>
-                          <td><a href={this.state.data.videos.environment} target='_blank' rel='noreferrer'>{this.state.data.videos.environment}</a></td>
-                          <td><a href={this.state.data.videos.face} target='_blank' rel='noreferrer'>{this.state.data.videos.face}</a></td>
-                          <td><a href={this.state.data.videos.screen} target='_blank' rel='noreferrer'>{this.state.data.videos.screen}</a></td>
+                          <td>{this.state.data.videos.environment}</td>
+                          <td>{this.state.data.videos.face}</td>
+                          <td>{this.state.data.videos.screen}</td>
                         </tr>
                       </tbody>
                     </Table>
@@ -443,11 +442,11 @@ class ViewSession extends Component {
               </div>
             </div>
           </main> 
-          : <main className={classes.main}>
+        : <main className={classes.main}>
               <div className={classes.spinnerWrap}>
                 <Spinner />
               </div>
-            </main>}
+          </main>}
       </>
     );
   }

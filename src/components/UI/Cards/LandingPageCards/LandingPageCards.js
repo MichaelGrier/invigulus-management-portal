@@ -8,8 +8,8 @@ const landingPageCards = (props) => {
   return (
     <div className={classes.landingPageCards}>
       <Link to={{pathname:'/manage-orgs-and-tests'}}><Card>Manage Organizations and Tests</Card></Link>
-      <Link to={{pathname:'/view-users'}}><Card>View Users</Card></Link>
-      <Link to={{pathname:'/view-sessions'}}><Card>View Sessions</Card></Link>
+      <a href='/view-users'><Card>View Users</Card></a>
+      <a href='/view-sessions'><Card>View Sessions</Card></a>
     </div>
   );
 }

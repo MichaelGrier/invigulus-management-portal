@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Auth} from 'aws-amplify';
-import {withRouter, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import classes from './LoginPage.module.css';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
@@ -193,4 +193,4 @@ class LoginPage extends Component {
   }
 }
 
-export default withRouter(LoginPage);
+export default LoginPage;
