@@ -456,8 +456,8 @@ class OrgForm extends Component {
     if (event.target.value === ""){
       document.getElementById("emailErrMsg").innerHTML="Required"
       }
-    else if (!isValid) {
-        document.getElementById("emailErrMsg").innerHTML="The email is not valid"
+    else if (emailv.value !== "" &&!isValid) {
+        document.getElementById("emailErrMsg").innerHTML="This email is not valid"
       }
     else {
         document.getElementById("emailErrMsg").innerHTML=""
@@ -470,7 +470,7 @@ class OrgForm extends Component {
     let isValid= rg.test(emailv.value)
     
     if (emailv.value !== "" && !isValid) {
-        document.getElementById("emailErrMsg2").innerHTML="The email is not valid"
+        document.getElementById("emailErrMsg2").innerHTML="This email is not valid"
       }
 
     else if (emailv.value === "")
@@ -568,7 +568,7 @@ class OrgForm extends Component {
     let emailValid2 = rg.test(emailv2.value)
 
     //The same validation as the onBlur validation is run a second time on all the required fields and an alert is generated if something is wrong.
-    if (!emailValid)
+    if (emailv.value !== "" && !emailValid)
     {
       Alert("The primary email is not valid.")
     }
@@ -837,7 +837,7 @@ class OrgForm extends Component {
                                 <select
                                 style={textbxstyle2} 
                                 id="addresstype" 
-                                name="addresstype"
+                                name="addresstype"                                
                                 onBlur={this.addresstypeVal}
                                 >
                                 <option>Primary</option>

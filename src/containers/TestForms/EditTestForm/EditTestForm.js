@@ -10,7 +10,6 @@ class TestForm extends Component {
     super();
     this.state = {
       data: {
-        itemType: "",
         testOrgId: "",
         id: "",
         description: "",
@@ -186,34 +185,6 @@ class TestForm extends Component {
                 <br/>
                 <table>
                   <tbody>
-                    <tr >
-                      <td 
-                        className={classes.cell1}  
-                        style={{textAlign:"right"}}
-                      >
-                        <label 
-                          htmlFor="itemType" 
-                          style={labelstyle}
-                        >Item Type(TST):
-                        </label>
-                      </td>
-                      <td 
-                        className={classes.cell2} 
-                        style={{textAlign:"left", width:"30%"}}
-                      >
-                        <input
-                          style={uneditabletextbxstyle}                        
-                          type="text" 
-                          id="itemType" 
-                          name="itemType"
-                          readOnly
-                          value={this.state.data.itemType} 
-                          onChange={this.handleItemTypeChange}
-                          onBlur={this.formValChange} 
-                        />
-                        <br/>
-                      </td>
-                    </tr>               
                     <tr>
                       <td 
                         className={classes.cell1} 
