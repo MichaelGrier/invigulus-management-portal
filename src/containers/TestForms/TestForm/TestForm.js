@@ -3,6 +3,7 @@ import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 
 import classes from './TestForm.module.css';
+import Alert from  '../../../components/UI/Alert/Alert'
 
 class TestForm extends Component {
   constructor() {
@@ -28,9 +29,15 @@ class TestForm extends Component {
     this.idVal = this.idVal.bind(this);
     this.descriptionVal = this.descriptionVal.bind(this);
     this.tdsVal = this.tdsVal.bind(this);
+    this.ok = this.ok.bind(this);
   }
 
-  // whenever a change is made to an input field, update the corresponding state property
+  ok(){
+    document.getElementById('dialogbox').style.display = "none";
+    document.getElementById('dialogoverlay').style.display = "none";
+  }
+
+  //whenever a change is made to an input field, update the corresponding state property
   handleItemTypeChange(event) {
     let data = {...this.state.data};
     data.itemType = event.target.value;
@@ -114,7 +121,7 @@ class TestForm extends Component {
 
     if (this.state.data.itemType === "" || this.state.data.testOrgId === "" || this.state.data.id === "" || this.state.data.description === "" || this.state.data.tds === "")
     {
-      alert("One or more required fields are missing.")
+      Alert("One or more required fields are missing.")
     }
     else {
     // distribute data stored in state into new object
@@ -129,12 +136,11 @@ class TestForm extends Component {
           } 
         })
         // else, display error
-        .catch(error => alert(error))    
+        .catch(error => Alert(error))    
     }
   }
 
   render () {
-
     const labelstyle = {
       color: "#3cB650",
       fontFamily: "sans-serif",
@@ -173,6 +179,32 @@ class TestForm extends Component {
 
     return (
       <div>
+      {/* This is the html code for the custom alert window. */}
+      <div 
+      className={classes.dialogoverlay} 
+      id ="dialogoverlay">
+      </div>
+      <div 
+      className= {classes.dialogbox}
+       id="dialogbox">
+      <div>
+          <div 
+          className={classes.dialoghead} 
+          id="dialogboxhead">
+          </div>
+          <div 
+          className={classes.dialogbody} 
+          id="dialogboxbody">
+          </div>
+          <div 
+          className={classes.dialogfoot} 
+          id="dialogboxfoot">
+          <button 
+          className={classes.alertbutton} 
+          onClick={this.ok}>OK</button>
+        </div>
+      </div>
+      </div>
         <main className={classes.main}>
           <h1 className={classes.header}>Add Test</h1>
           <form className={classes.wrapper} onSubmit={this.handleSubmit}>
@@ -274,7 +306,6 @@ class TestForm extends Component {
                         </span>
                       </td>
                     </tr>
-
                     <tr >
                       <td 
                         className={classes.cell1}  

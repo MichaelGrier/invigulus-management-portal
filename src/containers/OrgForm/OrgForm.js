@@ -8,6 +8,7 @@ import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
 import Accordion4 from '../../components/Accordion/Accordion4';
 import Accordion5 from '../../components/Accordion/Accodion5';
+import Alert from '../../components/UI/Alert/Alert';
 
 class OrgForm extends Component {
   constructor() {
@@ -50,6 +51,7 @@ class OrgForm extends Component {
     this.lnameVal = this.lnameVal.bind(this);
     this.phoneVal = this.phoneVal.bind(this);
     this.emailVal = this.emailVal.bind(this);
+    this.emailVal2 = this.emailVal2.bind(this);
     this.imgcaptureVal = this.imgcaptureVal.bind(this);
     this.idcaptureVal = this.idcaptureVal.bind(this);
     this.smoothingframeVal = this.smoothingframeVal.bind(this);
@@ -60,6 +62,12 @@ class OrgForm extends Component {
     this.selectState2 = this.selectState2.bind(this);
     this.handlestateVariable = this.handlestateVariable.bind(this);
     this.handlestateVariable2 = this.handlestateVariable2.bind(this);
+    this.ok = this.ok.bind(this);
+  }
+
+  ok(){
+    document.getElementById('dialogbox').style.display = "none";
+    document.getElementById('dialogoverlay').style.display = "none";
   }
 
   componentDidMount() {
@@ -449,10 +457,28 @@ class OrgForm extends Component {
       document.getElementById("emailErrMsg").innerHTML="Required"
       }
     else if (!isValid) {
-        document.getElementById("emailErrMsg").innerHTML="The email has an incorrect format"
+        document.getElementById("emailErrMsg").innerHTML="The email is not valid"
       }
     else {
         document.getElementById("emailErrMsg").innerHTML=""
+      }
+  }
+
+  emailVal2() {
+    let emailv = document.getElementById("email2")
+    let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let isValid= rg.test(emailv.value)
+    
+    if (emailv.value !== "" && !isValid) {
+        document.getElementById("emailErrMsg2").innerHTML="The email is not valid"
+      }
+
+    else if (emailv.value === "")
+    {
+      document.getElementById("emailErrMsg2").innerHTML=""
+    }
+    else {
+        document.getElementById("emailErrMsg2").innerHTML=""
       }
   }
 
@@ -481,7 +507,6 @@ class OrgForm extends Component {
   }
 
   frameintervalVal(event) {
-
     if (event.target.value === ""){
       document.getElementById("frameintervalErrMsg").innerHTML="Required"
       }
@@ -503,7 +528,6 @@ class OrgForm extends Component {
       else {
       document.getElementById("anomalydurationErrMsg").innerHTML=""
       }
-
   }
 
   smoothingframeVal(event) {
@@ -538,32 +562,38 @@ class OrgForm extends Component {
     let anomalydv = document.getElementById("anomalyduration")
     let frameiv = document.getElementById("frameinterval")
     let emailv = document.getElementById("email")
+    let emailv2 = document.getElementById("email2")
     let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let emailValid= rg.test(emailv.value)
+    let emailValid2 = rg.test(emailv2.value)
 
     //The same validation as the onBlur validation is run a second time on all the required fields and an alert is generated if something is wrong.
     if (!emailValid)
     {
-      alert("The email entered is not valid")
+      Alert("The primary email is not valid.")
+    }
+    else if (emailv2.value !== "" && !emailValid2)
+    {
+      Alert("The secondary email is not valid.")
     }
     else if (isNaN(smoothingfv.value))
     {
-      alert("Smoothing Frame must be a number")
+      Alert("Smoothing Frame must be a number.")
     }
     else if (isNaN(anomalydv.value))
     {
-      alert("Anomaly Duration must be a number")
+      Alert("Anomaly Duration must be a number.")
     }
     else if (isNaN(frameiv.value))
     {
-      alert("Anomaly Duration must be a number")
+      Alert("Frame Interval must be a number.")
     }
     else if (orgNamev.value === "" || orgIdv.value === "" || typeav.value === "" || streetav.value === "" || cityav.value === "" || 
     this.statea.value === "" || zipav.value === "" || countryav.value === "" || fnamecv.value === "" || lnamecv.value === "" ||
     typecv.value === "" || phonecv.value === "" || emailcv.value === "" || !this.idCapVal   || !this.imgCapVal || smoothingfv.value === "" ||
     anomalydv.value === "" || frameiv.value === "")
     {
-      alert ("One or more required fields are missing")
+      Alert("One or more required fields are missing.")
       if (!this.idCapVal)
       {
         document.getElementById("idCaptureErrMsg").innerHTML="Required"
@@ -597,7 +627,7 @@ class OrgForm extends Component {
            } 
          })
          //Display error
-         .catch(error => alert(error))   
+         .catch(error => Alert(error))   
     }
   }
 
@@ -696,6 +726,32 @@ class OrgForm extends Component {
       
     return (
       <div>
+        {/* This is the html code for the alert window. */}
+        <div 
+        className={classes.dialogoverlay} 
+        id ="dialogoverlay">
+        </div>
+        <div 
+        className= {classes.dialogbox} 
+        id="dialogbox">
+        <div>
+            <div 
+            className={classes.dialoghead} 
+            id="dialogboxhead">
+            </div>
+            <div 
+            className={classes.dialogbody} 
+            id="dialogboxbody">
+            </div>
+            <div 
+            className={classes.dialogfoot} 
+            id="dialogboxfoot">
+            <button 
+            className={classes.alertbutton} 
+            onClick={this.ok}>OK</button>
+            </div>
+        </div>
+        </div>
         <main className={classes.main}>
           <h1 className={classes.header}>Add Organizations</h1>
           <form className={classes.wrapper} 
@@ -1255,7 +1311,6 @@ class OrgForm extends Component {
                                       <option value="SK">Saskatchewan</option>
                                       <option value="YT">Yukon</option>
                                     </select>
-                                  <br/>
                                 <span 
                                   id="stateErrMsg"
                                   style={{color:"red"}}>
@@ -1966,7 +2021,13 @@ class OrgForm extends Component {
                                   type="text" 
                                   id="email2" 
                                   name="email2"
+                                  onBlur={this.emailVal2}
                                   />
+                                  <br/>
+                                  <span 
+                                    id="emailErrMsg2"
+                                    style={{color:"red"}}>
+                                </span>
                               </td>
                             </tr>
                             <tr>
