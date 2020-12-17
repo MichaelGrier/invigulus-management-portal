@@ -8,3 +8,13 @@
   padding: 0 20px;
   box-sizing: border-box; 
 }
+
+.LoginWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.WelcomeText {
+  display: inline-block;
+  padding-top: 1rem;
+}

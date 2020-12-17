@@ -8,6 +8,8 @@ import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
 import Accordion4 from '../../components/Accordion/Accordion4';
 import Accordion5 from '../../components/Accordion/Accodion5';
+import Alert from '../../components/UI/Alert/Alert';
+
 
 class EditOrgForm extends Component {
   constructor() {
@@ -92,6 +94,7 @@ class EditOrgForm extends Component {
     this.lnameVal = this.lnameVal.bind(this);
     this.phoneVal = this.phoneVal.bind(this);
     this.emailVal = this.emailVal.bind(this);
+    this.emailVal2 = this.emailVal2.bind(this);
     this.imgcaptureVal = this.imgcaptureVal.bind(this);
     this.idcaptureVal = this.idcaptureVal.bind(this);
     this.smoothingframeVal = this.smoothingframeVal.bind(this);
@@ -125,6 +128,12 @@ class EditOrgForm extends Component {
     this.handleanomdChange = this.handleanomdChange.bind(this);
     this.handlestateVariable = this.handlestateVariable.bind(this);
     this.handlestateVariable2 = this.handlestateVariable2.bind(this);
+    this.ok = this.ok.bind(this);
+  }
+
+  ok(){
+    document.getElementById('dialogbox').style.display = "none";
+    document.getElementById('dialogoverlay').style.display = "none";
   }
 
   //Onchange methods to update state, mainly to ensure that the fields are editable. 
@@ -681,10 +690,23 @@ handlestateVariable2() {
       document.getElementById("emailErrMsg").innerHTML="Required"
       }
     else if (!isValid) {
-        document.getElementById("emailErrMsg").innerHTML="The email entered is not valid"
+        document.getElementById("emailErrMsg").innerHTML="The email is not valid"
       }
     else {
         document.getElementById("emailErrMsg").innerHTML=""
+      }
+  }
+
+  emailVal2(event) {
+    let emailv = document.getElementById("email2")
+    let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let isValid= rg.test(emailv.value)
+    
+    if (emailv.value !== "" && !isValid) {
+        document.getElementById("emailErrMsg2").innerHTML="The email is not valid"
+      }
+    else {
+        document.getElementById("emailErrMsg2").innerHTML=""
       }
   }
 
@@ -840,8 +862,9 @@ handlestateVariable2() {
           frameInterval: pathToData[configItem].configuration.postProcess.frameInterval,
           anomalyDuration: pathToData[configItem].configuration.postProcess.anomalyDuration,
           smoothingFrame: pathToData[configItem].configuration.postProcess.smoothingFrame
-          }) }
-          console.log(configData)
+          })}
+          //console.log(configData)
+
         // update state
         this.setState({
             data: basicData[0],
@@ -861,8 +884,8 @@ handlestateVariable2() {
           RadioimgNo.checked = true
         }
 
-        let RadioidNo = document.getElementById("idCaptureNo")
-        let RadioidYes = document.getElementById("idCaptureYes")
+        let RadioidNo = document.getElementById("idCaptureNo");
+        let RadioidYes = document.getElementById("idCaptureYes");
 
         if (this.state.configuration.idCapture === true) {
             RadioidYes.checked = true
@@ -916,7 +939,7 @@ handlestateVariable2() {
           statedropUS2.style.display = "none"
         }       
         console.log(this.state);
-      }).catch(error => alert(error));
+      }).catch(error => Alert(error));
     }
 
   //Onsubmit function which runs the final validation in addition to the API.
@@ -939,32 +962,38 @@ handlestateVariable2() {
     let anomalydv = document.getElementById("anomalyduration")
     let frameiv = document.getElementById("frameinterval")
     let emailv = document.getElementById("email")
+    let emailv2 = document.getElementById("email2")
     let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let emailValid= rg.test(emailv.value)
+    let emailValid2= rg.test(emailv2.value)
 
     //The same validation as the onblur methods is run again on submit and an alert is generated if something is wrong.
     if (!emailValid)
     {
-      alert("The email entered is not valid")
+      Alert("The primary email is not valid.")
+    }
+    else if (emailv2.value !== "" && !emailValid2)
+    {
+      Alert("The secondary email is not valid.")
     }
     else if (isNaN(smoothingfv.value))
     {
-      alert("Smoothing Frame must be a number")
+      Alert("Smoothing Frame must be a number.")
     }
     else if (isNaN(anomalydv.value))
     {
-      alert("Anomaly Duration must be a number")
+      Alert("Anomaly Duration must be a number.")
     }
     else if (isNaN(frameiv.value))
     {
-      alert("Frame Interval must be a number")
+      Alert("Frame Interval must be a number.")
     }
     else if (orgNamev.value === "" || typeav.value === "" || streetav.value === "" || cityav.value === "" || 
     this.statea === "" || zipav.value === "" || countryav.value === "" || fnamecv.value === "" || lnamecv.value === "" ||
     typecv.value === "" || phonecv.value === "" || emailcv.value === "" || !this.idCapVal   || !this.imgCapVal || smoothingfv.value === "" ||
     anomalydv.value === "" || frameiv.value === "")
     {
-      alert ("One or more required fields are missing")
+      Alert("One or more required fields are missing.")
       if (!this.idCapVal)
       {
         document.getElementById("idCaptureErrMsg").innerHTML="Required"
@@ -1001,7 +1030,7 @@ handlestateVariable2() {
                } 
              })
              //Otherwise, display the error.
-             .catch(error => alert(error))    
+             .catch(error => Alert(error))    
           }
         }
 
@@ -1112,6 +1141,30 @@ handlestateVariable2() {
       
     return (
       <div>
+        <div 
+        className={classes.dialogoverlay} 
+        id ="dialogoverlay">
+        </div>
+        <div 
+        className={classes.dialogbox} 
+        id="dialogbox">
+        <div>
+            <div 
+            className={classes.dialoghead} 
+            id="dialogboxhead">
+            </div>
+            <div 
+            className={classes.dialogbody} 
+            id="dialogboxbody">
+            </div>
+            <div 
+            className={classes.dialogfoot} 
+            id="dialogboxfoot">
+            <button className={classes.alertbutton} 
+            onClick={this.ok}>OK</button>
+            </div>
+        </div>
+        </div>
         <main className={classes.main}>
         <h1 className={classes.header}>Edit Organizations</h1>
           <form className={classes.wrapper} 
@@ -2426,7 +2479,13 @@ handlestateVariable2() {
                                   onChange={this.handleemail2Change}
                                   value={this.state.contact2.email2}  
                                   name="email2"
+                                  onBlur={this.emailVal2}
                                   />
+                                  <br/>
+                                  <span 
+                                    id="emailErrMsg2"
+                                    style={{color:"red"}}>
+                                </span>
                               </td>
                             </tr>
                             <tr>
@@ -2800,7 +2859,7 @@ handlestateVariable2() {
                             <tr>
                               <td 
                                 className={classes.cell7} 
-                                style={{textAlign:"right", paddingRight: "2%", paddingTop:"2%"}}>
+                                style={{textAlign:"center", paddingRight: "2%", paddingTop:"2%"}}>
                                 <input
                                   onClick={this.stateUpdate}
                                   type="submit" value="Submit" 

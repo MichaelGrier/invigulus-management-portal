@@ -3,7 +3,7 @@ import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 
 import classes from './EditTestForm.module.css';
-import Heading2 from '../../../components/Form Inputs/Heading2/Heading2';
+import Alert from '../../../components/UI/Alert/Alert';
 
 class TestForm extends Component {
   constructor() {
@@ -17,10 +17,16 @@ class TestForm extends Component {
         tds: "",
       }
     }
-   
+
     this.handleTdsChange = this.handleTdsChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.ok = this.ok.bind(this);
+  }
+
+  ok(){
+    document.getElementById('dialogbox').style.display = "none";
+    document.getElementById('dialogoverlay').style.display = "none";
   }
 
   componentDidMount() {
@@ -51,7 +57,7 @@ class TestForm extends Component {
     event.preventDefault();
     if (this.state.data.description === "" || this.state.data.tds === "")
     {
-      alert("One or more required fields are missing.")
+      Alert("One or more required fields are missing.")
     }
     else {
     // store editable data in new object
@@ -71,7 +77,7 @@ class TestForm extends Component {
            } 
          })
          // else, display error
-         .catch(error => alert(error))    
+         .catch(error => Alert(error))    
       }
    }
 
@@ -93,7 +99,6 @@ class TestForm extends Component {
       document.getElementById("tdsErrMsg").innerHTML=""
       }
   }
-
 
   render () {
 
@@ -146,6 +151,33 @@ class TestForm extends Component {
 
     return (
       <div>
+        {/* This is the html code for the custom alert window */}
+        <div 
+          className={classes.dialogoverlay} 
+          id ="dialogoverlay">
+          </div>
+        <div 
+        className= {classes.dialogbox} 
+        id="dialogbox">
+        <div>
+          <div 
+          className={classes.dialoghead} 
+          id="dialogboxhead">
+          </div>
+          <div 
+          className={classes.dialogbody} 
+          id="dialogboxbody">
+          </div>
+          <div 
+          className={classes.dialogfoot} 
+          id="dialogboxfoot">
+          <button 
+          className={classes.alertbutton} 
+          onClick={this.ok}>OK
+          </button>
+          </div>
+      </div>
+      </div>
         <main className={classes.main}>
           <h1 className={classes.header}>Edit Test</h1>
           <form className={classes.wrapper} onSubmit={this.handleSubmit}>

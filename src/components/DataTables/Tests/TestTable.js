@@ -20,6 +20,8 @@ import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import SmallButton from '../../UI/SmallButton/SmallButton';
 import Spinner from '../../UI/Spinner/Spinner';
+import Alert from '../../../components/UI/Alert/Alert';
+import Confirm from '../../../components/UI/Alert/Confirm';
 
 const TestTable = () => {
   const [tests, setTests] = useState([]);
@@ -49,6 +51,7 @@ const TestTable = () => {
       // update state
       setTests(loadedData);
       setLoaded(true);
+      console.log(loadedData);
     });
   }, []);
 
@@ -104,7 +107,7 @@ const TestTable = () => {
   //console.log(selectedRow);
 
   // handle edit button click
-  const HandleEditRequest = () => {
+  const handleEditRequest = () => {
     try{
       // get properties to be passed to form and store in variable
       const itemToEdit = selectedRow[0].original;
@@ -124,29 +127,43 @@ const TestTable = () => {
         search: '?' + queryString
       });
     } catch(err) {
-      alert('please select a row to edit')
+      Alert('Please select a test to edit.')
     }
+  }
+
+  const yes = () => {
+    // make axios call, then reload page
+    let itemToDelete = selectedRow[0].original.id
+      
+      // make axios call, then reload page
+      axios.delete(`/tests/${itemToDelete}`)
+          .then(res => {
+            console.log(res)
+            if (res.status === 200) {
+              window.location.reload();
+            }
+          })
+          .catch(error => Alert(error));
+
+        document.getElementById('dialogbox2').style.display = "none";
+        document.getElementById('dialogoverlay2').style.display = "none";
+  }
+
+  const ok = () => {
+    document.getElementById('dialogbox').style.display = "none";
+    document.getElementById('dialogoverlay').style.display = "none";
+  }
+
+  const no = () => {
+    document.getElementById('dialogbox2').style.display = "none";
+    document.getElementById('dialogoverlay2').style.display = "none";
   }
 
   // handle delete button click
   const handleDeleteRequest = () => {
-    let userConfirmation;
-    userConfirmation = window.confirm('Are you sure you want to delete this test?')
-
-    // check for user confirmation
-    if (userConfirmation) {
-      // get id of test to be deleted from selectedRow object
-      let itemToDelete = selectedRow[0].original.id
-      
-      // make axios call, then reload page
-      axios.delete(`/tests/${itemToDelete}`)
-          .then(response => {
-            window.location.reload();
-          })
-          .catch(error => alert(error));
+    Confirm("Are you sure you want to delete this test?")
     }
-  }
-
+  
   return (
     <div className={classes.tableWrap}>
       {/* if data is loaded, render table and associated components. if not, render loading spinner */}
@@ -156,6 +173,29 @@ const TestTable = () => {
             {/* render filter field, with globalFilter and setGlobalFilter passed as props */}
             <TableFilter filter={globalFilter} setFilter={setGlobalFilter} />
             <Link to={{pathname: '/add-test'}}><SmallButton>Add New</SmallButton></Link>
+          </div>
+
+          <div className={classes.dialogoverlay} id ="dialogoverlay2"></div>
+          <div className= {classes.dialogbox} id="dialogbox2">
+          <div>
+              <div className={classes.dialoghead} id="dialogboxhead2"></div>
+              <div className={classes.dialogbody} id="dialogboxbody2"></div>
+              <div className={classes.dialogfoot} id="dialogboxfoot2">
+              <button id="yes1"className={classes.alertbutton} onClick={yes}>OK</button>
+              <button id="no1" className={classes.alertbutton} onClick={no}>Cancel</button> 
+              </div>
+          </div>
+          </div>
+
+          <div className={classes.dialogoverlay} id ="dialogoverlay"></div>
+          <div className= {classes.dialogbox} id="dialogbox">
+          <div>
+              <div className={classes.dialoghead} id="dialogboxhead"></div>
+              <div className={classes.dialogbody} id="dialogboxbody"></div>
+              <div className={classes.dialogfoot} id="dialogboxfoot">
+              <button id="yes1"className={classes.alertbutton} onClick={ok}>OK</button>
+              </div>
+          </div>
           </div>
 
           {/* render table */}
@@ -209,7 +249,7 @@ const TestTable = () => {
             >Next</button>
           </div>
           <br/>
-          <SmallButton clicked={HandleEditRequest}>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
+          <SmallButton clicked={handleEditRequest}>&nbsp;&nbsp;Edit&nbsp;&nbsp;</SmallButton>
           <SmallButton clicked={handleDeleteRequest}>Delete</SmallButton>
         </div>
       : 

@@ -20,6 +20,7 @@ import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import SmallButton from '../../UI/SmallButton/SmallButton';
 import Spinner from '../../UI/Spinner/Spinner';
+import Alert from '../../../components/UI/Alert/Alert';
 
 const SessionTable = () => {
   // declare state variables
@@ -150,8 +151,13 @@ const SessionTable = () => {
         search: '?' + queryString
       });
     } catch(err) {
-      alert('Please select a session to view')
+      Alert('Please select a session to view.')
     }
+  }
+  //This is the code for the "OK" button on the custom alert box
+  const ok = () => {
+    document.getElementById('dialogbox').style.display = "none";
+    document.getElementById('dialogoverlay').style.display = "none";
   }
 
   // loop through array of anomalies and count how many have more than one face detected
@@ -261,6 +267,16 @@ const SessionTable = () => {
                 )
               })}
             </tbody>
+            <div className={classes.dialogoverlay} id ="dialogoverlay"></div>
+            <div className= {classes.dialogbox} id="dialogbox">
+            <div>
+                <div className={classes.dialoghead} id="dialogboxhead"></div>
+                <div className={classes.dialogbody} id="dialogboxbody"></div>
+                <div className={classes.dialogfoot} id="dialogboxfoot">
+                <button className={classes.alertbutton} onClick={ok}>OK</button>
+                </div>
+            </div>
+            </div>      
           </Table>
           <div>
             {/* render pagination buttons */}

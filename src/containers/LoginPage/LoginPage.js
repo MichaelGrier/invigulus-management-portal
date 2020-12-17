@@ -1,75 +1,82 @@
 import React, {Component} from 'react';
+import {Auth} from 'aws-amplify';
+import {withRouter, Link} from 'react-router-dom';
 
 import classes from './LoginPage.module.css';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
+import Alert from '../../components/UI/Alert/Alert'
 
 class LoginPage extends Component {
   constructor() {
     super();
     this.state={
-        email: "",
-        password: "",
+      email: "",
+      password: ""
     }
 
-    this.emailVal = this.emailVal.bind(this);
-    this.passwordVal = this.passwordVal.bind(this);
-    this.handleemailChange = this.handleemailChange.bind(this);
-    this.handlepasswordChange = this.handlepasswordChange.bind(this);
+    this.emailValidation = this.emailValidation.bind(this);
+    this.passwordValidation = this.passwordValidation.bind(this);
+    this.handleemailChange = this.handleEmailChange.bind(this);
+    this.handlepasswordChange = this.handlePasswordChange.bind(this);
+    //this.ok = this.ok.bind(this);
   }
 
-  handleemailChange(event) {
+  // ok(){
+  //   document.getElementById('dialogbox').style.display = "none";
+  //   document.getElementById('dialogoverlay').style.display = "none";
+  // }
+
+  handleEmailChange(event) {
     this.setState({email: event.target.value});
   }
 
-  handlepasswordChange(event) {
+  handlePasswordChange(event) {
     this.setState({password: event.target.value});
   }
 
-  emailVal() {
-    let emailv = document.getElementById("eml")
-    let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    let isValid= rg.test(emailv.value)
-    
-    if (emailv.value === ""){
-      document.getElementById("emailErrMsg").innerHTML="Required"
-      }
-    else if (!isValid) {
-        document.getElementById("emailErrMsg").innerHTML="The email has an incorrect format"
-      }
-    else {
-        document.getElementById("emailErrMsg").innerHTML=""
-      }
-  }
+  emailValidation() {
+    let emailField = document.getElementById("eml")
 
-  passwordVal() {
-    let passwdv = document.getElementById("pssword")
-    if (passwdv.value === ""){
+    if (emailField.value === "") {
       document.getElementById("passwordErrMsg").innerHTML="Required"
-      }
-      else{
+    } else {
       document.getElementById("passwordErrMsg").innerHTML=""
-      }
     }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    let emailv = document.getElementById("eml")
-    let passwdv = document.getElementById("pssword")
-    let rg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    let emailValid= rg.test(emailv.value)
-
-    if (!emailValid)
-    {
-      alert("The email entered does not have the correct format.")
-    }
-    else if (emailv.value === "" || passwdv.value === "")
-    {
-      alert("A required field is missing.")
-    }
-    
   }
 
+  passwordValidation() {
+    let passwordField = document.getElementById("pssword");
 
+    if (passwordField.value === "") {
+      document.getElementById("passwordErrMsg").innerHTML="Required"
+    } else {
+      document.getElementById("passwordErrMsg").innerHTML=""
+    }
+  }
+
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    let emailField = document.getElementById("eml")
+    let passwordField = document.getElementById("pssword")
+
+    if (emailField.value === "" || passwordField.value === "") {
+      Alert("A required field is missing.")
+    } 
+
+    // cognito integration
+    try {
+      // send login request, assign response to a variable
+      const user = await Auth.signIn(this.state.email, this.state.password);
+      console.log(user);
+      // set global state
+      this.props.auth.setAuthStatus(true);
+      this.props.auth.setUser(user)
+      // redirect to home
+      this.props.history.push('/');
+    } catch(error) {
+      Alert('something went wrong, try logging in again');
+    }
+  }
 
   render () {
     const labelstyle = {
@@ -109,10 +116,20 @@ class LoginPage extends Component {
 
     return (
       <main className={classes.main}>
+      {/* <div className={classes.dialogoverlay} id ="dialogoverlay"></div>
+      <div className= {classes.dialogbox} id="dialogbox">
+      <div>
+          <div className={classes.dialoghead} id="dialogboxhead"></div>
+          <div className={classes.dialogbody} id="dialogboxbody"></div>
+          <div className={classes.dialogfoot} id="dialogboxfoot">
+          <button id="yes1" className={classes.alertbutton} onClick={this.ok()}>OK</button>
+          </div>
+      </div>
+      </div> */}
         <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
-            <Heading2>Log In</Heading2>
+            <h1 className={classes.header}>Log In</h1>
             <table>
               <tr>
                 <td 
@@ -121,7 +138,7 @@ class LoginPage extends Component {
                   <label 
                     htmlFor="email" 
                     style={labelstyle} >
-                    Email:
+                    Email/User Name:
                   </label>
                 </td>
                 <td 
@@ -165,22 +182,30 @@ class LoginPage extends Component {
                     <span 
                       id="passwordErrMsg"
                       style={{color:"red"}}>
-                  </span>
+                    </span>
               </td>
             </tr>
             </table> 
             <br/>
+
             <input 
               type="submit"
               value= "Submit"
               style={buttonstyle}>
-              </input> 
+            </input> 
             <br/>
-        </fieldset>
+
+            <Link 
+              to={{pathname:'/reset-password'}}
+              className={classes.resetPasswordLink}
+            >
+              Forgot Your Password?
+            </Link>
+          </fieldset>
         </form>
       </main>
     );
   }
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);
