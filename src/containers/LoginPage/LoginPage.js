@@ -4,6 +4,7 @@ import {withRouter, Link} from 'react-router-dom';
 
 import classes from './LoginPage.module.css';
 import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
+import Alert from '../../components/UI/Alert/Alert'
 
 class LoginPage extends Component {
   constructor() {
@@ -17,7 +18,13 @@ class LoginPage extends Component {
     this.passwordValidation = this.passwordValidation.bind(this);
     this.handleemailChange = this.handleEmailChange.bind(this);
     this.handlepasswordChange = this.handlePasswordChange.bind(this);
+    //this.ok = this.ok.bind(this);
   }
+
+  // ok(){
+  //   document.getElementById('dialogbox').style.display = "none";
+  //   document.getElementById('dialogoverlay').style.display = "none";
+  // }
 
   handleEmailChange(event) {
     this.setState({email: event.target.value});
@@ -53,7 +60,7 @@ class LoginPage extends Component {
     let passwordField = document.getElementById("pssword")
 
     if (emailField.value === "" || passwordField.value === "") {
-      alert("A required field is missing.")
+      Alert("A required field is missing.")
     } 
 
     // cognito integration
@@ -67,7 +74,7 @@ class LoginPage extends Component {
       // redirect to home
       this.props.history.push('/');
     } catch(error) {
-      alert('something went wrong, try logging in again');
+      Alert('something went wrong, try logging in again');
     }
   }
 
@@ -109,6 +116,16 @@ class LoginPage extends Component {
 
     return (
       <main className={classes.main}>
+      {/* <div className={classes.dialogoverlay} id ="dialogoverlay"></div>
+      <div className= {classes.dialogbox} id="dialogbox">
+      <div>
+          <div className={classes.dialoghead} id="dialogboxhead"></div>
+          <div className={classes.dialogbody} id="dialogboxbody"></div>
+          <div className={classes.dialogfoot} id="dialogboxfoot">
+          <button id="yes1" className={classes.alertbutton} onClick={this.ok()}>OK</button>
+          </div>
+      </div>
+      </div> */}
         <form className={classes.wrapper} 
             onSubmit={this.handleSubmit}>
             <fieldset>
