@@ -16,7 +16,7 @@ import TableFilter from '../../UI/TableFilter/TableFilter';
 
 import classes from './OrgTable.module.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCaretUp, faYenSign} from '@fortawesome/free-solid-svg-icons';
+import {faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import SmallButton from '../../UI/SmallButton/SmallButton';
@@ -177,7 +177,7 @@ const OrgTable = () => {
   const handleDeleteRequest = () => {
     if (selectedRow[0] === undefined)
     {
-      Alert("Please select a test to delete.")
+      Alert("Please select an organization to delete.")
     }
     else {
     Confirm("Are you sure you want to delete this test?")

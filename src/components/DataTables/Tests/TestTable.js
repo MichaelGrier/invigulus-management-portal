@@ -163,7 +163,7 @@ const TestTable = () => {
   const handleDeleteRequest = () => {
     if (selectedRow[0] === undefined)
     {
-      Alert("Please select an organization to delete.")
+      Alert("Please select a test to delete.")
     }
     else {
       Confirm("Are you sure you want to delete this test?")

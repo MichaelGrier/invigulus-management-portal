@@ -111,33 +111,60 @@ class LoginPage extends Component {
 
     return (
       <div>
-      <div className={classes.dialogoverlay} id ="dialogoverlay"></div>
-      <div className= {classes.dialogbox} id="dialogbox">
-      <div>
-          <div className={classes.dialoghead} id="dialogboxhead"></div>
-          <div className={classes.dialogbody} id="dialogboxbody"></div>
-          <div className={classes.dialogfoot} id="dialogboxfoot">
-          <button id="yes1" className={classes.alertbutton} onClick={
-            () => {document.getElementById('dialogbox').style.display = "none";
-              document.getElementById('dialogoverlay').style.display = "none";}
-          }>OK</button>
+        <div className={classes.dialogoverlay} id ="dialogoverlay"></div>
+        <div className= {classes.dialogbox} id="dialogbox">
+          <div>
+            <div className={classes.dialoghead} id="dialogboxhead"></div>
+            <div className={classes.dialogbody} id="dialogboxbody"></div>
+            <div className={classes.dialogfoot} id="dialogboxfoot">
+              <button id="yes1" className={classes.alertbutton} onClick={
+                () => {document.getElementById('dialogbox').style.display = "none";
+                  document.getElementById('dialogoverlay').style.display = "none";}
+              }>OK</button>
+            </div>
           </div>
-      </div>
-      </div>
-      <main className={classes.main}>
-        <form className={classes.wrapper} 
-            onSubmit={this.handleSubmit}>
-            <fieldset>
-            <h1 className={classes.header}>Log In</h1>
-            <table>
+        </div>
+        <main className={classes.main}>
+          <form className={classes.wrapper} 
+              onSubmit={this.handleSubmit}>
+              <fieldset>
+              <h1 className={classes.header}>Log In</h1>
+              <table>
+                <tr>
+                  <td 
+                    id={classes.cell} 
+                    style={{textAlign:"right"}} >
+                    <label 
+                      htmlFor="email" 
+                      style={labelstyle} >
+                      Email/User Name:
+                    </label>
+                  </td>
+                  <td 
+                    className={classes.cell2} 
+                    style={{textAlign:"left"}}>
+                    <input 
+                      style={textbxstyle} 
+                      type="text" 
+                      id="eml" 
+                      name="eml"
+                      onChange={this.handleemailChange}
+                      onBlur={this.emailVal}/>
+                      <br/>
+                      <span 
+                        id="emailErrMsg"
+                        style={{color:"red"}}>
+                      </span>
+                  </td>
+              </tr>
               <tr>
                 <td 
-                  id={classes.cell} 
-                  style={{textAlign:"right"}} >
+                  className={classes.cell} 
+                  style={{textAlign:"right"}}>
                   <label 
-                    htmlFor="email" 
-                    style={labelstyle} >
-                    Email/User Name:
+                    htmlFor="pssword" 
+                    style={labelstyle}>
+                    Password:
                   </label>
                 </td>
                 <td 
@@ -145,64 +172,37 @@ class LoginPage extends Component {
                   style={{textAlign:"left"}}>
                   <input 
                     style={textbxstyle} 
-                    type="text" 
-                    id="eml" 
-                    name="eml"
-                    onChange={this.handleemailChange}
-                    onBlur={this.emailVal}/>
+                    type="password" 
+                    id="pssword" 
+                    name="pssword"
+                    onChange={this.handlepasswordChange}
+                    onBlur={this.passwordVal}/>
                     <br/>
-                    <span 
-                      id="emailErrMsg"
-                      style={{color:"red"}}>
-                    </span>
+                      <span 
+                        id="passwordErrMsg"
+                        style={{color:"red"}}>
+                      </span>
                 </td>
-            </tr>
-            <tr>
-              <td 
-                className={classes.cell} 
-                style={{textAlign:"right"}}>
-                <label 
-                  htmlFor="pssword" 
-                  style={labelstyle}>
-                  Password:
-                </label>
-              </td>
-              <td 
-                className={classes.cell2} 
-                style={{textAlign:"left"}}>
-                <input 
-                  style={textbxstyle} 
-                  type="password" 
-                  id="pssword" 
-                  name="pssword"
-                  onChange={this.handlepasswordChange}
-                  onBlur={this.passwordVal}/>
-                  <br/>
-                    <span 
-                      id="passwordErrMsg"
-                      style={{color:"red"}}>
-                    </span>
-              </td>
-            </tr>
-            </table> 
-            <br/>
+              </tr>
+              </table> 
+              <br/>
 
-            <input 
-              type="submit"
-              value= "Submit"
-              style={buttonstyle}>
-            </input> 
-            <br/>
+              <input 
+                type="submit"
+                value= "Submit"
+                style={buttonstyle}>
+              </input> 
+              <br/>
 
-            <Link 
-              to={{pathname:'/reset-password'}}
-              className={classes.resetPasswordLink}
-            >
-              Forgot Your Password?
-            </Link>
-          </fieldset>
-        </form>
-      </main>
+              <Link 
+                to={{pathname:'/reset-password'}}
+                className={classes.resetPasswordLink}
+              >
+                Forgot Your Password?
+              </Link>
+            </fieldset>
+          </form>
+        </main>
       </div>
     );
   }
