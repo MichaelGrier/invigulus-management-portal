@@ -161,9 +161,15 @@ const TestTable = () => {
 
   // handle delete button click
   const handleDeleteRequest = () => {
-    Confirm("Are you sure you want to delete this test?")
+    if (selectedRow[0] === undefined)
+    {
+      Alert("Please select an organization to delete.")
     }
-  
+    else {
+      Confirm("Are you sure you want to delete this test?")
+    }
+  }
+
   return (
     <div className={classes.tableWrap}>
       {/* if data is loaded, render table and associated components. if not, render loading spinner */}

@@ -154,8 +154,11 @@ const OrgTable = () => {
       
     // make axios call, then reload page
     axios.delete(`/orgs/${itemToDelete}`)
-        .then(response => {
-          window.location.reload();
+        .then(res => {
+          console.log(res)
+          if (res.status === 200) {
+            window.location.reload();
+          }
         })
         .catch(error => Alert(error));
 
@@ -172,7 +175,13 @@ const OrgTable = () => {
 
 
   const handleDeleteRequest = () => {
+    if (selectedRow[0] === undefined)
+    {
+      Alert("Please select a test to delete.")
+    }
+    else {
     Confirm("Are you sure you want to delete this test?")
+    }
   }
 
   return (
