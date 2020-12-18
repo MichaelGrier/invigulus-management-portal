@@ -63,7 +63,7 @@ class UserForm extends Component {
     return (
       <div>
         <main className={classes.main}>
-            <h1> Manage Users</h1>
+            <h1 className={classes.header}>Add User</h1>
           <form className={classes.wrapper}>
               <fieldset>
                 <div className={classes.flexChild}>
@@ -102,9 +102,6 @@ class UserForm extends Component {
                 <td className={classes.cell2} style={{textAlign:"left"}}><input type="file" id="picture" name="picture" accept="image/*"></input></td>
                 </tr>
 
-                {/* <tr><td className={classes.cell1}></td>
-                <td className={classes.cell2} style={{rowspan: "2", textAlign:"right"}}><Button>Add User</Button></td></tr> */}
-
                 </table> 
                 
                 </div>
@@ -133,9 +130,6 @@ class UserForm extends Component {
                 <td className={classes.cell4} style={{textAlign:"left"}}><input style={textbxstyle2} type="text" id="country" name="country"/></td>
                 </tr>
 
-                {/* <tr><td className={classes.cell5} style={{textAlign:"center", paddingLeft: "0px", rowspan: "2" }}><Button>Edit User</Button></td>
-                <td className={classes.cell6} style={{textAlign:"left", paddingLeft: "0px"}}><Button>Submit</Button></td>
-                </tr> */}
                 </table>
                 </div>
                 <div className={classes.flexChild}>
