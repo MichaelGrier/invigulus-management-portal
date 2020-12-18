@@ -3,7 +3,6 @@ import {Auth} from 'aws-amplify';
 import {Link} from 'react-router-dom';
 
 import classes from './LoginPage.module.css';
-import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
 import Alert from '../../components/UI/Alert/Alert'
 
 class LoginPage extends Component {

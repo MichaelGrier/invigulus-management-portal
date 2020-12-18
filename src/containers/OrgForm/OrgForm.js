@@ -589,7 +589,7 @@ class OrgForm extends Component {
       Alert("Frame Interval must be a number.")
     }
     else if (orgNamev.value === "" || orgIdv.value === "" || typeav.value === "" || streetav.value === "" || cityav.value === "" || 
-    this.statea.value === "" || zipav.value === "" || countryav.value === "" || fnamecv.value === "" || lnamecv.value === "" ||
+    this.statea === "" || zipav.value === "" || countryav.value === "" || fnamecv.value === "" || lnamecv.value === "" ||
     typecv.value === "" || phonecv.value === "" || emailcv.value === "" || !this.idCapVal   || !this.imgCapVal || smoothingfv.value === "" ||
     anomalydv.value === "" || frameiv.value === "")
     {
@@ -601,6 +601,7 @@ class OrgForm extends Component {
       else {
         document.getElementById("idCaptureErrMsg").innerHTML=""
       }
+
       if (!this.imgCapVal)
       {
         document.getElementById("imgCaptureErrMsg").innerHTML="Required"
@@ -608,6 +609,119 @@ class OrgForm extends Component {
       else {
         document.getElementById("imgCaptureErrMsg").innerHTML=""
       }
+
+      if (orgNamev.value === ""){
+        document.getElementById("orgnameErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("orgnameErrMsg").innerHTML=""
+      }
+
+      if (orgIdv.value === ""){
+        document.getElementById("orgidErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("orgidErrMsg").innerHTML=""
+      }
+
+      if (typeav.value === ""){
+        document.getElementById("addresstypeErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("addresstypeErrMsg").innerHTML=""
+      }
+  
+      if (streetav.value === ""){
+        document.getElementById("streetErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("streetErrMsg").innerHTML=""
+      }
+
+      if (zipav.value === ""){
+        document.getElementById("zipErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("zipErrMsg").innerHTML=""
+      }
+
+      if (cityav.value === ""){
+        document.getElementById("cityErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("cityErrMsg").innerHTML=""
+      }
+
+      if (this.statea === "" ){
+        document.getElementById("stateErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("stateErrMsg").innerHTML=""
+      }
+
+      if (countryav.value === "" ){
+        document.getElementById("countryErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("countryErrMsg").innerHTML=""
+      }
+
+      if (typecv.value === ""){
+        document.getElementById("contacttypeErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("contacttypeErrMsg").innerHTML=""
+      }
+
+      if (fnamecv.value === "" ){
+        document.getElementById("fnameErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("fnameErrMsg").innerHTML=""
+      }
+
+      if (lnamecv.value === "" ){
+        document.getElementById("lnameErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("lnameErrMsg").innerHTML=""
+      }
+
+      if (phonecv.value === "" ){
+        document.getElementById("phoneErrMsg").innerHTML="Required"
+      }
+      else{
+        document.getElementById("phoneErrMsg").innerHTML=""
+      }
+    
+      if (emailcv.value === ""){
+        document.getElementById("emailErrMsg").innerHTML="Required"
+      }
+      else {
+        document.getElementById("emailErrMsg").innerHTML=""
+      }
+
+      if (frameiv.value === ""){
+        document.getElementById("frameintervalErrMsg").innerHTML="Required"
+      }
+      else {
+        document.getElementById("frameintervalErrMsg").innerHTML=""
+      }
+
+      if (anomalydv.value === "" ){
+        document.getElementById("anomalydurationErrMsg").innerHTML="Required"
+      }
+      else {
+        document.getElementById("anomalydurationErrMsg").innerHTML=""
+      }
+
+      if (smoothingfv.value === ""){
+        document.getElementById("smoothingframeErrMsg").innerHTML="Required"
+      }
+      else {
+        document.getElementById("smoothingframeErrMsg").innerHTML=""
+      }
+
     }
     else {
     //Distribute the data stored in state into new object.
@@ -1311,6 +1425,7 @@ class OrgForm extends Component {
                                       <option value="SK">Saskatchewan</option>
                                       <option value="YT">Yukon</option>
                                     </select>
+                                    <br/>
                                 <span 
                                   id="stateErrMsg"
                                   style={{color:"red"}}>

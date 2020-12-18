@@ -57,6 +57,19 @@ class TestForm extends Component {
     if (this.state.data.description === "" || this.state.data.tds === "")
     {
       Alert("One or more required fields are missing.")
+      if (this.state.data.description === ""){
+        document.getElementById("descriptionErrMsg").innerHTML="Required"
+        }
+        else{
+        document.getElementById("descriptionErrMsg").innerHTML=""
+        }
+
+      if (this.state.data.tds === ""){
+        document.getElementById("tdsErrMsg").innerHTML="Required"
+        }
+        else{
+        document.getElementById("tdsErrMsg").innerHTML=""
+        }
     }
     else {
     // store editable data in new object

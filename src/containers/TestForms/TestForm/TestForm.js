@@ -104,7 +104,36 @@ class TestForm extends Component {
     if (this.state.data.testOrgId === "" || this.state.data.id === "" || this.state.data.description === "" || this.state.data.tds === "")
     {
       Alert("One or more required fields are missing.")
-    }
+
+        if (this.state.data.testOrgId === "" ){
+          document.getElementById("testOrgIdErrMsg").innerHTML="Required"
+          }
+          else{
+          document.getElementById("testOrgIdErrMsg").innerHTML=""
+          }
+      
+        if (this.state.data.id === "" ){
+          document.getElementById("idErrMsg").innerHTML="Required"
+          }
+          else{
+          document.getElementById("idErrMsg").innerHTML=""
+          }
+      
+        if (this.state.data.description === ""){
+          document.getElementById("descriptionErrMsg").innerHTML="Required"
+          }
+          else{
+          document.getElementById("descriptionErrMsg").innerHTML=""
+          }
+
+        if (this.state.data.tds === ""){
+          document.getElementById("tdsErrMsg").innerHTML="Required"
+          }
+          else{
+          document.getElementById("tdsErrMsg").innerHTML=""
+          }
+      }
+    
     else {
     // distribute data stored in state into new object
     const formData = {...this.state.data}
