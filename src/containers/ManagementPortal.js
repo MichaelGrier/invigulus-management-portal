@@ -47,7 +47,7 @@ class ManagementPortal extends Component {
       this.setAuthStatus(true);
 
       // set axios defaults
-      axios.defaults.baseURL = 'https://jiyfwa9bs1.execute-api.us-west-2.amazonaws.com/v1';
+      axios.defaults.baseURL = 'https://jiyfwa9bs1.execute-api.us-west-2.amazonaws.com/dev';
       axios.defaults.headers.common['Authorization'] = `Bearer ${session.accessToken.jwtToken}`;
 
       const user = await Auth.currentAuthenticatedUser();

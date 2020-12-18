@@ -7,7 +7,7 @@ import Accordion from '../../components/Accordion/Accordion';
 import Accordion2 from '../../components/Accordion/Accordion2';
 import Accordion3 from '../../components/Accordion/Accordion3';
 import Accordion4 from '../../components/Accordion/Accordion4';
-import Accordion5 from '../../components/Accordion/Accodion5';
+import Accordion5 from '../../components/Accordion/Accordion5';
 import Alert from '../../components/UI/Alert/Alert';
 
 

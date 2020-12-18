@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 
-import classes from './UserPage.module.css';
-import Heading2 from '../../components/Form Inputs/Heading2/Heading2';
+import classes from './UserForm.module.css';
 
-class UserPage extends Component {
+class UserForm extends Component {
 
   render () {
     const labelstyle = {
@@ -15,67 +14,56 @@ class UserPage extends Component {
       textRendering: "optimizeLegibility",
       display: "inline-block",
       width: "70%"
-      };
-    
-      const textbxstyle = {
-        width: "90%",
-        padding: "12px 20px",
-        margin: "8px 0",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        boxSizing: "border-box",
-        display: "inline-block"
-      }; 
+    };
+  
+    const textbxstyle = {
+      width: "90%",
+      padding: "12px 20px",
+      margin: "8px 0",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      boxSizing: "border-box",
+      display: "inline-block"
+    }; 
 
-      const textbxstyle2 = {
-        width: "70%",
-        padding: "12px 20px",
-        margin: "8px 0",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        boxSizing: "border-box",
-        display: "inline-block"
-      }; 
+    const textbxstyle2 = {
+      width: "70%",
+      padding: "12px 20px",
+      margin: "8px 0",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      boxSizing: "border-box",
+      display: "inline-block"
+    }; 
 
-      const buttonstyle = {
-        backgroundColor: "#4CAF50",
-        border: "none",
-        color: "white",
-        padding: "10px 22px",
-        textAlign: "center",
-        textDecoration: "none",
-        display: "inline-block",
-        fontSize: "16px",
-        margin: "4px 2px",
-        cursor: "pointer",
-        borderRadius:"30px",
-      };
+    const buttonstyle = {
+      backgroundColor: "#4CAF50",
+      border: "none",
+      color: "white",
+      padding: "10px 22px",
+      textAlign: "center",
+      textDecoration: "none",
+      display: "inline-block",
+      fontSize: "16px",
+      margin: "4px 2px",
+      cursor: "pointer",
+      borderRadius:"30px",
+    };
 
-      const textbxstyle3 = {
-        width: "90%",
-        padding: "12px 20px",
-        margin: "8px 0",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        boxSizing: "border-box",
-        display: "inline-block"
-      }; 
-
-      const textbxstyle4 = {
-        width: "93%",
-        padding: "12px 20px",
-        margin: "8px 0",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        boxSizing: "border-box",
-        display: "inline-block"
-      }; 
-
+    const textbxstyle4 = {
+      width: "93%",
+      padding: "12px 20px",
+      margin: "8px 0",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      boxSizing: "border-box",
+      display: "inline-block"
+    }; 
 
     return (
       <div>
         <main className={classes.main}>
-            <Heading2> Manage Users</Heading2>
+            <h1> Manage Users</h1>
           <form className={classes.wrapper}>
               <fieldset>
                 <div className={classes.flexChild}>
@@ -167,4 +155,4 @@ class UserPage extends Component {
   }
 }
 
-export default UserPage;
+export default UserForm;
