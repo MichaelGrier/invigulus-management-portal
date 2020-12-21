@@ -113,7 +113,9 @@ const SessionTable = () => {
         return [
           {
             id: 'selection',
-            Header: 'select',
+            Header: ({getToggleAllRowsSelectedProps}) => (
+              <Checkbox {...getToggleAllRowsSelectedProps()} />
+            ),
             Cell: ({row}) => (
               <Checkbox {...row.getToggleRowSelectedProps()} />
             )
