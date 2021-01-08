@@ -1,70 +1,22 @@
-# Getting Started with Create React App
+# Invigulus Management Portal
+A Frontend React application which I created during my practicum at [Invigulus](https://invigulus.com/). This application leverages a RESTful API to allow Invigulus employees to perform full CRUD operations on all of their backend data.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**_note: this application utilizes a private api and is intended for use by invigulus employees only. as such, only invigulus employees will be able to log in and use this application. i am posting the code here as an example of my work, with express permission from Invigulus_**
 
-## Available Scripts
+**[ajoubert655](https://github.com/ajoubert655) contributed the following components to this project:**
+- OrgForm
+- EditOrgForm
+- Alert
+- Accordions
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### What I Learned:
+- Authentication, reset password, and change password functionality using Amazon Cognito
+- Using global state to track authentication status and user objects
+- Passing global state and helper functions as props
+- Ensuring login state persists through page reloads
+- Creating private route components with react-router
+- Rendering public and private routes conditionally, based on authentication status
+- Setting axios headers with auto-generated bearer tokens
+- Creating data tables with filter, sort, select and pagination functionality using react-table
+- Exporting selected data objects to a CSV file using react-csv
+- Using selected data objects to populate multiple data-tables simultaneously
