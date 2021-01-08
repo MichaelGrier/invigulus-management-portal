@@ -3,7 +3,7 @@ A Frontend React application which I created during my practicum at [Invigulus](
 
 **_note: this application utilizes a private api and is intended for use by invigulus employees only. as such, only invigulus employees will be able to log in and use this application. i am posting the code here as an example of my work, with express permission from Invigulus_**
 
-**[ajoubert655](https://github.com/ajoubert655) contributed the following components to this project:**
+[ajoubert655](https://github.com/ajoubert655) contributed the following components to this project:
 - OrgForm
 - EditOrgForm
 - Alert
